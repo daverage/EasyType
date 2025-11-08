@@ -92,7 +92,7 @@ fonts/
 ## 🌐 Web Embedding
 
 ```html
-<link rel="stylesheet" href="https://daverage.github.io/EasyType/css/easytype.css?v=1.0.0">
+<link rel="stylesheet" href="/css/easytype.css?v=1.0.0">
 ```
 
 Example CSS:
