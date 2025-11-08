@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EasyType — Neuro-inclusive fonts for calmer, clearer reading</title>
+<title>EasyType - Neuro-inclusive fonts for calmer, clearer reading</title>
 <meta name="description" content="EasyType is a neuro-inclusive type family designed to make reading easier for everyone, especially people with ADHD, dyslexia, or sensory processing differences.">
 <meta name="author" content="Andrzej Marczewski">
-<meta property="og:title" content="EasyType — Fonts for Calmer Reading">
+<meta property="og:title" content="EasyType - Fonts for Calmer Reading">
 <meta property="og:description" content="Built with evidence from neuroscience and cognitive psychology, EasyType helps readers focus and reduce visual stress.">
 <meta property="og:url" content="https://www.marczewski.me.uk/easytype">
 <meta property="og:image" content="assets/web-app-manifest-512x512.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="EasyType — Neuro-inclusive fonts for calmer, clearer reading">
+<meta name="twitter:title" content="EasyType - Neuro-inclusive fonts for calmer, clearer reading">
 <meta name="twitter:description" content="EasyType is a neuro-inclusive type family designed to make reading easier for everyone.">
 <meta name="twitter:image" content="assets/web-app-manifest-512x512.png">
 <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
@@ -32,6 +32,10 @@
   --brand-dark: #0F5257;
   --radius: 14px;
   --shadow: 0 8px 24px rgba(0,0,0,.06);
+  --gap: clamp(1rem, 2vw, 1.5rem);
+}
+* {
+  box-sizing: border-box;
 }
 body {
   margin: 0;
@@ -39,70 +43,124 @@ body {
   color: var(--text);
   font-family: 'EasyType Sans', system-ui, -apple-system, sans-serif;
   line-height: 1.6;
+  font-size: 16px;
 }
 header {
   text-align: center;
-  padding: 2.5rem 1rem 1.5rem;
-  background: linear-gradient(120deg,#f4ffff,#ffffff);
+  padding: 2rem 1.25rem 1.75rem;
+  background: linear-gradient(135deg,#f4ffff,#ffffff);
   border-bottom: 1px solid #e8e8e8;
 }
-header img { width: 180px; height: auto; }
+header img {
+  width: min(160px, 50vw);
+  height: auto;
+}
 header h1 {
-  margin: .5rem 0 0;
-  font-size: 2rem;
+  margin: .65rem 0 0;
+  font-size: clamp(1.9rem, 6vw, 2.5rem);
   font-weight: 700;
   color: var(--brand-dark);
 }
 header p.intro {
   max-width: 60ch;
-  margin: .75rem auto 1.25rem;
+  margin: .9rem auto 1.5rem;
   color: var(--muted);
-  font-size: 1.05rem;
+  font-size: 1rem;
+  padding: 0 .5rem;
 }
 .cta {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 44px;
   background: var(--brand);
   color: white;
   text-decoration: none;
-  padding: .7rem 1.4rem;
+  padding: .65rem 1.4rem;
   border-radius: var(--radius);
   font-weight: 600;
   box-shadow: 0 4px 12px rgba(0,0,0,.1);
 }
-.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+.wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 2.5rem;
+}
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
-  gap: 1.5rem;
-  margin: 2rem 0;
+  grid-template-columns: 1fr;
+  gap: var(--gap);
+  margin: 1.75rem 0;
 }
 .card {
   background: var(--card);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: 1.25rem 1.5rem;
+  padding: 1.2rem 1.35rem;
 }
 .tag {
   display:inline-block;
-  font-size:.75rem;
+  font-size:.78rem;
   background:#eaf8f8;
   color:var(--brand-dark);
   border-radius:999px;
-  padding:4px 10px;
-  margin-bottom:8px;
+  padding:4px 12px;
+  margin-bottom:10px;
   font-weight:600;
 }
-h2 { font-size:1.2rem; margin:.4rem 0 .6rem; color:var(--brand-dark);}
+h2 {
+  font-size:1.15rem;
+  margin:.35rem 0 .55rem;
+  color:var(--brand-dark);
+}
 .sample { margin: .75rem 0; }
 .small { font-size:.9rem; color:var(--muted); }
-ul { margin:.6rem 0 .6rem 1.2rem; line-height:1.6; }
+ul { margin:.6rem 0 .6rem 1.1rem; line-height:1.6; }
+code {
+  display:block;
+  padding:.5rem .75rem;
+  background:#f4f4f4;
+  border-radius:var(--radius);
+  font-size:.9rem;
+  overflow-wrap:anywhere;
+}
 footer {
   text-align:center;
   font-size:.85rem;
   color:var(--muted);
   margin:3rem 0 1rem;
+  padding: 0 1rem;
 }
 footer a { color:var(--brand-dark); text-decoration:none; }
 footer a:hover { text-decoration:underline; }
+
+@media (min-width: 600px) {
+  header {
+    padding: 2.75rem 2rem 2.25rem;
+  }
+  header p.intro {
+    font-size: 1.05rem;
+  }
+  .card {
+    padding: 1.35rem 1.6rem;
+  }
+}
+
+@media (min-width: 900px) {
+  header {
+    padding: 3rem 2.5rem 2.5rem;
+  }
+  .grid {
+    grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
+    margin: 2.5rem 0;
+  }
+  .wrap {
+    padding: 2rem 1.75rem 3rem;
+  }
+  h2 {
+    font-size: 1.25rem;
+  }
+}
 </style>
 </head>
 
@@ -110,7 +168,7 @@ footer a:hover { text-decoration:underline; }
   <header>
     <img src="assets/icon.png" alt="EasyType logo">
     <h1>EasyType</h1>
-    <p class="intro">A neuro-inclusive type family designed through the lens of cognitive science — helping minds stay steady, words stay clear, and reading feel calm.</p>
+    <p class="intro">A neuro-inclusive type family designed through the lens of cognitive science - helping minds stay steady, words stay clear, and reading feel calm.</p>
     <a class="cta" href="#download">Download the fonts</a>
   </header>
 
@@ -127,7 +185,7 @@ footer a:hover { text-decoration:underline; }
         <div class="tag">EasyType Focus</div>
         <h2>For attention and rhythm</h2>
         <p class="sample">Spacing and entry anchors guide the eye from word to word, improving reading flow for those with attention variability.</p>
-        <p class="small">Slightly wider spacing reduces crowding and supports smoother saccades — ideal for focus or study modes.</p>
+        <p class="small">Slightly wider spacing reduces crowding and supports smoother saccades - ideal for focus or study modes.</p>
       </article>
 
       <article class="card" data-family="EasyType Dyslexic">
@@ -145,16 +203,16 @@ footer a:hover { text-decoration:underline; }
       <ul>
         <li><strong>Entry anchoring</strong> gives the eye a consistent “starting point” for each word, aiding fixation and reducing scanning fatigue.</li>
         <li><strong>Raised x-height</strong> and <strong>increased openness</strong> improve letter recognition and reduce misreads, supported by studies on dyslexic perception of type.</li>
-        <li><strong>Adaptive spacing</strong> — slightly wider letter and word spacing — mitigates crowding and supports working-memory pacing.</li>
+        <li><strong>Adaptive spacing</strong> - slightly wider letter and word spacing - mitigates crowding and supports working-memory pacing.</li>
       </ul>
-      <p>EasyType blends these principles into three variants — Sans, Focus, and Dyslexic — so designers, educators, and readers can select what feels most comfortable.</p>
+      <p>EasyType blends these principles into three variants - Sans, Focus, and Dyslexic - so designers, educators, and readers can select what feels most comfortable.</p>
     </section>
 
     <section class="grid">
       <article class="card" id="download">
         <div class="tag">Get EasyType</div>
         <h2>Download or embed</h2>
-        <p>All weights and styles are available under the <a href="https://scripts.sil.org/OFL">SIL Open Font License 1.1</a>. You can use, modify, and redistribute them freely.</p>
+        <p>All weights and styles are available under the <a href="https://scripts.sil.org/OFL">SIL Open Font Licence 1.1</a>. You can use, modify, and redistribute them freely.</p>
         <p><strong>Web embed:</strong></p>
         <p><code>&lt;link rel="stylesheet" href="https://daverage.github.io/EasyType/css/easytype.css?v=1.0.0"&gt;</code></p>
         <p><strong>Desktop install:</strong> grab the full family as <a href="https://www.marczewski.me.uk/easytype/easytypesans.zip">easytypesans.zip</a> for macOS or Windows.</p>
@@ -164,17 +222,17 @@ footer a:hover { text-decoration:underline; }
         <div class="tag">Evidence base</div>
         <h2>Research that informed EasyType</h2>
         <ul>
-          <li>Pelli D.G., Tillman K.A. (2008) — <em>The uncrowded window of object recognition</em>, Nature Neuroscience 11(10).</li>
-          <li>Rayner K. (1998) — <em>Eye movements in reading and information processing</em>, Psychological Bulletin 124(3).</li>
-          <li>Spinelli D. et al. (2002) — <em>Crowding effects on word recognition in dyslexia</em>, Cortex 38(2).</li>
-          <li>Le Loi J., Whitney C. (2016) — <em>Optimal inter-letter spacing for reading</em>, Vision Research 121.</li>
+          <li>Pelli D.G., Tillman K.A. (2008) - <em>The uncrowded window of object recognition</em>, Nature Neuroscience 11(10).</li>
+          <li>Rayner K. (1998) - <em>Eye movements in reading and information processing</em>, Psychological Bulletin 124(3).</li>
+          <li>Spinelli D. et al. (2002) - <em>Crowding effects on word recognition in dyslexia</em>, Cortex 38(2).</li>
+          <li>Le Loi J., Whitney C. (2016) - <em>Optimal inter-letter spacing for reading</em>, Vision Research 121.</li>
         </ul>
         <p class="small">EasyType doesn’t “treat” dyslexia or ADHD. It applies evidence-based typographic principles to create calmer, clearer reading experiences for all.</p>
       </article>
     </section>
 
     <footer>
-      <p>© 2025 Andrzej Marczewski — EasyType Fonts. Licensed under SIL Open Font License 1.1.</p>
+      <p>© 2025 Andrzej Marczewski - EasyType Fonts. Licenced under SIL Open Font Licence 1.1.</p>
       <p><a href="https://github.com/daverage/EasyType">View on GitHub</a></p>
     </footer>
   </main>
