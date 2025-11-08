@@ -86,7 +86,7 @@ fonts/
      ├── EasyTypeSans-Regular.woff2
      └── ...
 ```
-
+ 
 ---
 
 ## 🌐 Web Embedding
