@@ -1,0 +1,94 @@
+/*!
+ * EasyType Fonts
+ * © 2025 Andrzej Marczewski — SIL Open Font License 1.1
+ * Based on Noto Sans. Modifications: optical anchoring + spacing for neuro-inclusive readability.
+ */
+
+@font-face {
+  font-family: 'EasyType Sans';
+  src: url('../fonts/web/EasyTypeSans-Regular.woff2') format('woff2'),
+       url('../fonts/ttf/EasyTypeSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'EasyType Sans';
+  src: url('../fonts/web/EasyTypeSans-Italic.woff2') format('woff2'),
+       url('../fonts/ttf/EasyTypeSans-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'EasyType Sans';
+  src: url('../fonts/web/EasyTypeSans-Bold.woff2') format('woff2'),
+       url('../fonts/ttf/EasyTypeSans-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'EasyType Sans';
+  src: url('../fonts/web/EasyTypeSans-BoldItalic.woff2') format('woff2'),
+       url('../fonts/ttf/EasyTypeSans-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* EasyType Focus */
+@font-face {
+  font-family: 'EasyType Focus';
+  src: url('../fonts/web/EasyTypeFocus-Regular.woff2') format('woff2'),
+       url('../fonts/ttf/EasyTypeFocus-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'EasyType Focus';
+  src: url('../fonts/web/EasyTypeFocus-Italic.woff2') format('woff2'),
+       url('../fonts/ttf/EasyTypeFocus-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'EasyType Focus';
+  src: url('../fonts/web/EasyTypeFocus-Bold.woff2') format('woff2'),
+       url('../fonts/ttf/EasyTypeFocus-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'EasyType Focus';
+  src: url('../fonts/web/EasyTypeFocus-BoldItalic.woff2') format('woff2'),
+       url('../fonts/ttf/EasyTypeFocus-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* EasyType Dyslexic */
+@font-face {
+  font-family: 'EasyType Dyslexic';
+  src: url('../fonts/web/EasyTypeDyslexic-Regular.woff2') format('woff2'),
+       url('../fonts/ttf/EasyTypeDyslexic-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'EasyType Dyslexic';
+  src: url('../fonts/web/EasyTypeDyslexic-Italic.woff2') format('woff2'),
+       url('../fonts/ttf/EasyTypeDyslexic-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'EasyType Dyslexic';
+  src: url('../fonts/web/EasyTypeDyslexic-Bold.woff2') format('woff2'),
+       url('../fonts/ttf/EasyTypeDyslexic-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'EasyType Dyslexic';
+  src: url('../fonts/web/EasyTypeDyslexic-BoldItalic.woff2') format('woff2'),
+       url('../fonts/ttf/EasyTypeDyslexic-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+}

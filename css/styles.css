@@ -1,0 +1,111 @@
+:root {
+  --bg: #fafafa;
+  --card: #ffffff;
+  --text: #141414;
+  --muted: #666;
+  --brand: #1e4dd8;
+  --brand-ink: #0f2a7a;
+  --radius: 14px;
+  --shadow: 0 8px 24px rgba(0,0,0,.06);
+}
+
+* { box-sizing: border-box; }
+html, body { margin:0; padding:0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'EasyType Sans', system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+}
+
+.wrap { max-width: 1100px; margin: 0 auto; padding: 24px; }
+
+.header {
+  display: grid;
+  gap: 16px;
+  padding: 28px 20px;
+  background: linear-gradient(120deg, #f2f5ff, #fff);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.header h1 {
+  margin: 0;
+  font-family: 'EasyType Sans';
+  font-weight: 700;
+  letter-spacing: .2px;
+  font-size: 2rem;
+}
+.header p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin: 24px 0;
+}
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px 18px;
+}
+
+.tag {
+  display: inline-block;
+  font-size: .75rem;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: var(--brand-ink);
+  margin-bottom: 8px;
+}
+
+h2 {
+  font-family: 'EasyType Sans';
+  font-size: 1.1rem;
+  margin: 0 0 8px;
+}
+
+.sample {
+  margin: 10px 0 6px;
+  min-height: 3.5em;
+}
+
+.small { color: var(--muted); font-size: .85rem; margin-top: 8px; }
+
+.controls {
+  display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px;
+}
+.control {
+  background: #f5f7ff;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: .9rem;
+}
+.control input[type="range"] { width: 160px; }
+
+.cta {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: var(--brand);
+  color: white; text-decoration: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(30,77,216,.25);
+}
+.cta:hover { background: #2043b8; }
+
+.footer {
+  color: var(--muted);
+  font-size: .85rem;
+  margin: 28px 0 12px;
+  text-align: center;
+}
+code {
+  background: #f0f3fa;
+  padding: 2px 6px; border-radius: 6px;
+}

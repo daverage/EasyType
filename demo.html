@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>EasyType – Full Specimen (Sans, Focus, Dyslexic × Regular/Italic/Bold/Bold Italic)</title>
+
+  <!--
+    Usage:
+    1) Put this HTML in the SAME folder as your generated fonts:
+       EasyTypeSans-Regular.ttf
+       EasyTypeSans-Italic.ttf
+       EasyTypeSans-Bold.ttf
+       EasyTypeSans-BoldItalic.ttf
+       EasyTypeFocus-Regular.ttf
+       EasyTypeFocus-Italic.ttf
+       EasyTypeFocus-Bold.ttf
+       EasyTypeFocus-BoldItalic.ttf
+       EasyTypeDyslexic-Regular.ttf
+       EasyTypeDyslexic-Italic.ttf
+       EasyTypeDyslexic-Bold.ttf
+       EasyTypeDyslexic-BoldItalic.ttf
+
+    2) Open this file in a modern browser.
+  -->
+
+  <style>
+    /* ---------- Font faces: 3 families × 4 styles ---------- */
+    @font-face { font-family: "EasyType Sans"; src: url("out/EasyTypeSans-Regular.ttf?v=7") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: "EasyType Sans"; src: url("out/EasyTypeSans-Italic.ttf?v=7") format("truetype");  font-weight: 400; font-style: italic; font-display: swap; }
+    @font-face { font-family: "EasyType Sans"; src: url("out/EasyTypeSans-Bold.ttf?v=7") format("truetype");    font-weight: 700; font-style: normal; font-display: swap; }
+    @font-face { font-family: "EasyType Sans"; src: url("out/EasyTypeSans-BoldItalic.ttf?v=7") format("truetype"); font-weight: 700; font-style: italic; font-display: swap; }
+
+    @font-face { font-family: "EasyType Focus"; src: url("out/EasyTypeFocus-Regular.ttf?v=7") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: "EasyType Focus"; src: url("out/EasyTypeFocus-Italic.ttf?v=7") format("truetype");  font-weight: 400; font-style: italic; font-display: swap; }
+    @font-face { font-family: "EasyType Focus"; src: url("out/EasyTypeFocus-Bold.ttf?v=7") format("truetype");    font-weight: 700; font-style: normal; font-display: swap; }
+    @font-face { font-family: "EasyType Focus"; src: url("out/EasyTypeFocus-BoldItalic.ttf?v=7") format("truetype"); font-weight: 700; font-style: italic; font-display: swap; }
+
+    @font-face { font-family: "EasyType Dyslexic"; src: url("out/EasyTypeDyslexic-Regular.ttf?v=7") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: "EasyType Dyslexic"; src: url("out/EasyTypeDyslexic-Italic.ttf?v=7") format("truetype");  font-weight: 400; font-style: italic; font-display: swap; }
+    @font-face { font-family: "EasyType Dyslexic"; src: url("out/EasyTypeDyslexic-Bold.ttf?v=7") format("truetype");    font-weight: 700; font-style: normal; font-display: swap; }
+    @font-face { font-family: "EasyType Dyslexic"; src: url("out/EasyTypeDyslexic-BoldItalic.ttf?v=7") format("truetype"); font-weight: 700; font-style: italic; font-display: swap; }
+
+    /* Base reference: Noto Sans */
+    @font-face { font-family: "Noto Sans"; src: url("base_fonts/NotoSans-Regular.ttf") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: "Noto Sans"; src: url("base_fonts/NotoSans-Italic.ttf") format("truetype"); font-weight: 400; font-style: italic; font-display: swap; }
+    @font-face { font-family: "Noto Sans"; src: url("base_fonts/NotoSans-Bold.ttf") format("truetype"); font-weight: 700; font-style: normal; font-display: swap; }
+    @font-face { font-family: "Noto Sans"; src: url("base_fonts/NotoSans-BoldItalic.ttf") format("truetype"); font-weight: 700; font-style: italic; font-display: swap; }
+
+    :root{
+      --bg:#fafafa;
+      --fg:#151515;
+      --muted:#6b6b6b;
+      --card:#ffffff;
+      --ring:#e6e6e6;
+      --accent:#1e88e5;
+
+      --size:16px;        /* live control */
+      --line:1.6;         /* live control */
+      --letter:0;         /* additional letter-spacing in em */
+      --word:0;           /* additional word-spacing in em */
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--fg);
+      background:var(--bg);
+      font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "EasyType Sans", "Noto Sans", sans-serif;
+    }
+
+    header{
+      position:sticky; top:0; z-index:10;
+      background:var(--card);
+      border-bottom:1px solid var(--ring);
+      padding:16px;
+    }
+    .row{ display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+    .row > *{ margin:0; }
+    label{ font-size:12px; color:var(--muted); }
+    input[type="range"]{ width:200px; }
+    .chip{
+      display:inline-block; padding:6px 10px; border:1px solid var(--ring); border-radius:999px; background:#fff; font-size:12px; color:#333;
+    }
+
+    main{ padding:20px; max-width:1200px; margin:0 auto; }
+
+    .family{
+      margin:24px 0 32px 0;
+    }
+    .family h2{
+      margin:0 0 12px 0; font-size:22px; font-weight:700;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(320px, 1fr));
+      gap:16px;
+    }
+    @media (min-width:1100px){
+      .grid{ grid-template-columns: repeat(4, 1fr); }
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--ring);
+      border-radius:12px;
+      padding:14px;
+      box-shadow:0 1px 2px rgba(0,0,0,.03);
+    }
+    .meta{
+      display:flex; justify-content:space-between; align-items:center;
+      margin-bottom:8px;
+    }
+    .meta .style{
+      font-size:12px; color:var(--muted);
+    }
+    .sample{
+      font-size:var(--size);
+      line-height:var(--line);
+      letter-spacing:calc(1em * var(--letter));
+      word-spacing:calc(1em * var(--word));
+    }
+    .sample p{ margin:0 0 10px 0; }
+    .rule{ height:1px; background:var(--ring); margin:8px 0; }
+
+    .size-note{
+      font-size:12px; color:var(--muted); text-align:right; margin-top:4px;
+    }
+
+    .kbd{
+      font: 12px/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      background:#f1f1f1; border:1px solid #e2e2e2; border-radius:6px; padding:2px 6px;
+    }
+
+    /* Font family classes */
+    .of-sans{ font-family: "EasyType Sans", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", sans-serif; }
+    .of-focus{ font-family: "EasyType Focus", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", sans-serif; }
+    .of-dys{ font-family: "EasyType Dyslexic", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", sans-serif; }
+    .of-noto{ font-family: "Noto Sans", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="row">
+      <strong>EasyType Specimen</strong>
+      <span class="chip">12 styles</span>
+      <span class="chip">Live controls</span>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <label>Size
+        <input id="sz" type="range" min="12" max="28" step="1" value="16">
+        <span id="szv" class="kbd">16 px</span>
+      </label>
+      <label>Line height
+        <input id="lh" type="range" min="1.2" max="2.0" step="0.05" value="1.6">
+        <span id="lhv" class="kbd">1.60</span>
+      </label>
+      <label>Letter spacing
+        <input id="ls" type="range" min="-0.02" max="0.08" step="0.005" value="0">
+        <span id="lsv" class="kbd">0.000 em</span>
+      </label>
+      <label>Word spacing
+        <input id="ws" type="range" min="-0.05" max="0.20" step="0.01" value="0">
+        <span id="wsv" class="kbd">0.00 em</span>
+      </label>
+    </div>
+  </header>
+
+  <main>
+    <!-- FAMILY: EasyType Sans -->
+    <section class="family">
+      <h2>EasyType Sans</h2>
+      <div class="grid of-sans">
+        <!-- Regular -->
+        <div class="card">
+          <div class="meta"><div class="style">Regular</div></div>
+          <div class="sample" style="font-weight:400; font-style:normal;">
+            <p><strong>Pangram</strong>: The quick brown fox jumps over the lazy dog.</p>
+            <p>Alt pangram: Pack my box with five dozen liquor jugs.</p>
+            <div class="rule"></div>
+            <p><strong>Numbers</strong>: 0 1 2 3 4 5 6 7 8 9 · £ € $ % ¼ ½ ¾</p>
+            <div class="rule"></div>
+            <p><strong>Paragraph</strong>: Reading comfort comes from spacing, rhythm, and clear shapes. Anchors should be subtle, steady, and quiet on the baseline.</p>
+          </div>
+          <div class="size-note">400 / normal</div>
+        </div>
+
+        <!-- Italic -->
+        <div class="card">
+          <div class="meta"><div class="style">Italic</div></div>
+          <div class="sample" style="font-weight:400; font-style:italic;">
+            <p><strong>Pangram</strong>: The quick brown fox jumps over the lazy dog.</p>
+            <p>Alt pangram: Sphinx of black quartz, judge my vow.</p>
+            <div class="rule"></div>
+            <p><strong>Numbers</strong>: 0 1 2 3 4 5 6 7 8 9 · £ € $ % ¼ ½ ¾</p>
+            <div class="rule"></div>
+            <p><strong>Paragraph</strong>: Italic keeps the same metrics as Regular, so line breaks stay predictable in Word and print.</p>
+          </div>
+          <div class="size-note">400 / italic</div>
+        </div>
+
+        <!-- Bold -->
+        <div class="card">
+          <div class="meta"><div class="style">Bold</div></div>
+          <div class="sample" style="font-weight:700; font-style:normal;">
+            <p><strong>Pangram</strong>: The quick brown fox jumps over the lazy dog.</p>
+            <p>Alt pangram: Jackdaws love my big quartz sphinx.</p>
+            <div class="rule"></div>
+            <p><strong>Numbers</strong>: 0 1 2 3 4 5 6 7 8 9 · £ € $ % ¼ ½ ¾</p>
+            <div class="rule"></div>
+            <p><strong>Paragraph</strong>: Bold trims anchor length slightly to avoid a heavy texture at body sizes.</p>
+          </div>
+          <div class="size-note">700 / normal</div>
+        </div>
+
+        <!-- Bold Italic -->
+        <div class="card">
+          <div class="meta"><div class="style">Bold Italic</div></div>
+          <div class="sample" style="font-weight:700; font-style:italic;">
+            <p><strong>Pangram</strong>: The quick brown fox jumps over the lazy dog.</p>
+            <p>Alt pangram: Waltz, bad nymph, for quick jigs vex.</p>
+            <div class="rule"></div>
+            <p><strong>Numbers</strong>: 0 1 2 3 4 5 6 7 8 9 · £ € $ % ¼ ½ ¾</p>
+            <div class="rule"></div>
+            <p><strong>Paragraph</strong>: Entry anchors remain baseline-true for clarity even under slant.</p>
+          </div>
+          <div class="size-note">700 / italic</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAMILY: EasyType Focus -->
+    <section class="family">
+      <h2>EasyType Focus</h2>
+      <div class="grid of-focus">
+        <!-- Regular -->
+        <div class="card">
+          <div class="meta"><div class="style">Regular</div></div>
+          <div class="sample" style="font-weight:400;">
+            <p><strong>Pangram</strong>: The quick brown fox jumps over the lazy dog.</p>
+            <p>Alt pangram: Pack my box with five dozen liquor jugs.</p>
+            <div class="rule"></div>
+            <p><strong>Numbers</strong>: 0 1 2 3 4 5 6 7 8 9 · £ € $ % ¼ ½ ¾</p>
+            <div class="rule"></div>
+            <p><strong>Paragraph</strong>: Wider letter and word spacing reduce crowding and support steady eye movement.</p>
+          </div>
+          <div class="size-note">400 / normal</div>
+        </div>
+
+        <!-- Italic -->
+        <div class="card">
+          <div class="meta"><div class="style">Italic</div></div>
+          <div class="sample" style="font-weight:400; font-style:italic;">
+            <p><strong>Pangram</strong>: The quick brown fox jumps over the lazy dog.</p>
+            <p>Alt pangram: Sphinx of black quartz, judge my vow.</p>
+            <div class="rule"></div>
+            <p><strong>Numbers</strong>: 0 1 2 3 4 5 6 7 8 9 · £ € $ % ¼ ½ ¾</p>
+            <div class="rule"></div>
+            <p><strong>Paragraph</strong>: Spacing stays generous in italics for consistent rhythm.</p>
+          </div>
+          <div class="size-note">400 / italic</div>
+        </div>
+
+        <!-- Bold -->
+        <div class="card">
+          <div class="meta"><div class="style">Bold</div></div>
+          <div class="sample" style="font-weight:700;">
+            <p><strong>Pangram</strong>: The quick brown fox jumps over the lazy dog.</p>
+            <p>Alt pangram: Jackdaws love my big quartz sphinx.</p>
+            <div class="rule"></div>
+            <p><strong>Numbers</strong>: 0 1 2 3 4 5 6 7 8 9 · £ € $ % ¼ ½ ¾</p>
+            <div class="rule"></div>
+            <p><strong>Paragraph</strong>: Moderate anchors remain visible but quiet at small sizes.</p>
+          </div>
+          <div class="size-note">700 / normal</div>
+        </div>
+
+        <!-- Bold Italic -->
+        <div class="card">
+          <div class="meta"><div class="style">Bold Italic</div></div>
+          <div class="sample" style="font-weight:700; font-style:italic;">
+            <p><strong>Pangram</strong>: The quick brown fox jumps over the lazy dog.</p>
+            <p>Alt pangram: Waltz, bad nymph, for quick jigs vex.</p>
+            <div class="rule"></div>
+            <p><strong>Numbers</strong>: 0 1 2 3 4 5 6 7 8 9 · £ € $ % ¼ ½ ¾</p>
+            <div class="rule"></div>
+            <p><strong>Paragraph</strong>: Focus keeps texture calm for headings and emphasis.</p>
+          </div>
+          <div class="size-note">700 / italic</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAMILY: EasyType Dyslexic -->
+    <section class="family">
+      <h2>EasyType Dyslexic</h2>
+      <div class="grid of-dys">
+        <!-- Regular -->
+        <div class="card">
+          <div class="meta"><div class="style">Regular</div></div>
+          <div class="sample" style="font-weight:400;">
+            <p><strong>Pangram</strong>: The quick brown fox jumps over the lazy dog.</p>
+            <p>Alt pangram: Pack my box with five dozen liquor jugs.</p>
+            <div class="rule"></div>
+            <p><strong>Numbers</strong>: 0 1 2 3 4 5 6 7 8 9 · £ € $ % ¼ ½ ¾</p>
+            <div class="rule"></div>
+            <p><strong>Paragraph</strong>: Stronger spacing and letter differentiation aim to reduce common confusions.</p>
+          </div>
+          <div class="size-note">400 / normal</div>
+        </div>
+
+        <!-- Italic -->
+        <div class="card">
+          <div class="meta"><div class="style">Italic</div></div>
+          <div class="sample" style="font-weight:400; font-style:italic;">
+            <p><strong>Pangram</strong>: The quick brown fox jumps over the lazy dog.</p>
+            <p>Alt pangram: Sphinx of black quartz, judge my vow.</p>
+            <div class="rule"></div>
+            <p><strong>Numbers</strong>: 0 1 2 3 4 5 6 7 8 9 · £ € $ % ¼ ½ ¾</p>
+            <div class="rule"></div>
+            <p><strong>Paragraph</strong>: Anchors remain baseline-true to avoid wobble under slant.</p>
+          </div>
+          <div class="size-note">400 / italic</div>
+        </div>
+
+        <!-- Bold -->
+        <div class="card">
+          <div class="meta"><div class="style">Bold</div></div>
+          <div class="sample" style="font-weight:700;">
+            <p><strong>Pangram</strong>: The quick brown fox jumps over the lazy dog.</p>
+            <p>Alt pangram: Jackdaws love my big quartz sphinx.</p>
+            <div class="rule"></div>
+            <p><strong>Numbers</strong>: 0 1 2 3 4 5 6 7 8 9 · £ € $ % ¼ ½ ¾</p>
+            <div class="rule"></div>
+            <p><strong>Paragraph</strong>: Bold trims anchors slightly so the texture doesn’t clump.</p>
+          </div>
+          <div class="size-note">700 / normal</div>
+        </div>
+
+        <!-- Bold Italic -->
+        <div class="card">
+          <div class="meta"><div class="style">Bold Italic</div></div>
+          <div class="sample" style="font-weight:700; font-style:italic;">
+            <p><strong>Pangram</strong>: The quick brown fox jumps over the lazy dog.</p>
+            <p>Alt pangram: Waltz, bad nymph, for quick jigs vex.</p>
+            <div class="rule"></div>
+            <p><strong>Numbers</strong>: 0 1 2 3 4 5 6 7 8 9 · £ € $ % ¼ ½ ¾</p>
+            <div class="rule"></div>
+            <p><strong>Paragraph</strong>: Emphasis stays readable with heavier spacing and anchors.</p>
+          </div>
+          <div class="size-note">700 / italic</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAMILY: Reference Noto Sans -->
+    <section class="family">
+      <h2>Noto Sans baseline</h2>
+      <div class="grid of-noto">
+        <!-- Regular -->
+        <div class="card">
+          <div class="meta">
+            <div class="style">Regular</div>
+          </div>
+          <div class="sample" style="font-weight:400;">
+            <p><strong>Pangram</strong>: The quick brown fox jumps over the lazy dog.</p>
+            <p>Alt pangram: Sphinx of black quartz, judge my vow.</p>
+            <div class="rule"></div>
+            <p><strong>Numbers</strong>: 0 1 2 3 4 5 6 7 8 9 · £ € $ % ¼ ½ ¾</p>
+            <div class="rule"></div>
+            <p><strong>Paragraph</strong>: Raw Noto Sans shows the unmodified spacing/kerning our EasyType cuts build from.</p>
+          </div>
+          <div class="size-note">400 / normal</div>
+        </div>
+
+        <!-- Italic -->
+        <div class="card">
+          <div class="meta">
+            <div class="style">Italic</div>
+          </div>
+          <div class="sample" style="font-weight:400; font-style:italic;">
+            <p><strong>Pangram</strong>: Waltz, bad nymph, for quick jigs vex.</p>
+            <p>Alt pangram: Pack my box with five dozen liquor jugs.</p>
+            <div class="rule"></div>
+            <p><strong>Numbers</strong>: 0 1 2 3 4 5 6 7 8 9 · £ € $ % ¼ ½ ¾</p>
+            <div class="rule"></div>
+            <p><strong>Paragraph</strong>: Use this as a reference for italics before flow anchoring and spacing adjustments.</p>
+          </div>
+          <div class="size-note">400 / italic</div>
+        </div>
+
+        <!-- Bold -->
+        <div class="card">
+          <div class="meta">
+            <div class="style">Bold</div>
+          </div>
+          <div class="sample" style="font-weight:700;">
+            <p><strong>Pangram</strong>: Jackdaws love my big quartz sphinx.</p>
+            <p>Alt pangram: Watch Jeopardy!, Alex Trebek's fun TV quiz game.</p>
+            <div class="rule"></div>
+            <p><strong>Numbers</strong>: 0 1 2 3 4 5 6 7 8 9 · £ € $ % ¼ ½ ¾</p>
+            <div class="rule"></div>
+            <p><strong>Paragraph</strong>: Bold reveals where EasyType trims anchors and weight for calmer texture.</p>
+          </div>
+          <div class="size-note">700 / normal</div>
+        </div>
+
+        <!-- Bold Italic -->
+        <div class="card">
+          <div class="meta">
+            <div class="style">Bold Italic</div>
+          </div>
+          <div class="sample" style="font-weight:700; font-style:italic;">
+            <p><strong>Pangram</strong>: Victor jagt zwölf Boxkämpfer quer über den großen Sylter Deich.</p>
+            <p>Alt pangram: Blowzy night-frumps vex'd Jack Q.</p>
+            <div class="rule"></div>
+            <p><strong>Numbers</strong>: 0 1 2 3 4 5 6 7 8 9 · £ € $ % ¼ ½ ¾</p>
+            <div class="rule"></div>
+            <p><strong>Paragraph</strong>: Compare this untouched style with the EasyType italic cuts to see entry anchoring gains.</p>
+          </div>
+          <div class="size-note">700 / italic</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // live controls
+    const sz = document.getElementById('sz');
+    const lh = document.getElementById('lh');
+    const ls = document.getElementById('ls');
+    const ws = document.getElementById('ws');
+    const szv = document.getElementById('szv');
+    const lhv = document.getElementById('lhv');
+    const lsv = document.getElementById('lsv');
+    const wsv = document.getElementById('wsv');
+
+    function apply() {
+      document.documentElement.style.setProperty('--size', sz.value + 'px');
+      document.documentElement.style.setProperty('--line', lh.value);
+      document.documentElement.style.setProperty('--letter', ls.value);
+      document.documentElement.style.setProperty('--word', ws.value);
+      szv.textContent = sz.value + ' px';
+      lhv.textContent = Number(lh.value).toFixed(2);
+      lsv.textContent = Number(ls.value).toFixed(3) + ' em';
+      wsv.textContent = Number(ws.value).toFixed(2) + ' em';
+    }
+    [sz, lh, ls, ws].forEach(el => el.addEventListener('input', apply));
+    apply();
+  </script>
+</body>
+</html>
