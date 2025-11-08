@@ -12,9 +12,9 @@ I live with both ADHD and dyslexia, and EasyType started as a personal experimen
 
 | Font | Description |
 |------|--------------|
-| **EasyTypeSans** | Neutral rhythm and mild anchoring for everyday interfaces and long-form text. |
-| **EasyTypeFocus** | Wider letter and word spacing to support attentional flow and reduce visual crowding. |
-| **EasyTypeDyslexic** | Higher x-height, stronger entry anchors, and open counters for maximum clarity under reading pressure. |
+| **EasyType Sans** | Neutral rhythm and mild anchoring for everyday interfaces and long-form text. |
+| **EasyType Focus** | Wider letter and word spacing to support attentional flow and reduce visual crowding. |
+| **EasyType Dyslexic** | Higher x-height, stronger entry anchors, and open counters for maximum clarity under reading pressure. |
 
 Each family includes:
 - Regular, Italic, Bold, and Bold Italic styles  
@@ -99,7 +99,7 @@ Example CSS:
 
 ```css
 body {
-  font-family: 'EasyTypeSans', system-ui, sans-serif;
+  font-family: 'EasyType Sans', system-ui, sans-serif;
   line-height: 1.6;
   color: #141414;
 }

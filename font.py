@@ -36,9 +36,9 @@ os.makedirs(OUT_WEB,   exist_ok=True)
 
 # -------------------- Families -----------------------
 FAMILIES = {
-    "EasyTypeSans":     ({"Regular":400,"Italic":400,"Bold":700,"BoldItalic":700}, 0.25, 1.02, 1.06, 1.12, 0.8),
-    "EasyTypeFocus":    ({"Regular":400,"Italic":400,"Bold":700,"BoldItalic":700}, 0.40, 1.06, 1.14, 1.24, 1.0),
-    "EasyTypeDyslexic": ({"Regular":400,"Italic":400,"Bold":700,"BoldItalic":700}, 0.55, 1.10, 1.22, 1.32, 1.0),
+    "EasyType Sans":     ({"Regular":400,"Italic":400,"Bold":700,"BoldItalic":700}, 0.25, 1.02, 1.06, 1.12, 0.8),
+    "EasyType Focus":    ({"Regular":400,"Italic":400,"Bold":700,"BoldItalic":700}, 0.40, 1.06, 1.14, 1.24, 1.0),
+    "EasyType Dyslexic": ({"Regular":400,"Italic":400,"Bold":700,"BoldItalic":700}, 0.55, 1.10, 1.22, 1.32, 1.0),
 }
 
 VERSION_STR = "EasyType v1.0.2"
