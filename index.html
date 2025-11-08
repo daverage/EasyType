@@ -41,7 +41,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: 'EasyType Sans', system-ui, -apple-system, sans-serif;
+  font-family: 'EasyTypeSans', system-ui, -apple-system, sans-serif;
   line-height: 1.6;
   font-size: 16px;
 }
@@ -169,27 +169,28 @@ footer a:hover { text-decoration:underline; }
     <img src="assets/icon.png" alt="EasyType logo">
     <h1>EasyType</h1>
     <p class="intro">A neuro-inclusive type family designed through the lens of cognitive science - helping minds stay steady, words stay clear, and reading feel calm.</p>
+    <p class="intro" style="font-size:.9rem; color:var(--brand-dark); margin-top:.4rem;">Version 1.0 builds on a carefully modified Noto Sans base and is open-sourced on <a href="https://github.com/daverage/EasyType" style="color:inherit; text-decoration:underline;">GitHub</a>.</p>
     <a class="cta" href="#download">Download the fonts</a>
   </header>
 
   <main class="wrap">
     <section class="grid" id="specimens">
-      <article class="card" data-family="EasyType Sans">
-        <div class="tag">EasyType Sans</div>
+      <article class="card" data-family="EasyTypeSans">
+        <div class="tag">EasyTypeSans</div>
         <h2>Balanced default</h2>
         <p class="sample">The quick brown fox jumps over the lazy dog. Reading should feel calm, anchored, and unhurried.</p>
         <p class="small">Neutral rhythm, gentle anchoring, and comfort spacing for everyday use in interfaces or long-form text.</p>
       </article>
 
-      <article class="card" data-family="EasyType Focus">
-        <div class="tag">EasyType Focus</div>
+      <article class="card" data-family="EasyTypeFocus">
+        <div class="tag">EasyTypeFocus</div>
         <h2>For attention and rhythm</h2>
         <p class="sample">Spacing and entry anchors guide the eye from word to word, improving reading flow for those with attention variability.</p>
         <p class="small">Slightly wider spacing reduces crowding and supports smoother saccades - ideal for focus or study modes.</p>
       </article>
 
-      <article class="card" data-family="EasyType Dyslexic">
-        <div class="tag">EasyType Dyslexic</div>
+      <article class="card" data-family="EasyTypeDyslexic">
+        <div class="tag">EasyTypeDyslexic</div>
         <h2>Clarity under pressure</h2>
         <p class="sample">Higher x-height, stronger baseline anchors, and open shapes reduce confusion between similar letters.</p>
         <p class="small">Designed for visual clarity, fatigue reduction, and accessible learning materials.</p>
@@ -205,7 +206,7 @@ footer a:hover { text-decoration:underline; }
         <li><strong>Raised x-height</strong> and <strong>increased openness</strong> improve letter recognition and reduce misreads, supported by studies on dyslexic perception of type.</li>
         <li><strong>Adaptive spacing</strong> - slightly wider letter and word spacing - mitigates crowding and supports working-memory pacing.</li>
       </ul>
-      <p>EasyType blends these principles into three variants - Sans, Focus, and Dyslexic - so designers, educators, and readers can select what feels most comfortable.</p>
+      <p>EasyType blends these principles into three variants - EasyTypeSans, EasyTypeFocus, and EasyTypeDyslexic - so designers, educators, and readers can select what feels most comfortable.</p>
     </section>
 
     <section class="grid">
@@ -216,6 +217,7 @@ footer a:hover { text-decoration:underline; }
         <p><strong>Web embed:</strong></p>
         <p><code>&lt;link rel="stylesheet" href="https://daverage.github.io/EasyType/css/easytype.css?v=1.0.0"&gt;</code></p>
         <p><strong>Desktop install:</strong> grab the full family as <a href="https://www.marczewski.me.uk/easytype/easytypesans.zip">easytypesans.zip</a> for macOS or Windows.</p>
+        <p><strong>Interactive specimen:</strong> explore every weight, style, and feature on the <a href="demo.html">live demo page</a> (it loads the same EasyTypeSans web include used in production).</p>
       </article>
 
       <article class="card">

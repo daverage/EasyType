@@ -2,45 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>EasyType – Full Specimen (Sans, Focus, Dyslexic × Regular/Italic/Bold/Bold Italic)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EasyType – Full Specimen (EasyTypeSans, EasyTypeFocus, EasyTypeDyslexic × Regular/Italic/Bold/Bold Italic)</title>
+
+  <link rel="stylesheet" href="css/easytype.css">
 
   <!--
     Usage:
-    1) Put this HTML in the SAME folder as your generated fonts:
-       EasyTypeSans-Regular.ttf
-       EasyTypeSans-Italic.ttf
-       EasyTypeSans-Bold.ttf
-       EasyTypeSans-BoldItalic.ttf
-       EasyTypeFocus-Regular.ttf
-       EasyTypeFocus-Italic.ttf
-       EasyTypeFocus-Bold.ttf
-       EasyTypeFocus-BoldItalic.ttf
-       EasyTypeDyslexic-Regular.ttf
-       EasyTypeDyslexic-Italic.ttf
-       EasyTypeDyslexic-Bold.ttf
-       EasyTypeDyslexic-BoldItalic.ttf
-
-    2) Open this file in a modern browser.
+    1) Ensure the generated fonts live in fonts/ttf and fonts/web, and that css/easytype.css points to them.
+    2) Open this file in a modern browser from the project root so the stylesheet is resolved.
   -->
 
   <style>
-    /* ---------- Font faces: 3 families × 4 styles ---------- */
-    @font-face { font-family: "EasyType Sans"; src: url("out/EasyTypeSans-Regular.ttf?v=7") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
-    @font-face { font-family: "EasyType Sans"; src: url("out/EasyTypeSans-Italic.ttf?v=7") format("truetype");  font-weight: 400; font-style: italic; font-display: swap; }
-    @font-face { font-family: "EasyType Sans"; src: url("out/EasyTypeSans-Bold.ttf?v=7") format("truetype");    font-weight: 700; font-style: normal; font-display: swap; }
-    @font-face { font-family: "EasyType Sans"; src: url("out/EasyTypeSans-BoldItalic.ttf?v=7") format("truetype"); font-weight: 700; font-style: italic; font-display: swap; }
-
-    @font-face { font-family: "EasyType Focus"; src: url("out/EasyTypeFocus-Regular.ttf?v=7") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
-    @font-face { font-family: "EasyType Focus"; src: url("out/EasyTypeFocus-Italic.ttf?v=7") format("truetype");  font-weight: 400; font-style: italic; font-display: swap; }
-    @font-face { font-family: "EasyType Focus"; src: url("out/EasyTypeFocus-Bold.ttf?v=7") format("truetype");    font-weight: 700; font-style: normal; font-display: swap; }
-    @font-face { font-family: "EasyType Focus"; src: url("out/EasyTypeFocus-BoldItalic.ttf?v=7") format("truetype"); font-weight: 700; font-style: italic; font-display: swap; }
-
-    @font-face { font-family: "EasyType Dyslexic"; src: url("out/EasyTypeDyslexic-Regular.ttf?v=7") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
-    @font-face { font-family: "EasyType Dyslexic"; src: url("out/EasyTypeDyslexic-Italic.ttf?v=7") format("truetype");  font-weight: 400; font-style: italic; font-display: swap; }
-    @font-face { font-family: "EasyType Dyslexic"; src: url("out/EasyTypeDyslexic-Bold.ttf?v=7") format("truetype");    font-weight: 700; font-style: normal; font-display: swap; }
-    @font-face { font-family: "EasyType Dyslexic"; src: url("out/EasyTypeDyslexic-BoldItalic.ttf?v=7") format("truetype"); font-weight: 700; font-style: italic; font-display: swap; }
-
-    /* Base reference: Noto Sans */
+    /* Base reference: Noto Sans (for comparison blocks) */
     @font-face { font-family: "Noto Sans"; src: url("base_fonts/NotoSans-Regular.ttf") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
     @font-face { font-family: "Noto Sans"; src: url("base_fonts/NotoSans-Italic.ttf") format("truetype"); font-weight: 400; font-style: italic; font-display: swap; }
     @font-face { font-family: "Noto Sans"; src: url("base_fonts/NotoSans-Bold.ttf") format("truetype"); font-weight: 700; font-style: normal; font-display: swap; }
@@ -66,45 +40,84 @@
       margin:0;
       color:var(--fg);
       background:var(--bg);
-      font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "EasyType Sans", "Noto Sans", sans-serif;
+      font: 15px/1.5 "EasyTypeSans", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", sans-serif;
     }
 
     header{
       position:sticky; top:0; z-index:10;
       background:var(--card);
       border-bottom:1px solid var(--ring);
-      padding:16px;
+      padding:14px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.04);
     }
-    .row{ display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+    .row{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      align-items:flex-start;
+    }
+    .row.controls{ margin-top:10px; }
     .row > *{ margin:0; }
-    label{ font-size:12px; color:var(--muted); }
-    input[type="range"]{ width:200px; }
+    label{
+      font-size:12px;
+      color:var(--muted);
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      width:100%;
+    }
+    input[type="range"]{
+      width:100%;
+      min-height:32px;
+    }
     .chip{
-      display:inline-block; padding:6px 10px; border:1px solid var(--ring); border-radius:999px; background:#fff; font-size:12px; color:#333;
+      display:inline-flex;
+      align-items:center;
+      padding:6px 12px;
+      border:1px solid var(--ring);
+      border-radius:999px;
+      background:#fff;
+      font-size:12px;
+      color:#333;
     }
 
-    main{ padding:20px; max-width:1200px; margin:0 auto; }
+    main{
+      padding:20px 16px 32px;
+      max-width:1200px;
+      margin:0 auto;
+    }
 
     .family{
       margin:24px 0 32px 0;
     }
     .family h2{
-      margin:0 0 12px 0; font-size:22px; font-weight:700;
+      margin:0 0 12px 0;
+      font-size:clamp(1.4rem, 5vw, 2rem);
+      font-weight:700;
     }
     .grid{
       display:grid;
-      grid-template-columns: repeat(2, minmax(320px, 1fr));
+      grid-template-columns:1fr;
       gap:16px;
-    }
-    @media (min-width:1100px){
-      .grid{ grid-template-columns: repeat(4, 1fr); }
     }
     .card{
       background:var(--card);
       border:1px solid var(--ring);
-      border-radius:12px;
-      padding:14px;
-      box-shadow:0 1px 2px rgba(0,0,0,.03);
+      border-radius:16px;
+      padding:18px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.06);
+    }
+    @media (min-width:640px){
+      .row{ flex-direction:row; flex-wrap:wrap; align-items:center; }
+      label{ width:auto; min-width:220px; }
+    }
+    @media (min-width:900px){
+      .grid{ grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); }
+    }
+    @media (min-width:1200px){
+      .grid{ grid-template-columns: repeat(4, 1fr); }
+      header{ padding:18px 22px; }
+      main{ padding:32px 24px 48px; }
     }
     .meta{
       display:flex; justify-content:space-between; align-items:center;
@@ -132,9 +145,9 @@
     }
 
     /* Font family classes */
-    .of-sans{ font-family: "EasyType Sans", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", sans-serif; }
-    .of-focus{ font-family: "EasyType Focus", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", sans-serif; }
-    .of-dys{ font-family: "EasyType Dyslexic", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", sans-serif; }
+    .of-sans{ font-family: "EasyTypeSans", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", sans-serif; }
+    .of-focus{ font-family: "EasyTypeFocus", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", sans-serif; }
+    .of-dys{ font-family: "EasyTypeDyslexic", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", sans-serif; }
     .of-noto{ font-family: "Noto Sans", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
   </style>
 </head>
@@ -145,7 +158,7 @@
       <span class="chip">12 styles</span>
       <span class="chip">Live controls</span>
     </div>
-    <div class="row" style="margin-top:8px">
+    <div class="row controls">
       <label>Size
         <input id="sz" type="range" min="12" max="28" step="1" value="16">
         <span id="szv" class="kbd">16 px</span>
@@ -166,9 +179,9 @@
   </header>
 
   <main>
-    <!-- FAMILY: EasyType Sans -->
+    <!-- FAMILY: EasyTypeSans -->
     <section class="family">
-      <h2>EasyType Sans</h2>
+      <h2>EasyTypeSans</h2>
       <div class="grid of-sans">
         <!-- Regular -->
         <div class="card">
@@ -228,9 +241,9 @@
       </div>
     </section>
 
-    <!-- FAMILY: EasyType Focus -->
+    <!-- FAMILY: EasyTypeFocus -->
     <section class="family">
-      <h2>EasyType Focus</h2>
+      <h2>EasyTypeFocus</h2>
       <div class="grid of-focus">
         <!-- Regular -->
         <div class="card">
@@ -290,9 +303,9 @@
       </div>
     </section>
 
-    <!-- FAMILY: EasyType Dyslexic -->
+    <!-- FAMILY: EasyTypeDyslexic -->
     <section class="family">
-      <h2>EasyType Dyslexic</h2>
+      <h2>EasyTypeDyslexic</h2>
       <div class="grid of-dys">
         <!-- Regular -->
         <div class="card">
