@@ -10,6 +10,8 @@ It explains what the project is, how it’s built, and how it connects to the re
 EasyType is an open font family designed for readers with ADHD, dyslexia, and other attention-related differences.  
 Built on typographic and neuroscience research, it blends subtle optical anchoring, balanced spacing, and improved rhythm to make text feel easier to read — without sacrificing design quality.
 
+I live with both ADHD and dyslexia, and EasyType started as a personal experiment to make long reading sessions less tiring. Every decision in this project is shaped by that need for calmer, more efficient reading.
+
 ---
 
 ## ✳️ Font Families
@@ -31,6 +33,8 @@ Each family includes:
 
 Traditional fonts are designed for visual uniformity — not for how the eye and brain process language.  
 Research in cognitive science and perceptual psychology shows that subtle cues can reduce eye strain, improve word recognition, and enhance rhythm during reading.
+
+As someone managing ADHD and dyslexia, I felt the lack of those cues daily, so the design brief was simple: build a type family that helps my own eyes stay anchored and focused first, then open-source it for everyone else who needs the same support.
 
 EasyType implements those cues directly in the letterforms:
 
@@ -94,7 +98,7 @@ fonts/
 ## 🌐 Web Embedding
 
 ```html
-<link rel="stylesheet" href="https://marczewski.me.uk/easytype/css/easytype.css?v=1.0.0">
+<link rel="stylesheet" href="https://daverage.github.io/EasyType/css/easytype.css?v=1.0.0">
 ```
 
 Example CSS:
@@ -105,6 +109,12 @@ body {
   line-height: 1.6;
   color: #141414;
 }
+```
+
+For local installs, download the full family bundle:
+
+```
+https://www.marczewski.me.uk/easytype/easytypesans.zip
 ```
 
 ---
@@ -147,6 +157,7 @@ body {
 * Designed to support **attention anchoring**, **saccadic rhythm**, and **crowding reduction**.
 * Every modification was validated visually and numerically for readability without disrupting typographic proportion.
 * The design goal: *clarity without caricature* — fonts that work for everyone but especially help those who need calmer visual flow.
+* This is the toolkit I wanted for myself as a reader with ADHD and dyslexia, so every refinement is judged by whether it genuinely makes my own reading more efficient.
 
 ---
 
@@ -168,11 +179,9 @@ Attribution is appreciated:
 ## 💬 Learn More
 
 * Website: [https://marczewski.me.uk/easytype](https://marczewski.me.uk/easytype)
-* GitHub: [https://github.com/andrzejmarczewski/easytype-fonts](https://github.com/andrzejmarczewski/easytype-fonts)
+* GitHub: [https://github.com/daverage/EasyType](https://github.com/daverage/EasyType)
 * Creator: [Andrzej Marczewski](https://marczewski.me.uk)
 
 ---
 
 *“Good design doesn’t demand focus — it invites it.”*
-
-
