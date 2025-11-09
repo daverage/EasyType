@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EasyType Font Study Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      font-family: "Open Sans", Arial, sans-serif;
+      background: #f4f4f5;
+      color: #0f172a;
+    }
+    body {
+      margin: 0;
+      padding: 32px 20px 80px;
+    }
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    h1 {
+      margin: 0 0 6px;
+      font-size: 1.9rem;
+    }
+    .muted {
+      color: #475569;
+      margin-bottom: 24px;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 20px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      background: #0f172a;
+      color: #fff;
+    }
+    button.secondary {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px 24px;
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+      margin-bottom: 28px;
+    }
+    .insights h2 {
+      margin-top: 0;
+      font-size: 1.4rem;
+    }
+    .insights p {
+      margin: 0 0 12px;
+      line-height: 1.5;
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+    .summary-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 12px 14px;
+      background: #f8fafc;
+    }
+    .summary-card h4 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+      color: #0f172a;
+    }
+    .summary-card p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #334155;
+    }
+    .summary-note {
+      margin: 12px 0;
+      color: #334155;
+      font-weight: 500;
+    }
+    .subgroup {
+      margin-top: 16px;
+    }
+    .subgroup h3 {
+      margin: 0 0 8px;
+      font-size: 1.15rem;
+    }
+    .condition-block {
+      border-top: 1px solid #e2e8f0;
+      padding-top: 12px;
+      margin-top: 12px;
+    }
+    .condition-block h3 {
+      margin: 0 0 6px;
+      font-size: 1.05rem;
+    }
+    .charts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-bottom: 36px;
+    }
+    .chart-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+    }
+    .chart-card h3 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+      color: #475569;
+    }
+    canvas {
+      width: 100% !important;
+      height: 240px !important;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+    }
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #e2e8f0;
+      text-align: left;
+    }
+    th {
+      background: #f8fafc;
+      font-weight: 600;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    #status {
+      margin-top: 12px;
+      color: #c2410c;
+      min-height: 20px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>EasyType Font Study Dashboard</h1>
+    <p class="muted">Live summary of reading speed, accuracy, and user ratings per font.</p>
+
+    <div class="controls">
+      <button id="refreshBtn">Refresh data</button>
+      <button id="rawCsvBtn" class="secondary">Download Raw CSV</button>
+      <button id="summaryCsvBtn" class="secondary">Download Summary CSV</button>
+    </div>
+
+    <section class="card insights">
+      <h2>At-a-glance insights</h2>
+      <div id="overallSummary"></div>
+      <p id="insightText">No data yet.</p>
+      <div class="subgroup">
+        <h3>Condition breakdown</h3>
+        <div id="conditionInsights"></div>
+      </div>
+      <div class="subgroup">
+        <h3>Device breakdown</h3>
+        <div id="deviceInsights"></div>
+      </div>
+    </section>
+
+    <div class="charts">
+      <div class="chart-card">
+        <h3>Reading speed (WPM)</h3>
+        <canvas id="wpmChart"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Quiz correctness</h3>
+        <canvas id="quizChart"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Ease ratings</h3>
+        <canvas id="easeChart"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Effort ratings</h3>
+        <canvas id="effortChart"></canvas>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Font</th>
+          <th>Trials</th>
+          <th>WPM (m ± sd)</th>
+          <th>Quiz (m ± sd)</th>
+          <th>Ease (m ± sd)</th>
+          <th>Effort (m ± sd)</th>
+          <th>Answer time (m ± sd)</th>
+        </tr>
+      </thead>
+      <tbody id="summaryBody">
+        <tr><td colspan="6" style="text-align:center;">No data yet.</td></tr>
+      </tbody>
+    </table>
+
+    <div id="status"></div>
+  </main>
+
+  <script>
+    const FONT_ORDER = [
+      "EasyType Focus",
+      "EasyType Dyslexic",
+      "EasyType",
+      "Open Dyslexic",
+      "Open Sans"
+    ];
+
+    const CONDITION_GROUPS = [
+      { key: "ADHD", label: "ADHD / attention differences" },
+      { key: "Dyslexia", label: "Dyslexia" },
+      { key: "None", label: "No stated condition" }
+    ];
+
+    const DEVICE_GROUPS = [
+      { key: "mobile", label: "Mobile / Tablet" },
+      { key: "desktop", label: "Desktop / Laptop" }
+    ];
+
+    const METRIC_META = {
+      wpm: { label: "Reading speed", direction: "higher", formatter: val => `${val.toFixed(0)} wpm` },
+      quiz_correct: { label: "Quiz accuracy", direction: "higher", formatter: val => `${val.toFixed(2)} / 2 correct` },
+      ease: { label: "Ease rating", direction: "higher", formatter: val => `${val.toFixed(1)} / 7` },
+      effort: { label: "Effort rating", direction: "lower", formatter: val => `${val.toFixed(1)} / 7` },
+      qa_ms: { label: "Question time", direction: "lower", formatter: val => `${(val / 1000).toFixed(1)} s` }
+    };
+
+    const CHART_METRICS = [
+      { key: "wpm", label: "Words per Minute", canvas: "wpmChart" },
+      { key: "quiz_correct", label: "Quiz Correct", canvas: "quizChart" },
+      { key: "ease", label: "Ease", canvas: "easeChart" },
+      { key: "effort", label: "Effort", canvas: "effortChart" }
+    ];
+
+    const SUMMARY_METRIC_KEYS = ["wpm", "quiz_correct", "ease", "effort", "qa_ms"];
+
+    const charts = {};
+    let latestRows = [];
+    const overallSummary = document.getElementById("overallSummary");
+    const insightText = document.getElementById("insightText");
+    const conditionInsights = document.getElementById("conditionInsights");
+    const deviceInsights = document.getElementById("deviceInsights");
+
+    function mean(values) {
+      if (!values.length) return 0;
+      return values.reduce((sum, val) => sum + val, 0) / values.length;
+    }
+
+    function stdDev(values) {
+      if (values.length < 2) return 0;
+      const avg = mean(values);
+      const variance = values.reduce((sum, val) => sum + Math.pow(val - avg, 2), 0) / (values.length - 1);
+      return Math.sqrt(variance);
+    }
+
+    function groupByFont(rows) {
+      const groups = new Map();
+      rows.forEach(row => {
+        const font = row.font || "Unknown";
+        if (!groups.has(font)) {
+          groups.set(font, []);
+        }
+        groups.get(font).push(row);
+      });
+      return groups;
+    }
+
+    function buildSummary(rows) {
+      const groups = groupByFont(rows);
+      const summaries = [];
+      FONT_ORDER.concat(
+        Array.from(groups.keys()).filter(font => !FONT_ORDER.includes(font))
+      ).forEach(font => {
+        const trials = groups.get(font) || [];
+        if (!trials.length) return;
+        const stats = {};
+        SUMMARY_METRIC_KEYS.forEach(key => {
+          const vals = trials.map(t => Number(t[key] ?? 0));
+          stats[key] = {
+            mean: vals.length ? mean(vals) : 0,
+            sd: vals.length ? stdDev(vals) : 0
+          };
+        });
+        summaries.push({ font, n: trials.length, stats });
+      });
+      return summaries;
+    }
+
+    const EPSILON = 1e-6;
+
+    function getMetricLeaders(summary, metricKey) {
+      if (!summary.length) return null;
+      const direction = METRIC_META[metricKey].direction;
+      let bestValue = null;
+      let leaders = [];
+      summary.forEach(row => {
+        const value = row.stats[metricKey].mean;
+        if (bestValue === null) {
+          bestValue = value;
+          leaders = [row.font];
+          return;
+        }
+        const better = direction === "higher" ? value > bestValue + EPSILON : value < bestValue - EPSILON;
+        const equal = Math.abs(value - bestValue) <= EPSILON;
+        if (better) {
+          bestValue = value;
+          leaders = [row.font];
+        } else if (equal) {
+          leaders.push(row.font);
+        }
+      });
+      return { fonts: leaders, value: bestValue };
+    }
+
+    function formatLeaderSentence(metricKey, leaderInfo) {
+      if (!leaderInfo) return null;
+      const meta = METRIC_META[metricKey];
+      const fontList = leaderInfo.fonts.join(" & ");
+      return `${meta.label}: ${fontList} (${meta.formatter(leaderInfo.value)})`;
+    }
+
+    function getOverallLeaders(leaderMap) {
+      const tally = new Map();
+      Object.values(leaderMap).forEach(info => {
+        if (!info) return;
+        info.fonts.forEach(font => {
+          tally.set(font, (tally.get(font) || 0) + 1);
+        });
+      });
+      if (!tally.size) return [];
+      const max = Math.max(...tally.values());
+      return Array.from(tally.entries())
+        .filter(([, count]) => count === max)
+        .map(([font, count]) => ({ font, count }));
+    }
+
+    function buildLeaderCards(leaderMap) {
+      return Object.keys(METRIC_META).map(key => {
+        const meta = METRIC_META[key];
+        const info = leaderMap[key];
+        if (!info) {
+          return {
+            label: `Best ${meta.label.toLowerCase()}`,
+            text: "Not enough data yet."
+          };
+        }
+        return {
+          label: `Best ${meta.label.toLowerCase()}`,
+          text: `${info.fonts.join(" & ")} · ${meta.formatter(info.value)}`
+        };
+      });
+    }
+
+    function leaderNote(overallLeaders) {
+      if (!overallLeaders.length) return "Overall leader: not enough data yet.";
+      if (overallLeaders.length === 1) {
+        return `Overall leader: ${overallLeaders[0].font}.`;
+      }
+      const names = overallLeaders.map(item => item.font).join(" & ");
+      return `Overall leaders: ${names} (tied).`;
+    }
+
+    function renderSummaryCards(container, title, leaderMap) {
+      const cards = buildLeaderCards(leaderMap);
+      const overallLeaders = getOverallLeaders(leaderMap);
+      const cardMarkup = cards.map(card => `
+        <div class="summary-card">
+          <h4>${card.label}</h4>
+          <p>${card.text}</p>
+        </div>
+      `).join("");
+      const heading = title ? `<h3>${title}</h3>` : "";
+      container.innerHTML = `
+        ${heading}
+        <div class="summary-grid">
+          ${cardMarkup}
+        </div>
+        <p class="summary-note">${leaderNote(overallLeaders)}</p>
+      `;
+    }
+
+    function renderOverallInsights(summary) {
+      if (!summary.length) {
+        overallSummary.innerHTML = "";
+        insightText.textContent = "No data yet.";
+        conditionInsights.innerHTML = "";
+        deviceInsights.innerHTML = "";
+        return;
+      }
+      const leaderMap = {};
+      Object.keys(METRIC_META).forEach(key => {
+        leaderMap[key] = getMetricLeaders(summary, key);
+      });
+      renderSummaryCards(overallSummary, "Overall snapshot", leaderMap);
+      insightText.textContent = "Each card shows the current top font for a specific outcome.";
+      renderConditionInsights();
+      renderDeviceInsights();
+    }
+
+    function renderConditionInsights() {
+      conditionInsights.innerHTML = "";
+      CONDITION_GROUPS.forEach(group => {
+        const block = document.createElement("div");
+        block.className = "condition-block";
+        const filtered = latestRows.filter(row => Array.isArray(row.conditions) && row.conditions.includes(group.key));
+        const summary = buildSummary(filtered);
+        block.innerHTML = `<h3>${group.label}</h3>`;
+        if (!summary.length) {
+          block.innerHTML += "<p>No data yet.</p>";
+        } else {
+          const leaderMap = {};
+          Object.keys(METRIC_META).forEach(key => {
+            leaderMap[key] = getMetricLeaders(summary, key);
+          });
+          const table = document.createElement("div");
+          renderSummaryCards(table, "", leaderMap);
+          block.appendChild(table);
+        }
+        conditionInsights.appendChild(block);
+      });
+    }
+
+    function renderDeviceInsights() {
+      deviceInsights.innerHTML = "";
+      DEVICE_GROUPS.forEach(group => {
+        const block = document.createElement("div");
+        block.className = "condition-block";
+        const filtered = latestRows.filter(row => row.device_type === group.key);
+        const summary = buildSummary(filtered);
+        block.innerHTML = `<h3>${group.label}</h3>`;
+        if (!summary.length) {
+          block.innerHTML += "<p>No data yet.</p>";
+        } else {
+          const leaderMap = {};
+          Object.keys(METRIC_META).forEach(key => {
+            leaderMap[key] = getMetricLeaders(summary, key);
+          });
+          const table = document.createElement("div");
+          renderSummaryCards(table, "", leaderMap);
+          block.appendChild(table);
+        }
+        deviceInsights.appendChild(block);
+      });
+    }
+
+    function formatStat(stat, key) {
+      if (key === "qa_ms") {
+        return `${(stat.mean / 1000).toFixed(1)} ± ${(stat.sd / 1000).toFixed(1)} s`;
+      }
+      return `${stat.mean.toFixed(1)} ± ${stat.sd.toFixed(1)}`;
+    }
+
+    function renderTable(summary) {
+      const body = document.getElementById("summaryBody");
+      body.innerHTML = "";
+      if (!summary.length) {
+        body.innerHTML = '<tr><td colspan="6" style="text-align:center;">No data yet.</td></tr>';
+        return;
+      }
+      summary.forEach(row => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${row.font}</td>
+          <td>${row.n}</td>
+          <td>${formatStat(row.stats.wpm, "wpm")}</td>
+          <td>${formatStat(row.stats.quiz_correct, "quiz_correct")}</td>
+          <td>${formatStat(row.stats.ease, "ease")}</td>
+          <td>${formatStat(row.stats.effort, "effort")}</td>
+          <td>${formatStat(row.stats.qa_ms, "qa_ms")}</td>
+        `;
+        body.appendChild(tr);
+      });
+    }
+
+    function applyChartData(summary) {
+      CHART_METRICS.forEach(metric => {
+        const labels = summary.map(row => row.font);
+        const means = summary.map(row => Number(row.stats[metric.key].mean.toFixed(2)));
+        const sds = summary.map(row => Number(row.stats[metric.key].sd.toFixed(2)));
+        if (!charts[metric.key]) {
+          charts[metric.key] = new Chart(document.getElementById(metric.canvas), {
+            type: "bar",
+            data: {
+              labels,
+              datasets: [{
+                label: "Mean",
+                data: means,
+                backgroundColor: "rgba(15,23,42,0.6)",
+                customData: sds
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  callbacks: {
+                    label: ctx => {
+                      const value = ctx.parsed.y;
+                      const sd = ctx.dataset.customData?.[ctx.dataIndex] ?? 0;
+                      return `Mean: ${value} (± ${sd})`;
+                    }
+                  }
+                }
+              },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  ticks: { precision: 0 }
+                }
+              }
+            }
+          });
+        } else {
+          const chart = charts[metric.key];
+          chart.data.labels = labels;
+          chart.data.datasets[0].data = means;
+          chart.data.datasets[0].customData = sds;
+          chart.update();
+        }
+      });
+    }
+
+    function rowsToCsv(rows) {
+      if (!rows.length) return "pid,font,passage_id,read_ms,qa_ms,wpm,quiz_correct,ease,comfort,effort,device_type,conditions,ts";
+      const columns = ["pid","font","passage_id","read_ms","qa_ms","wpm","quiz_correct","ease","comfort","effort","device_type","conditions","ts"];
+      const header = columns.join(",");
+      const body = rows.map(row => columns.map(col => {
+        const value = row[col] ?? "";
+        return JSON.stringify(Array.isArray(value) ? value.join("|") : value);
+      }).join(",")).join("\n");
+      return `${header}\n${body}`;
+    }
+
+    function summaryToCsv(summary) {
+      if (!summary.length) return "font,n,wpm_mean,wpm_sd,quiz_mean,quiz_sd,ease_mean,ease_sd,effort_mean,effort_sd,qa_mean_ms,qa_sd_ms";
+      const header = "font,n,wpm_mean,wpm_sd,quiz_mean,quiz_sd,ease_mean,ease_sd,effort_mean,effort_sd,qa_mean_ms,qa_sd_ms";
+      const body = summary.map(row => [
+        row.font,
+        row.n,
+        row.stats.wpm.mean.toFixed(2),
+        row.stats.wpm.sd.toFixed(2),
+        row.stats.quiz_correct.mean.toFixed(2),
+        row.stats.quiz_correct.sd.toFixed(2),
+        row.stats.ease.mean.toFixed(2),
+        row.stats.ease.sd.toFixed(2),
+        row.stats.effort.mean.toFixed(2),
+        row.stats.effort.sd.toFixed(2),
+        row.stats.qa_ms.mean.toFixed(2),
+        row.stats.qa_ms.sd.toFixed(2)
+      ].join(",")).join("\n");
+      return `${header}\n${body}`;
+    }
+
+    function downloadCsv(content, filename) {
+      const blob = new Blob([content], { type: "text/csv" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    async function loadData() {
+      const status = document.getElementById("status");
+      status.textContent = "Loading...";
+      try {
+        const response = await fetch("getdata.php", { cache: "no-store" });
+        if (!response.ok) throw new Error("Request failed");
+        const rows = await response.json();
+        latestRows = Array.isArray(rows) ? rows : [];
+        const summary = buildSummary(latestRows);
+        renderTable(summary);
+        if (summary.length) {
+          applyChartData(summary);
+        } else {
+          CHART_METRICS.forEach(metric => {
+            if (charts[metric.key]) {
+              charts[metric.key].data.labels = [];
+              charts[metric.key].data.datasets[0].data = [];
+              charts[metric.key].update();
+            }
+          });
+        }
+        renderOverallInsights(summary);
+        status.textContent = `Last updated ${new Date().toLocaleTimeString()}`;
+      } catch (err) {
+        console.error(err);
+        status.textContent = "Unable to load data.";
+      }
+    }
+
+    document.getElementById("refreshBtn").addEventListener("click", loadData);
+    document.getElementById("rawCsvBtn").addEventListener("click", () => {
+      downloadCsv(rowsToCsv(latestRows), "easytype_raw.csv");
+    });
+    document.getElementById("summaryCsvBtn").addEventListener("click", () => {
+      const summary = buildSummary(latestRows);
+      downloadCsv(summaryToCsv(summary), "easytype_summary.csv");
+    });
+
+    loadData();
+    setInterval(loadData, 10000);
+  </script>
+</body>
+</html>

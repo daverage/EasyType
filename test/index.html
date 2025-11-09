@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EasyType Font Reading Test</title>
+  <meta name="description" content="Lightweight EasyType font study that measures reading speed, comprehension, and comfort across experimental and control fonts.">
+  <link rel="icon" type="image/png" href="../icon.png">
+  <link rel="apple-touch-icon" href="../icon.png">
+  <meta property="og:title" content="EasyType Font Reading Test">
+  <meta property="og:description" content="Help us compare EasyType fonts by reading five short passages and sharing how each font feels.">
+  <meta property="og:image" content="card.png">
+  <meta property="og:image:alt" content="EasyType Font Reading Test preview card">
+  <meta property="og:type" content="website">
+  <meta property="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="card.png">
+  <meta name="twitter:image:alt" content="EasyType Font Reading Test preview card">
+  <style>
+    @font-face {
+      font-family: "EasyType Focus";
+      src: url("../fonts/web/EasyTypeFocus-Regular.woff2") format("woff2");
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "EasyType Dyslexic";
+      src: url("../fonts/web/EasyTypeDyslexic-Regular.woff2") format("woff2");
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "EasyType";
+      src: url("../fonts/web/EasyTypeSans-Regular.woff2") format("woff2");
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Open Dyslexic";
+      src: url("https://cdn.jsdelivr.net/gh/antijingoist/open-dyslexic/otf/OpenDyslexic-Regular.otf") format("opentype");
+      font-display: swap;
+    }
+    @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400&display=swap");
+
+    :root {
+      color-scheme: light;
+      font-family: "Helvetica", "Arial", sans-serif;
+      background: #f7f7f7;
+      color: #111;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    main {
+      width: min(720px, 100%);
+      margin: 0 auto;
+      padding: 24px 16px 64px;
+    }
+    header {
+      margin-bottom: 24px;
+    }
+    h1 {
+      font-size: 1.8rem;
+      margin: 0 0 0.5rem;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    }
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 8px;
+    }
+    input[type="text"] {
+      width: 90%;
+      padding: 10px 12px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 12px 28px;
+      font-size: 1rem;
+      cursor: pointer;
+      background: #111;
+      color: #fff;
+      transition: opacity 0.2s ease;
+    }
+    button[disabled] {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .reading {
+      font-size: 18px;
+      line-height: 1.6;
+      padding: 20px;
+      border-radius: 12px;
+      background: #fdfdfd;
+      border: 1px solid #ececec;
+      min-height: 180px;
+      margin-bottom: 16px;
+    }
+    .font-easytype-focus { font-family: "EasyType Focus", "EasyType", sans-serif; }
+    .font-easytype-dyslexic { font-family: "EasyType Dyslexic", "Open Dyslexic", sans-serif; }
+    .font-easytype { font-family: "EasyType", "Open Sans", sans-serif; }
+    .font-open-dyslexic { font-family: "Open Dyslexic", "EasyType Dyslexic", sans-serif; }
+    .font-open-sans { font-family: "Open Sans", Arial, sans-serif; }
+
+    .questions {
+      margin-top: 20px;
+    }
+    .question {
+      margin-bottom: 18px;
+    }
+    .question p {
+      margin: 0 0 8px;
+      font-weight: 600;
+    }
+    .question label {
+      font-weight: 400;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .likert-group {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-top: 16px;
+    }
+    .likert-scale {
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 14px 16px;
+      background: #fdfdfd;
+    }
+    .scale-header {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .scale-anchors {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: #475569;
+      gap: 12px;
+      flex: 1;
+    }
+    .scale-options {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(24px, 1fr));
+      gap: 8px;
+      padding: 8px;
+      border-radius: 10px;
+      position: relative;
+    }
+    .scale-options.good-high {
+      background: linear-gradient(90deg, rgba(248,113,113,0.18) 0%, rgba(74,222,128,0.18) 100%);
+    }
+    .scale-options.good-low {
+      background: linear-gradient(90deg, rgba(74,222,128,0.18) 0%, rgba(248,113,113,0.18) 100%);
+    }
+    .scale-options label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #0f172a;
+    }
+    .scale-options input[type="radio"] {
+      accent-color: #111;
+      width: 18px;
+      height: 18px;
+    }
+    .conditions {
+      margin-top: 16px;
+      padding: 16px;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      background: #fdfdfd;
+    }
+    .conditions p {
+      margin: 0 0 10px;
+      font-weight: 600;
+    }
+    .condition-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    .condition-option input {
+      width: 18px;
+      height: 18px;
+    }
+    .status {
+      margin-top: 16px;
+      min-height: 20px;
+      font-size: 0.95rem;
+      color: #555;
+    }
+    .hidden {
+      display: none !important;
+    }
+    .thankyou {
+      text-align: center;
+      font-size: 1.2rem;
+      padding: 40px 0;
+    }
+    #timerHint {
+      font-size: 0.9rem;
+      color: #c2410c;
+      margin-top: 4px;
+    }
+    .notice {
+      font-size: 0.9rem;
+      color: #475569;
+      margin-top: 8px;
+    }
+    textarea {
+      width: 100%;
+      min-height: 110px;
+      resize: vertical;
+      border-radius: 8px;
+      border: 1px solid #cbd5f5;
+      padding: 10px 12px;
+      font-size: 1rem;
+      font-family: inherit;
+    }
+    .comment-box {
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>EasyType Font Reading Test</h1>
+      <p>We’re testing how readable different fonts feel. Please read each short passage, answer two quick questions, and give honest comfort ratings so we can improve EasyType for everyone. Thank you for lending a few minutes to this research.</p>
+    </header>
+
+    <section id="consentCard" class="card">
+      <p style="margin-top:0;">Session ID: <strong id="pidDisplay"></strong></p>
+      <p style="margin-top:4px;">Detected device: <strong id="deviceTypeLabel"></strong></p>
+      <p class="notice">No personal data is collected. Your nickname and answers help us compare fonts only.</p>
+      <label for="nickname">Nickname (something memorable to you)</label>
+      <input type="text" id="nickname" placeholder="e.g. StarReader" autocomplete="off">
+      <div class="conditions">
+        <p>Do you identify with any of the following? (Select all that apply.)</p>
+        <label class="condition-option">
+          <input type="checkbox" name="condition" value="ADHD">
+          <span>ADHD / attention differences</span>
+        </label>
+        <label class="condition-option">
+          <input type="checkbox" name="condition" value="Dyslexia">
+          <span>Dyslexia</span>
+        </label>
+        <label class="condition-option">
+          <input type="checkbox" name="condition" value="Other">
+          <span>Other reading needs</span>
+        </label>
+        <label class="condition-option">
+          <input type="checkbox" name="condition" value="None">
+          <span>None</span>
+        </label>
+      </div>
+      <button id="startBtn" style="margin-top: 16px;">Begin</button>
+      <p class="status" id="introStatus"></p>
+    </section>
+
+    <section id="trialCard" class="card hidden">
+      <div id="trialHeader">
+        <strong>Passage <span id="trialCounter">1</span> of 5</strong>
+        <div id="timerHint">Please spend at least 7 seconds reading before answering.</div>
+      </div>
+      <article id="passage" class="reading"></article>
+      <div class="questions" id="questions">
+        <p style="margin-top:0;color:#475569;">Pick the factual answer that best matches the passage.</p>
+      </div>
+      <div class="likert-group" id="likertGroup">
+        <!-- Scales inserted with JS -->
+      </div>
+      <button id="nextBtn" style="margin-top: 24px;" disabled>Next</button>
+      <p class="status" id="trialStatus"></p>
+    </section>
+
+    <section id="thankYou" class="card thankyou hidden">
+      <p>Thank you for completing the study. As soon as I have some results, I will share them and provide the font for you to download.</p>
+      <div class="comment-box">
+        <label for="finalComment">Any other comments about the fonts? (optional)</label>
+        <textarea id="finalComment" placeholder="e.g., Certain letters stood out, a font felt calming on mobile, etc."></textarea>
+        <button id="submitCommentBtn" style="margin-top: 12px;">Submit comment</button>
+        <p class="status" id="commentStatus"></p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const LIKERT_OPTIONS = [1, 2, 3, 4, 5, 6, 7];
+    const FONTS = [
+      { name: "EasyType Focus", className: "font-easytype-focus" },
+      { name: "EasyType Dyslexic", className: "font-easytype-dyslexic" },
+      { name: "EasyType", className: "font-easytype" },
+      { name: "Open Dyslexic", className: "font-open-dyslexic" },
+      { name: "Open Sans", className: "font-open-sans" }
+    ];
+
+    const pidDisplay = document.getElementById("pidDisplay");
+    const deviceTypeLabel = document.getElementById("deviceTypeLabel");
+    const nicknameInput = document.getElementById("nickname");
+    const startBtn = document.getElementById("startBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const trialCard = document.getElementById("trialCard");
+    const trialCounter = document.getElementById("trialCounter");
+    const passageEl = document.getElementById("passage");
+    const questionsEl = document.getElementById("questions");
+    const likertGroup = document.getElementById("likertGroup");
+    const statusEl = document.getElementById("trialStatus");
+    const introStatus = document.getElementById("introStatus");
+    const thankYou = document.getElementById("thankYou");
+    const timerHint = document.getElementById("timerHint");
+    const conditionInputs = Array.from(document.querySelectorAll('input[name="condition"]'));
+    const finalCommentInput = document.getElementById("finalComment");
+    const submitCommentBtn = document.getElementById("submitCommentBtn");
+    const commentStatus = document.getElementById("commentStatus");
+
+    let passages = [];
+    let trialOrder = [];
+    let currentIdx = -1;
+    let startTime = 0;
+    let unlockTimer = null;
+    let pid = "";
+    let nickname = "";
+    let participantConditions = [];
+    let deviceType = "";
+    let qaStartTime = null;
+    let commentSubmitted = false;
+
+    const SCALE_CONFIG = [
+      {
+        name: "ease",
+        title: "Ease of reading",
+        anchors: ["Very hard to read", "Extremely easy to read"],
+        goodHigh: true
+      },
+      {
+        name: "comfort",
+        title: "Visual comfort",
+        anchors: ["Strained / uncomfortable", "Relaxed / comfortable"],
+        goodHigh: true
+      },
+      {
+        name: "effort",
+        title: "Mental effort",
+        anchors: ["No effort at all", "Extreme effort"],
+        goodHigh: false
+      }
+    ];
+
+    function generatePid() {
+      const random = Math.random().toString(36).slice(2, 6).toUpperCase();
+      return `ET-${Date.now().toString(36).toUpperCase()}-${random}`;
+    }
+
+    function handleConditionSelection(changedInput) {
+      if (changedInput.value === "None" && changedInput.checked) {
+        conditionInputs.forEach(input => {
+          if (input !== changedInput) input.checked = false;
+        });
+      } else if (changedInput.value !== "None" && changedInput.checked) {
+        const noneOption = conditionInputs.find(input => input.value === "None");
+        if (noneOption) noneOption.checked = false;
+      }
+    }
+
+    conditionInputs.forEach(input => {
+      input.addEventListener("change", () => handleConditionSelection(input));
+    });
+
+    function getSelectedConditions() {
+      return conditionInputs.filter(input => input.checked).map(input => input.value);
+    }
+
+    function detectDeviceType() {
+      const ua = navigator.userAgent || navigator.vendor || window.opera;
+      const isMobile = /android|iphone|ipad|ipod|mobile/i.test(ua);
+      return isMobile ? "mobile" : "desktop";
+    }
+
+    function buildLikertScales() {
+      likertGroup.innerHTML = "";
+      SCALE_CONFIG.forEach(scale => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "likert-scale";
+        wrapper.innerHTML = `
+          <div class="scale-header">${scale.title}</div>
+          <div class="scale-anchors">
+            <span>${scale.anchors[0]}</span>
+            <span>${scale.anchors[1]}</span>
+          </div>
+        `;
+        const options = document.createElement("div");
+        options.className = `scale-options ${scale.goodHigh ? "good-high" : "good-low"}`;
+        LIKERT_OPTIONS.forEach(val => {
+          const label = document.createElement("label");
+          const input = document.createElement("input");
+          input.type = "radio";
+          input.name = scale.name;
+          input.value = val;
+          label.appendChild(input);
+          const span = document.createElement("span");
+          span.textContent = val;
+          label.appendChild(span);
+          options.appendChild(label);
+        });
+        wrapper.appendChild(options);
+        likertGroup.appendChild(wrapper);
+      });
+    }
+
+    function shuffle(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    async function loadPassages() {
+      try {
+        const response = await fetch("data/passages.json", { cache: "no-store" });
+        if (!response.ok) throw new Error("Could not load passages.");
+        passages = await response.json();
+        introStatus.textContent = "";
+      } catch (err) {
+        introStatus.textContent = "Unable to load passages. Please refresh.";
+        console.error(err);
+      }
+    }
+
+    function resetLikert() {
+      SCALE_CONFIG.forEach(scale => {
+        const checked = document.querySelector(`input[name="${scale.name}"]:checked`);
+        if (checked) checked.checked = false;
+      });
+    }
+
+    function buildQuestions(passage) {
+      questionsEl.innerHTML = '<p style="margin-top:0;color:#475569;">Pick the factual answer that best matches the passage.</p>';
+      passage.questions.forEach((question, qIdx) => {
+        const block = document.createElement("div");
+        block.className = "question";
+        block.dataset.correct = String(question.a);
+
+        const prompt = document.createElement("p");
+        prompt.textContent = question.q;
+        block.appendChild(prompt);
+
+        question.choices.forEach((choice, choiceIdx) => {
+          const label = document.createElement("label");
+          const radio = document.createElement("input");
+          radio.type = "radio";
+          radio.name = `q${qIdx}`;
+          radio.value = choiceIdx;
+          radio.addEventListener("change", markQuestionInteraction);
+          label.appendChild(radio);
+          const span = document.createElement("span");
+          span.textContent = choice;
+          label.appendChild(span);
+          block.appendChild(label);
+        });
+
+        questionsEl.appendChild(block);
+      });
+    }
+
+    function prepareTrials() {
+      const shuffledFonts = shuffle(FONTS);
+      const shuffledPassages = shuffle(passages);
+      trialOrder = shuffledFonts.map((font, idx) => ({
+        font,
+        passage: shuffledPassages[idx]
+      }));
+      currentIdx = 0;
+    }
+
+    function renderTrial() {
+      const current = trialOrder[currentIdx];
+      if (!current) return;
+
+      trialCounter.textContent = currentIdx + 1;
+      passageEl.textContent = current.passage.text;
+      passageEl.className = `reading ${current.font.className}`;
+      buildQuestions(current.passage);
+      resetLikert();
+      qaStartTime = null;
+      statusEl.textContent = "";
+
+      nextBtn.disabled = true;
+      timerHint.textContent = "Please spend at least 7 seconds reading before answering.";
+      if (unlockTimer) clearTimeout(unlockTimer);
+      unlockTimer = setTimeout(() => {
+        nextBtn.disabled = false;
+        timerHint.textContent = "Ready when you are.";
+      }, 7000);
+      startTime = Date.now();
+    }
+
+    function markQuestionInteraction() {
+      if (!qaStartTime) {
+        qaStartTime = Date.now();
+      }
+    }
+
+    function collectResponses() {
+      const questionBlocks = Array.from(document.querySelectorAll(".question"));
+      let quizCorrect = 0;
+      for (let i = 0; i < questionBlocks.length; i++) {
+        const block = questionBlocks[i];
+        const selected = block.querySelector(`input[name="q${i}"]:checked`);
+        if (!selected) {
+          return null;
+        }
+        if (Number(selected.value) === Number(block.dataset.correct)) {
+          quizCorrect += 1;
+        }
+      }
+
+      const easeInput = document.querySelector('input[name="ease"]:checked');
+      const comfortInput = document.querySelector('input[name="comfort"]:checked');
+      const effortInput = document.querySelector('input[name="effort"]:checked');
+
+      if (!easeInput || !comfortInput || !effortInput) {
+        return null;
+      }
+
+      const ease = Number(easeInput.value);
+      const comfort = Number(comfortInput.value);
+      const effort = Number(effortInput.value);
+
+      return { quizCorrect, ease, comfort, effort };
+    }
+
+    async function saveTrial(payload) {
+      try {
+        const response = await fetch("save.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const result = await response.json();
+        if (!response.ok || !result.ok) {
+          throw new Error("Save failed");
+        }
+        return true;
+      } catch (err) {
+        console.error(err);
+        statusEl.textContent = "Could not save data. Please check the connection and try again.";
+        return false;
+      }
+    }
+
+    function finishTest() {
+      trialCard.classList.add("hidden");
+      thankYou.classList.remove("hidden");
+      finalCommentInput.value = "";
+      commentStatus.textContent = "";
+      submitCommentBtn.disabled = false;
+      commentSubmitted = false;
+    }
+
+    async function handleNext() {
+      const current = trialOrder[currentIdx];
+      if (!current) return;
+
+      const readMs = Date.now() - startTime;
+      if (readMs < 7000) {
+        statusEl.textContent = "Please remember to spend at least 7 seconds on each passage.";
+        return;
+      }
+
+      const responses = collectResponses();
+      if (!responses) {
+        statusEl.textContent = "Answer both questions and set all three ratings.";
+        return;
+      }
+
+      const words = current.passage.text.trim().split(/\s+/).length;
+      const wpm = Math.max(0, Math.round((words / readMs) * 60000));
+      const qaMs = qaStartTime ? Date.now() - qaStartTime : 0;
+
+      const payload = {
+        pid,
+        font: current.font.name,
+        nickname,
+        conditions: participantConditions,
+        passage_id: current.passage.id,
+        read_ms: readMs,
+        qa_ms: qaMs,
+        wpm,
+        quiz_correct: responses.quizCorrect,
+        ease: responses.ease,
+        comfort: responses.comfort,
+        effort: responses.effort,
+        device_type: deviceType,
+        ts: new Date().toISOString()
+      };
+
+      nextBtn.disabled = true;
+      statusEl.textContent = "Saving...";
+      const ok = await saveTrial(payload);
+      if (!ok) {
+        nextBtn.disabled = false;
+        return;
+      }
+
+      statusEl.textContent = "Saved. Loading the next passage...";
+      currentIdx += 1;
+      if (currentIdx >= trialOrder.length) {
+        finishTest();
+      } else {
+        passageEl.scrollIntoView({ behavior: "smooth", block: "start" });
+        renderTrial();
+      }
+    }
+
+    async function submitFinalComment() {
+      if (commentSubmitted) return;
+      const comment = finalCommentInput.value.trim();
+      if (!comment) {
+        commentStatus.textContent = "Please add a quick note before submitting.";
+        return;
+      }
+      submitCommentBtn.disabled = true;
+      commentStatus.textContent = "Saving...";
+      try {
+        const response = await fetch("save.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            type: "feedback",
+            pid,
+            nickname,
+            conditions: participantConditions,
+            device_type: deviceType,
+            comment,
+            ts: new Date().toISOString()
+          })
+        });
+        const result = await response.json();
+        if (!response.ok || !result.ok) {
+          throw new Error("Feedback save failed");
+        }
+        commentSubmitted = true;
+        submitCommentBtn.disabled = true;
+        commentStatus.textContent = "Thanks for the extra insight!";
+      } catch (err) {
+        console.error(err);
+        commentStatus.textContent = "Could not save your comment. Please try again.";
+        submitCommentBtn.disabled = false;
+      }
+    }
+
+    startBtn.addEventListener("click", () => {
+      const proposedNickname = nicknameInput.value.trim();
+      if (!proposedNickname) {
+        introStatus.textContent = "Please enter a nickname so we can keep your session straight.";
+        return;
+      }
+      if (!passages.length) {
+        introStatus.textContent = "Passages are still loading. Please try again.";
+        return;
+      }
+      const selectedConditions = getSelectedConditions();
+      if (!selectedConditions.length) {
+        introStatus.textContent = "Please let us know if any of the conditions apply (select \"None\" if not).";
+        return;
+      }
+      nickname = proposedNickname;
+      participantConditions = selectedConditions;
+      prepareTrials();
+      document.getElementById("consentCard").classList.add("hidden");
+      trialCard.classList.remove("hidden");
+      thankYou.classList.add("hidden");
+      renderTrial();
+    });
+
+    nextBtn.addEventListener("click", handleNext);
+    submitCommentBtn.addEventListener("click", submitFinalComment);
+
+    buildLikertScales();
+    loadPassages();
+    pid = generatePid();
+    pidDisplay.textContent = pid;
+    deviceType = detectDeviceType();
+    deviceTypeLabel.textContent = deviceType === "mobile" ? "Mobile / Tablet" : "Desktop / Laptop";
+  </script>
+</body>
+</html>
