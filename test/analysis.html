@@ -329,6 +329,18 @@
       return groups;
     }
 
+    function uniqueParticipantCount(rows) {
+      const ids = new Set();
+      rows.forEach(row => {
+        if (row.pid) {
+          ids.add(row.pid);
+        } else if (row.nickname) {
+          ids.add(`nick:${row.nickname}`);
+        }
+      });
+      return ids.size || rows.length;
+    }
+
     function buildSummary(rows) {
       const groups = groupByFont(rows);
       const summaries = [];
@@ -400,7 +412,7 @@
 
     function buildLeaderCards(leaderMap, sampleSize = null) {
       const sampleLabel = typeof sampleSize === "number"
-        ? ` (n=${sampleSize} ${sampleSize === 1 ? "test" : "tests"})`
+        ? ` (n=${sampleSize} ${sampleSize === 1 ? "participant" : "participants"})`
         : "";
       return Object.keys(METRIC_META).map(key => {
         const meta = METRIC_META[key];
@@ -438,7 +450,7 @@
       `).join("");
       const heading = title ? `<h3>${title}</h3>` : "";
       const countText = typeof sampleSize === "number"
-        ? `<p class="summary-count">Based on ${sampleSize} ${sampleSize === 1 ? "test" : "tests"}.</p>`
+        ? `<p class="summary-count">Based on ${sampleSize} ${sampleSize === 1 ? "participant" : "participants"}.</p>`
         : "";
       container.innerHTML = `
         ${heading}
@@ -462,7 +474,8 @@
       Object.keys(METRIC_META).forEach(key => {
         leaderMap[key] = getMetricLeaders(summary, key);
       });
-      renderSummaryCards(overallSummary, "Overall snapshot", leaderMap, latestRows.length);
+      const participantCount = uniqueParticipantCount(latestRows);
+      renderSummaryCards(overallSummary, "Overall snapshot", leaderMap, participantCount);
       insightText.textContent = "Each card shows the current top font for a specific outcome.";
       renderConditionInsights();
       renderDeviceInsights();
@@ -484,7 +497,8 @@
             leaderMap[key] = getMetricLeaders(summary, key);
           });
           const table = document.createElement("div");
-          renderSummaryCards(table, "", leaderMap, filtered.length);
+          const participantCount = uniqueParticipantCount(filtered);
+          renderSummaryCards(table, "", leaderMap, participantCount);
           block.appendChild(table);
         }
         conditionInsights.appendChild(block);
@@ -507,7 +521,8 @@
             leaderMap[key] = getMetricLeaders(summary, key);
           });
           const table = document.createElement("div");
-          renderSummaryCards(table, "", leaderMap, filtered.length);
+          const participantCount = uniqueParticipantCount(filtered);
+          renderSummaryCards(table, "", leaderMap, participantCount);
           block.appendChild(table);
         }
         deviceInsights.appendChild(block);
