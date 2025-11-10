@@ -51,7 +51,8 @@
       border-radius: 16px;
       padding: 20px 24px;
       box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
-      margin-bottom: 28px;
+      margin-bottom: 16px;
+      margin-top: 16px;
     }
     .insights h2 {
       margin-top: 0;
@@ -87,6 +88,11 @@
       margin: 12px 0;
       color: #334155;
       font-weight: 500;
+    }
+    .summary-count {
+      margin: 4px 0 12px;
+      color: #64748b;
+      font-size: 0.9rem;
     }
     .subgroup {
       margin-top: 16px;
@@ -144,6 +150,35 @@
     }
     tr:last-child td {
       border-bottom: none;
+    }
+    .comments h2 {
+      margin-top: 0;
+    }
+    .comments p {
+      margin-top: 0;
+    }
+    .comments-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .comment-item {
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 12px 14px;
+      background: #fff;
+    }
+    .comment-meta {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin: 0 0 6px;
+    }
+    .comment-text {
+      margin: 0;
+      color: #0f172a;
+      line-height: 1.5;
+      white-space: pre-line;
     }
     #status {
       margin-top: 12px;
@@ -213,6 +248,14 @@
       </tbody>
     </table>
 
+    <section class="card comments">
+      <h2>Participant comments</h2>
+      <p class="muted" style="margin-bottom:12px;">Latest open-ended notes provided after trials.</p>
+      <div id="commentsList" class="comments-list">
+        <p class="muted" style="margin:0;">No comments yet.</p>
+      </div>
+    </section>
+
     <div id="status"></div>
   </main>
 
@@ -255,10 +298,12 @@
 
     const charts = {};
     let latestRows = [];
+    let latestComments = [];
     const overallSummary = document.getElementById("overallSummary");
     const insightText = document.getElementById("insightText");
     const conditionInsights = document.getElementById("conditionInsights");
     const deviceInsights = document.getElementById("deviceInsights");
+    const commentsList = document.getElementById("commentsList");
 
     function mean(values) {
       if (!values.length) return 0;
@@ -353,7 +398,10 @@
         .map(([font, count]) => ({ font, count }));
     }
 
-    function buildLeaderCards(leaderMap) {
+    function buildLeaderCards(leaderMap, sampleSize = null) {
+      const sampleLabel = typeof sampleSize === "number"
+        ? ` (n=${sampleSize} ${sampleSize === 1 ? "test" : "tests"})`
+        : "";
       return Object.keys(METRIC_META).map(key => {
         const meta = METRIC_META[key];
         const info = leaderMap[key];
@@ -365,7 +413,7 @@
         }
         return {
           label: `Best ${meta.label.toLowerCase()}`,
-          text: `${info.fonts.join(" & ")} · ${meta.formatter(info.value)}`
+          text: `${info.fonts.join(" & ")} · ${meta.formatter(info.value)}${sampleLabel}`
         };
       });
     }
@@ -379,8 +427,8 @@
       return `Overall leaders: ${names} (tied).`;
     }
 
-    function renderSummaryCards(container, title, leaderMap) {
-      const cards = buildLeaderCards(leaderMap);
+    function renderSummaryCards(container, title, leaderMap, sampleSize = null) {
+      const cards = buildLeaderCards(leaderMap, sampleSize);
       const overallLeaders = getOverallLeaders(leaderMap);
       const cardMarkup = cards.map(card => `
         <div class="summary-card">
@@ -389,8 +437,12 @@
         </div>
       `).join("");
       const heading = title ? `<h3>${title}</h3>` : "";
+      const countText = typeof sampleSize === "number"
+        ? `<p class="summary-count">Based on ${sampleSize} ${sampleSize === 1 ? "test" : "tests"}.</p>`
+        : "";
       container.innerHTML = `
         ${heading}
+        ${countText}
         <div class="summary-grid">
           ${cardMarkup}
         </div>
@@ -410,7 +462,7 @@
       Object.keys(METRIC_META).forEach(key => {
         leaderMap[key] = getMetricLeaders(summary, key);
       });
-      renderSummaryCards(overallSummary, "Overall snapshot", leaderMap);
+      renderSummaryCards(overallSummary, "Overall snapshot", leaderMap, latestRows.length);
       insightText.textContent = "Each card shows the current top font for a specific outcome.";
       renderConditionInsights();
       renderDeviceInsights();
@@ -432,7 +484,7 @@
             leaderMap[key] = getMetricLeaders(summary, key);
           });
           const table = document.createElement("div");
-          renderSummaryCards(table, "", leaderMap);
+          renderSummaryCards(table, "", leaderMap, filtered.length);
           block.appendChild(table);
         }
         conditionInsights.appendChild(block);
@@ -455,7 +507,7 @@
             leaderMap[key] = getMetricLeaders(summary, key);
           });
           const table = document.createElement("div");
-          renderSummaryCards(table, "", leaderMap);
+          renderSummaryCards(table, "", leaderMap, filtered.length);
           block.appendChild(table);
         }
         deviceInsights.appendChild(block);
@@ -489,6 +541,51 @@
         `;
         body.appendChild(tr);
       });
+    }
+
+    function renderComments() {
+      if (!commentsList) return;
+      commentsList.innerHTML = "";
+      if (!latestComments.length) {
+        const empty = document.createElement("p");
+        empty.className = "muted";
+        empty.style.margin = "0";
+        empty.textContent = "No comments yet.";
+        commentsList.appendChild(empty);
+        return;
+      }
+      const sorted = [...latestComments].sort((a, b) => {
+        const aTime = a.ts ? Date.parse(a.ts) : 0;
+        const bTime = b.ts ? Date.parse(b.ts) : 0;
+        return bTime - aTime;
+      });
+      sorted.slice(0, 12).forEach(entry => {
+        const item = document.createElement("div");
+        item.className = "comment-item";
+        const meta = document.createElement("p");
+        meta.className = "comment-meta";
+        const nickname = entry.nickname || "Anonymous";
+        const device = entry.device_type === "mobile" ? "Mobile" : entry.device_type === "desktop" ? "Desktop" : "Device n/a";
+        const conditions = Array.isArray(entry.conditions) && entry.conditions.length
+          ? entry.conditions.join(", ")
+          : "No condition noted";
+        const ts = entry.ts ? new Date(entry.ts).toLocaleString() : "Unknown time";
+        meta.textContent = `${nickname} · ${conditions} · ${device} · ${ts}`;
+        const commentText = document.createElement("p");
+        commentText.className = "comment-text";
+        commentText.textContent = entry.comment.trim();
+        item.appendChild(meta);
+        item.appendChild(commentText);
+        commentsList.appendChild(item);
+      });
+    }
+
+    async function fetchJson(url) {
+      const response = await fetch(url, { cache: "no-store" });
+      if (!response.ok) {
+        throw new Error(`Request failed for ${url}`);
+      }
+      return response.json();
     }
 
     function applyChartData(summary) {
@@ -585,10 +682,17 @@
       const status = document.getElementById("status");
       status.textContent = "Loading...";
       try {
-        const response = await fetch("getdata.php", { cache: "no-store" });
-        if (!response.ok) throw new Error("Request failed");
-        const rows = await response.json();
+        const [rows, feedback] = await Promise.all([
+          fetchJson("getdata.php"),
+          fetchJson("getfeedback.php").catch(err => {
+            console.warn("Feedback load failed", err);
+            return [];
+          })
+        ]);
         latestRows = Array.isArray(rows) ? rows : [];
+        latestComments = Array.isArray(feedback)
+          ? feedback.filter(entry => typeof entry.comment === "string" && entry.comment.trim().length)
+          : [];
         const summary = buildSummary(latestRows);
         renderTable(summary);
         if (summary.length) {
@@ -603,6 +707,7 @@
           });
         }
         renderOverallInsights(summary);
+        renderComments();
         status.textContent = `Last updated ${new Date().toLocaleTimeString()}`;
       } catch (err) {
         console.error(err);
@@ -620,7 +725,6 @@
     });
 
     loadData();
-    setInterval(loadData, 10000);
   </script>
 </body>
 </html>

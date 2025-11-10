@@ -1,0 +1,31 @@
+{
+  "name": "easytype-fonts",
+  "version": "1.0.0",
+  "description": "EasyType neuro-inclusive typefaces (Sans, Focus, Dyslexic) packaged for web and desktop projects.",
+  "license": "OFL-1.1",
+  "author": "Andrzej Marczewski",
+  "homepage": "https://www.marczewski.me.uk/easytype",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daverage/EasyType.git"
+  },
+  "bugs": {
+    "url": "https://github.com/daverage/EasyType/issues"
+  },
+  "files": [
+    "css/easytype.css",
+    "fonts",
+    "easytypesans.zip",
+    "LICENSE",
+    "readme.md"
+  ],
+  "keywords": [
+    "font",
+    "typography",
+    "dyslexia",
+    "adhd",
+    "accessibility",
+    "easytype"
+  ],
+  "style": "css/easytype.css"
+}

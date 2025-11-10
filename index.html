@@ -20,36 +20,9 @@
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
 <link rel="manifest" href="assets/site.webmanifest">
-<link rel="stylesheet" href="css/easytype.css"> 
+<link rel="stylesheet" href="css/easytype.css">
+<link rel="stylesheet" href="css/site-theme.css">
 <style>
-:root {
-  --bg: #fafafa;
-  --card: #ffffff;
-  --text: #141414;
-  --muted: #666;
-  --brand: #1AA6A6;
-  --brand-dark: #0F5257;
-  --radius: 14px;
-  --shadow: 0 8px 24px rgba(0,0,0,.06);
-  --gap: clamp(1rem, 2vw, 1.5rem);
-}
-* {
-  box-sizing: border-box;
-}
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'EasyType Sans', system-ui, -apple-system, sans-serif;
-  line-height: 1.6;
-  font-size: 16px;
-}
-header {
-  text-align: center;
-  padding: 2rem 1.25rem 1.75rem;
-  background: linear-gradient(135deg,#f4ffff,#ffffff);
-  border-bottom: 1px solid #e8e8e8;
-}
 header img {
   width: min(160px, 50vw);
   height: auto;
@@ -58,146 +31,77 @@ header h1 {
   margin: .65rem 0 0;
   font-size: clamp(1.9rem, 6vw, 2.5rem);
   font-weight: 700;
-  color: var(--brand-dark);
+  color: var(--ey-brand-dark);
 }
 header p.intro {
   max-width: 60ch;
   margin: .9rem auto 1.5rem;
-  color: var(--muted);
+  color: var(--ey-muted);
   font-size: 1rem;
   padding: 0 .5rem;
-}
-.cta {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 44px;
-  background: var(--brand);
-  color: white;
-  text-decoration: none;
-  padding: .65rem 1.4rem;
-  border-radius: var(--radius);
-  font-weight: 600;
-  box-shadow: 0 4px 12px rgba(0,0,0,.1);
-}
-.wrap {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 1.5rem 1.25rem 2.5rem;
-}
-.grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--gap);
-  margin: 1.75rem 0;
-}
-.card {
-  background: var(--card);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 1.2rem 1.35rem;
-}
-.tag {
-  display:inline-block;
-  font-size:.78rem;
-  background:#eaf8f8;
-  color:var(--brand-dark);
-  border-radius:999px;
-  padding:4px 12px;
-  margin-bottom:10px;
-  font-weight:600;
 }
 h2 {
   font-size:1.15rem;
   margin:.35rem 0 .55rem;
-  color:var(--brand-dark);
+  color:var(--ey-brand-dark);
 }
 .sample { margin: .75rem 0; }
-.small { font-size:.9rem; color:var(--muted); }
+.small { font-size:.9rem; color:var(--ey-muted); }
 ul { margin:.6rem 0 .6rem 1.1rem; line-height:1.6; }
 code {
   display:block;
   padding:.5rem .75rem;
   background:#f4f4f4;
-  border-radius:var(--radius);
+  border-radius:var(--ey-radius);
   font-size:.9rem;
   overflow-wrap:anywhere;
 }
-footer {
-  text-align:center;
-  font-size:.85rem;
-  color:var(--muted);
-  margin:3rem 0 1rem;
-  padding: 0 1rem;
-}
-footer a { color:var(--brand-dark); text-decoration:none; }
+footer a { color:var(--ey-brand-dark); text-decoration:none; }
 footer a:hover { text-decoration:underline; }
 
 @media (min-width: 600px) {
-  header {
-    padding: 2.75rem 2rem 2.25rem;
-  }
   header p.intro {
     font-size: 1.05rem;
-  }
-  .card {
-    padding: 1.35rem 1.6rem;
-  }
-}
-
-@media (min-width: 900px) {
-  header {
-    padding: 3rem 2.5rem 2.5rem;
-  }
-  .grid {
-    grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
-    margin: 2.5rem 0;
-  }
-  .wrap {
-    padding: 2rem 1.75rem 3rem;
-  }
-  h2 {
-    font-size: 1.25rem;
   }
 }
 </style>
 </head>
 
-<body>
-  <header>
+<body class="ey-shell">
+  <header class="ey-hero">
     <img src="assets/icon.png" alt="EasyType logo">
     <h1>EasyType</h1>
-    <p class="intro">A neuro-inclusive type family designed through the lens of cognitive science - helping minds stay steady, words stay clear, and reading feel calm.</p>
-    <p class="intro" style="font-size:.9rem; color:var(--brand-dark); margin-top:.4rem;">Version 1.0 builds on a carefully modified Noto Sans base and is open-sourced on <a href="https://github.com/daverage/EasyType" style="color:inherit; text-decoration:underline;">GitHub</a>.</p>
-    <a class="cta" href="#download">Download the fonts</a>
+    <p class="intro ey-intro">A neuro-inclusive type family designed through the lens of cognitive science - helping minds stay steady, words stay clear, and reading feel calm.</p>
+    <p class="intro ey-intro" style="font-size:.9rem; color:var(--ey-brand-dark); margin-top:.4rem;">Version 1.0 builds on a carefully modified Noto Sans base and is open-sourced on <a href="https://github.com/daverage/EasyType" style="color:inherit; text-decoration:underline;">GitHub</a>.</p>
+    <a class="cta ey-btn" href="#download">Download the fonts</a>
   </header>
 
-  <main class="wrap">
-    <section class="grid" id="specimens">
-      <article class="card" data-family="EasyType Sans">
-        <div class="tag">EasyType Sans</div>
+  <main class="wrap ey-wrap">
+    <section class="grid ey-grid" id="specimens">
+      <article class="card ey-card" data-family="EasyType Sans">
+        <div class="tag ey-tag">EasyType Sans</div>
         <h2>Balanced default</h2>
         <p class="sample">The quick brown fox jumps over the lazy dog. Reading should feel calm, anchored, and unhurried.</p>
         <p class="small">Neutral rhythm, gentle anchoring, and comfort spacing for everyday use in interfaces or long-form text.</p>
       </article>
 
-      <article class="card" data-family="EasyType Focus">
-        <div class="tag">EasyType Focus</div>
+      <article class="card ey-card" data-family="EasyType Focus">
+        <div class="tag ey-tag">EasyType Focus</div>
         <h2>For attention and rhythm</h2>
         <p class="sample">Spacing and entry anchors guide the eye from word to word, improving reading flow for those with attention variability.</p>
         <p class="small">Slightly wider spacing reduces crowding and supports smoother saccades - ideal for focus or study modes.</p>
       </article>
 
-      <article class="card" data-family="EasyType Dyslexic">
-        <div class="tag">EasyType Dyslexic</div>
+      <article class="card ey-card" data-family="EasyType Dyslexic">
+        <div class="tag ey-tag">EasyType Dyslexic</div>
         <h2>Clarity under pressure</h2>
         <p class="sample">Higher x-height, stronger baseline anchors, and open shapes reduce confusion between similar letters.</p>
         <p class="small">Designed for visual clarity, fatigue reduction, and accessible learning materials.</p>
       </article>
     </section>
 
-    <section class="card">
-      <div class="tag">The science behind EasyType</div>
+    <section class="card ey-card">
+      <div class="tag ey-tag">The science behind EasyType</div>
       <h2>Why it was built</h2>
       <p>Traditional fonts are optimised for aesthetics, not for how the human eye and brain process text. Research into <strong>visual crowding</strong>, <strong>saccadic movement</strong>, and <strong>attentional anchoring</strong> shows that small optical cues can reduce regressions and make reading feel smoother.</p>
       <ul>
@@ -208,19 +112,24 @@ footer a:hover { text-decoration:underline; }
       <p>EasyType blends these principles into three variants - EasyType Sans, EasyType Focus, and EasyType Dyslexic - so designers, educators, and readers can select what feels most comfortable.</p>
     </section>
 
-    <section class="grid">
-      <article class="card" id="download">
-        <div class="tag">Get EasyType</div>
+    <section class="grid ey-grid">
+      <article class="card ey-card" id="download">
+        <div class="tag ey-tag">Get EasyType</div>
         <h2>Download or embed</h2>
         <p>All weights and styles are available under the <a href="https://scripts.sil.org/OFL">SIL Open Font Licence 1.1</a>. You can use, modify, and redistribute them freely.</p>
-        <p><strong>Web embed:</strong></p>
-        <p><code>&lt;link rel="stylesheet" href="/css/easytype.css?v=1.0.0"&gt;</code></p>
-        <p><strong>Desktop install:</strong> grab the full family as <a href="https://www.marczewski.me.uk/easytype/easytypesans.zip">easytypesans.zip</a> for macOS or Windows.</p>
+        <p><strong>Self-hosting (recommended):</strong> keep the fonts on your own domain for predictable performance.</p>
+        <ul>
+          <li>Download the full bundle as <a href="https://www.marczewski.me.uk/easytype/easytypesans.zip">easytypesans.zip</a> or install it via <code>npm install easytype-fonts</code>.</li>
+          <li>Serve the contents of <code>fonts/</code> and <code>css/easytype.css</code> from your infrastructure, then reference your copy:</li>
+        </ul>
+        <p><code>&lt;link rel="stylesheet" href="/assets/fonts/easytype/css/easytype.css"&gt;</code></p>
+        <p>Using a bundler? Import the stylesheet directly: <code>@import "easytype-fonts/css/easytype.css";</code></p>
+        <p><strong>Hosted quick start:</strong> for prototypes you can point to the maintained copy at <code>https://www.marczewski.me.uk/easytype/css/easytype.css?v=1.0.0</code>, then switch to local hosting before shipping.</p>
         <p><strong>Interactive specimen:</strong> explore every weight, style, and feature on the <a href="demo.html">live demo page</a> (it loads the same EasyType Sans web include used in production).</p>
       </article>
 
-      <article class="card">
-        <div class="tag">Evidence base</div>
+      <article class="card ey-card">
+        <div class="tag ey-tag">Evidence base</div>
         <h2>Research that informed EasyType</h2>
         <ul>
           <li>Pelli D.G., Tillman K.A. (2008) - <em>The uncrowded window of object recognition</em>, Nature Neuroscience 11(10).</li>
@@ -232,7 +141,7 @@ footer a:hover { text-decoration:underline; }
       </article>
     </section>
 
-    <footer>
+    <footer class="ey-footer">
       <p>© 2025 Andrzej Marczewski - EasyType Fonts. Licenced under SIL Open Font Licence 1.1.</p>
       <p><a href="https://github.com/daverage/EasyType">View on GitHub</a></p>
     </footer>

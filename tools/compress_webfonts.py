@@ -39,6 +39,10 @@ def subset_font(
     unicode_range: str,
     chars: str | None,
     layout_features: str,
+    drop_tables: tuple[str, ...],
+    passthrough_tables: tuple[str, ...],
+    no_hinting: bool,
+    desubroutinize: bool,
     dry_run: bool,
 ) -> None:
     cmd = [
@@ -49,6 +53,14 @@ def subset_font(
         "--with-zopfli",
         f"--layout-features={layout_features}",
     ]
+    if drop_tables:
+        cmd.append(f"--drop-tables={','.join(drop_tables)}")
+    if passthrough_tables:
+        cmd.append(f"--passthrough-tables={','.join(passthrough_tables)}")
+    if no_hinting:
+        cmd.append("--no-hinting")
+    if desubroutinize:
+        cmd.append("--desubroutinize")
     if chars:
         cmd.append(f"--text={chars}")
     else:
@@ -87,6 +99,26 @@ def main() -> None:
         help="Layout features to keep (default: '*').",
     )
     parser.add_argument(
+        "--drop-tables",
+        default="DSIG,FFTM",
+        help="Comma-separated list of tables to drop for smaller files (default drops signature/FFTM metadata).",
+    )
+    parser.add_argument(
+        "--passthrough-tables",
+        default="",
+        help="Comma-separated list of tables to keep verbatim (e.g. COLR,CPAL).",
+    )
+    parser.add_argument(
+        "--no-hinting",
+        action="store_true",
+        help="Strip TrueType hinting data (improves compression, safe for modern browsers).",
+    )
+    parser.add_argument(
+        "--desubroutinize",
+        action="store_true",
+        help="Apply --desubroutinize to normalize CFF outlines before compression.",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Print commands without modifying any fonts.",
@@ -117,6 +149,12 @@ def main() -> None:
             unicode_range=args.unicode_range,
             chars=chars,
             layout_features=args.layout_features,
+            drop_tables=tuple(part.strip() for part in args.drop_tables.split(",") if part.strip()),
+            passthrough_tables=tuple(
+                part.strip() for part in args.passthrough_tables.split(",") if part.strip()
+            ),
+            no_hinting=args.no_hinting,
+            desubroutinize=args.desubroutinize,
             dry_run=args.dry_run,
         )
     print("[done] Fonts have been subset and recompressed.")

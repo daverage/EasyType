@@ -10,6 +10,7 @@
        url('../fonts/ttf/EasyTypeSans-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: 'EasyType Sans';
@@ -17,6 +18,7 @@
        url('../fonts/ttf/EasyTypeSans-Italic.ttf') format('truetype');
   font-weight: 400;
   font-style: italic;
+  font-display: swap;
 }
 @font-face {
   font-family: 'EasyType Sans';
@@ -24,6 +26,7 @@
        url('../fonts/ttf/EasyTypeSans-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: 'EasyType Sans';
@@ -31,6 +34,7 @@
        url('../fonts/ttf/EasyTypeSans-BoldItalic.ttf') format('truetype');
   font-weight: 700;
   font-style: italic;
+  font-display: swap;
 }
 
 /* EasyType Focus */
@@ -40,6 +44,7 @@
        url('../fonts/ttf/EasyTypeFocus-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: 'EasyType Focus';
@@ -47,6 +52,7 @@
        url('../fonts/ttf/EasyTypeFocus-Italic.ttf') format('truetype');
   font-weight: 400;
   font-style: italic;
+  font-display: swap;
 }
 @font-face {
   font-family: 'EasyType Focus';
@@ -54,6 +60,7 @@
        url('../fonts/ttf/EasyTypeFocus-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: 'EasyType Focus';
@@ -61,6 +68,7 @@
        url('../fonts/ttf/EasyTypeFocus-BoldItalic.ttf') format('truetype');
   font-weight: 700;
   font-style: italic;
+  font-display: swap;
 }
 
 /* EasyType Dyslexic */
@@ -70,6 +78,7 @@
        url('../fonts/ttf/EasyTypeDyslexic-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: 'EasyType Dyslexic';
@@ -77,6 +86,7 @@
        url('../fonts/ttf/EasyTypeDyslexic-Italic.ttf') format('truetype');
   font-weight: 400;
   font-style: italic;
+  font-display: swap;
 }
 @font-face {
   font-family: 'EasyType Dyslexic';
@@ -84,6 +94,7 @@
        url('../fonts/ttf/EasyTypeDyslexic-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: 'EasyType Dyslexic';
@@ -91,5 +102,6 @@
        url('../fonts/ttf/EasyTypeDyslexic-BoldItalic.ttf') format('truetype');
   font-weight: 700;
   font-style: italic;
+  font-display: swap;
 }
  

@@ -89,26 +89,36 @@ fonts/
  
 ---
 
-## 🌐 Web Embedding
+## 🌐 Web Embedding & Distribution
+
+### Self-hosting (recommended)
+Keeping the font files on your own domain avoids third-party bottlenecks and lets you tune caching headers.
+
+1. **Grab the files**
+   - Download the latest zip: `https://www.marczewski.me.uk/easytype/easytypesans.zip`
+   - or install via npm:  
+     ```bash
+     npm install easytype-fonts
+     ```
+2. Copy `fonts/` and `css/easytype.css` into your project (or import them straight from `node_modules/easytype-fonts`).
+3. Reference the stylesheet from your domain:
+   ```html
+   <link rel="stylesheet" href="/assets/fonts/easytype/css/easytype.css">
+   ```
+4. Use the families just like any other custom font:
+   ```css
+   body {
+     font-family: 'EasyType Sans', system-ui, sans-serif;
+     line-height: 1.6;
+     color: #141414;
+   }
+   ```
+
+### Hosted quick start
+Need something fast for prototypes? You can point to the maintained CDN-style copy—just remember to switch to self-hosting before production:
 
 ```html
-<link rel="stylesheet" href="/css/easytype.css?v=1.0.0">
-```
-
-Example CSS:
-
-```css
-body {
-  font-family: 'EasyType Sans', system-ui, sans-serif;
-  line-height: 1.6;
-  color: #141414;
-}
-```
-
-For local installs, download the full family bundle:
-
-```
-https://www.marczewski.me.uk/easytype/easytypesans.zip
+<link rel="stylesheet" href="https://www.marczewski.me.uk/easytype/css/easytype.css?v=1.0.0">
 ```
 
 ---

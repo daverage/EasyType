@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>EasyType – Full Specimen (EasyType Sans, EasyType Focus, EasyType Dyslexic × Regular/Italic/Bold/Bold Italic)</title>
 
-  <link rel="stylesheet" href="css/easytype.css"> 
+  <link rel="stylesheet" href="css/easytype.css">
+  <link rel="stylesheet" href="css/site-theme.css">
 
   <!--
     Usage:
@@ -21,12 +22,13 @@
     @font-face { font-family: "Noto Sans"; src: url("base_fonts/NotoSans-BoldItalic.ttf") format("truetype"); font-weight: 700; font-style: italic; font-display: swap; }
 
     :root{
-      --bg:#fafafa;
-      --fg:#151515;
-      --muted:#6b6b6b;
-      --card:#ffffff;
-      --ring:#e6e6e6;
-      --accent:#1e88e5;
+      color-scheme: light;
+      --bg: var(--ey-bg);
+      --fg: var(--ey-text);
+      --muted: var(--ey-muted);
+      --card: var(--ey-surface);
+      --ring: rgba(15,82,87,0.12);
+      --accent: var(--ey-brand);
 
       --size:16px;        /* live control */
       --line:1.6;         /* live control */
@@ -34,13 +36,14 @@
       --word:0;           /* additional word-spacing in em */
     }
 
-    *{ box-sizing:border-box; }
     html, body{ height:100%; }
     body{
       margin:0;
       color:var(--fg);
       background:var(--bg);
-      font: 15px/1.5 "EasyType Sans", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", sans-serif;
+      font-family: var(--ey-body-font);
+      font-size: 15px;
+      line-height: 1.5;
     }
 
     header{
@@ -70,21 +73,9 @@
       width:100%;
       min-height:32px;
     }
-    .chip{
-      display:inline-flex;
-      align-items:center;
-      padding:6px 12px;
-      border:1px solid var(--ring);
-      border-radius:999px;
-      background:#fff;
-      font-size:12px;
-      color:#333;
-    }
-
     main{
-      padding:20px 16px 32px;
       max-width:1200px;
-      margin:0 auto;
+      width:100%;
     }
 
     .family{
@@ -100,12 +91,9 @@
       grid-template-columns:1fr;
       gap:16px;
     }
-    .card{
-      background:var(--card);
-      border:1px solid var(--ring);
-      border-radius:16px;
-      padding:18px;
-      box-shadow:0 6px 18px rgba(0,0,0,0.06);
+    .card.ey-card{
+      border-color: var(--ring);
+      box-shadow:0 6px 18px rgba(0,0,0,0.08);
     }
     @media (min-width:640px){
       .row{ flex-direction:row; flex-wrap:wrap; align-items:center; }
@@ -151,12 +139,12 @@
     .of-noto{ font-family: "Noto Sans", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
   </style>
 </head>
-<body>
+<body class="ey-shell ey-specimen">
   <header>
     <div class="row">
       <strong>EasyType Specimen</strong>
-      <span class="chip">12 styles</span>
-      <span class="chip">Live controls</span>
+      <span class="chip ey-chip">12 styles</span>
+      <span class="chip ey-chip">Live controls</span>
     </div>
     <div class="row controls">
       <label>Size
@@ -178,13 +166,13 @@
     </div>
   </header>
 
-  <main>
+  <main class="ey-wrap specimen-main">
     <!-- FAMILY: EasyType Sans -->
     <section class="family">
       <h2>EasyType Sans</h2>
       <div class="grid of-sans">
         <!-- Regular -->
-        <div class="card">
+        <div class="card ey-card">
           <div class="meta"><div class="style">Regular</div></div>
           <div class="sample" style="font-weight:400; font-style:normal;">
             <p><strong>Pangram</strong>: The quick brown fox jumps over the lazy dog.</p>
@@ -198,7 +186,7 @@
         </div>
 
         <!-- Italic -->
-        <div class="card">
+        <div class="card ey-card">
           <div class="meta"><div class="style">Italic</div></div>
           <div class="sample" style="font-weight:400; font-style:italic;">
             <p><strong>Pangram</strong>: The quick brown fox jumps over the lazy dog.</p>
@@ -212,7 +200,7 @@
         </div>
 
         <!-- Bold -->
-        <div class="card">
+        <div class="card ey-card">
           <div class="meta"><div class="style">Bold</div></div>
           <div class="sample" style="font-weight:700; font-style:normal;">
             <p><strong>Pangram</strong>: The quick brown fox jumps over the lazy dog.</p>
@@ -226,7 +214,7 @@
         </div>
 
         <!-- Bold Italic -->
-        <div class="card">
+        <div class="card ey-card">
           <div class="meta"><div class="style">Bold Italic</div></div>
           <div class="sample" style="font-weight:700; font-style:italic;">
             <p><strong>Pangram</strong>: The quick brown fox jumps over the lazy dog.</p>
@@ -246,7 +234,7 @@
       <h2>EasyType Focus</h2>
       <div class="grid of-focus">
         <!-- Regular -->
-        <div class="card">
+        <div class="card ey-card">
           <div class="meta"><div class="style">Regular</div></div>
           <div class="sample" style="font-weight:400;">
             <p><strong>Pangram</strong>: The quick brown fox jumps over the lazy dog.</p>
@@ -260,7 +248,7 @@
         </div>
 
         <!-- Italic -->
-        <div class="card">
+        <div class="card ey-card">
           <div class="meta"><div class="style">Italic</div></div>
           <div class="sample" style="font-weight:400; font-style:italic;">
             <p><strong>Pangram</strong>: The quick brown fox jumps over the lazy dog.</p>
@@ -274,7 +262,7 @@
         </div>
 
         <!-- Bold -->
-        <div class="card">
+        <div class="card ey-card">
           <div class="meta"><div class="style">Bold</div></div>
           <div class="sample" style="font-weight:700;">
             <p><strong>Pangram</strong>: The quick brown fox jumps over the lazy dog.</p>
@@ -288,7 +276,7 @@
         </div>
 
         <!-- Bold Italic -->
-        <div class="card">
+        <div class="card ey-card">
           <div class="meta"><div class="style">Bold Italic</div></div>
           <div class="sample" style="font-weight:700; font-style:italic;">
             <p><strong>Pangram</strong>: The quick brown fox jumps over the lazy dog.</p>
@@ -308,7 +296,7 @@
       <h2>EasyType Dyslexic</h2>
       <div class="grid of-dys">
         <!-- Regular -->
-        <div class="card">
+        <div class="card ey-card">
           <div class="meta"><div class="style">Regular</div></div>
           <div class="sample" style="font-weight:400;">
             <p><strong>Pangram</strong>: The quick brown fox jumps over the lazy dog.</p>
@@ -322,7 +310,7 @@
         </div>
 
         <!-- Italic -->
-        <div class="card">
+        <div class="card ey-card">
           <div class="meta"><div class="style">Italic</div></div>
           <div class="sample" style="font-weight:400; font-style:italic;">
             <p><strong>Pangram</strong>: The quick brown fox jumps over the lazy dog.</p>
@@ -336,7 +324,7 @@
         </div>
 
         <!-- Bold -->
-        <div class="card">
+        <div class="card ey-card">
           <div class="meta"><div class="style">Bold</div></div>
           <div class="sample" style="font-weight:700;">
             <p><strong>Pangram</strong>: The quick brown fox jumps over the lazy dog.</p>
@@ -350,7 +338,7 @@
         </div>
 
         <!-- Bold Italic -->
-        <div class="card">
+        <div class="card ey-card">
           <div class="meta"><div class="style">Bold Italic</div></div>
           <div class="sample" style="font-weight:700; font-style:italic;">
             <p><strong>Pangram</strong>: The quick brown fox jumps over the lazy dog.</p>

@@ -15,6 +15,7 @@
   <meta property="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="card.png">
   <meta name="twitter:image:alt" content="EasyType Font Reading Test preview card">
+  <link rel="stylesheet" href="../css/site-theme.css">
   <style>
     @font-face {
       font-family: "EasyType Focus";
@@ -40,43 +41,46 @@
 
     :root {
       color-scheme: light;
-      font-family: "Helvetica", "Arial", sans-serif;
-      background: #f7f7f7;
-      color: #111;
+      --ey-body-font: "Arial", "Helvetica Neue", Helvetica, sans-serif;
     }
     body {
       margin: 0;
       padding: 0;
+      background: var(--ey-bg);
+      color: var(--ey-text);
+      font-family: var(--ey-body-font);
+      line-height: 1.6;
     }
     main {
       width: min(720px, 100%);
       margin: 0 auto;
-      padding: 24px 16px 64px;
-    }
-    header {
-      margin-bottom: 24px;
     }
     h1 {
       font-size: 1.8rem;
       margin: 0 0 0.5rem;
+      color: var(--ey-brand-dark);
     }
     .card {
-      background: #fff;
-      border-radius: 12px;
+      background: var(--ey-surface);
+      border-radius: var(--ey-radius);
       padding: 24px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+      border: var(--ey-card-border);
+      box-shadow: var(--ey-shadow);
     }
     label {
+      color: var(--ey-text);
       font-weight: 600;
       display: block;
       margin-bottom: 8px;
     }
     input[type="text"] {
-      width: 90%;
+      width: 100%;
       padding: 10px 12px;
       font-size: 1rem;
       border-radius: 8px;
-      border: 1px solid #ccc;
+      border: 1px solid rgba(15, 82, 87, 0.2);
+      background: #fff;
+      font-family: inherit;
     }
     button {
       border: none;
@@ -84,9 +88,15 @@
       padding: 12px 28px;
       font-size: 1rem;
       cursor: pointer;
-      background: #111;
+      background: var(--ey-brand);
       color: #fff;
-      transition: opacity 0.2s ease;
+      font-weight: 600;
+      box-shadow: 0 10px 24px rgba(26, 166, 166, 0.25);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.2s ease;
+    }
+    button:hover:not([disabled]) {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px rgba(26, 166, 166, 0.3);
     }
     button[disabled] {
       opacity: 0.4;
@@ -96,14 +106,26 @@
       font-size: 18px;
       line-height: 1.6;
       padding: 20px;
-      border-radius: 12px;
+      border-radius: var(--ey-radius);
       background: #fdfdfd;
-      border: 1px solid #ececec;
+      border: 1px solid rgba(15, 82, 87, 0.12);
       min-height: 180px;
       margin-bottom: 16px;
     }
+    .test-hero {
+      text-align: left;
+    }
+    .test-hero .ey-intro {
+      color: var(--ey-muted);
+      margin: 0.85rem auto 0;
+      max-width: 62ch;
+    }
+    .test-wrap {
+      max-width: 720px;
+      padding: clamp(1.5rem, 5vw, 2.75rem) clamp(1.25rem, 4vw, 1.75rem) clamp(3rem, 6vw, 4rem);
+    }
     .font-easytype-focus { font-family: "EasyType Focus", "EasyType", sans-serif; }
-    .font-easytype-dyslexic { font-family: "EasyType Dyslexic", "Open Dyslexic", sans-serif; }
+    .font-easytype-dyslexic { font-family: "EasyType Dyslexic", "EasyType", sans-serif; }
     .font-easytype { font-family: "EasyType", "Open Sans", sans-serif; }
     .font-open-dyslexic { font-family: "Open Dyslexic", "EasyType Dyslexic", sans-serif; }
     .font-open-sans { font-family: "Open Sans", Arial, sans-serif; }
@@ -132,20 +154,21 @@
       margin-top: 16px;
     }
     .likert-scale {
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
+      border: 1px solid rgba(15, 82, 87, 0.15);
+      border-radius: var(--ey-radius);
       padding: 14px 16px;
-      background: #fdfdfd;
+      background: #fbfefe;
     }
     .scale-header {
       font-weight: 600;
       margin-bottom: 10px;
+      color: var(--ey-brand-dark);
     }
     .scale-anchors {
       display: flex;
       justify-content: space-between;
       font-size: 0.8rem;
-      color: #475569;
+      color: var(--ey-muted);
       gap: 12px;
       flex: 1;
     }
@@ -158,10 +181,10 @@
       position: relative;
     }
     .scale-options.good-high {
-      background: linear-gradient(90deg, rgba(248,113,113,0.18) 0%, rgba(74,222,128,0.18) 100%);
+      background: linear-gradient(90deg, rgba(245, 158, 11, 0.12) 0%, rgba(26, 166, 166, 0.22) 100%);
     }
     .scale-options.good-low {
-      background: linear-gradient(90deg, rgba(74,222,128,0.18) 0%, rgba(248,113,113,0.18) 100%);
+      background: linear-gradient(90deg, rgba(26, 166, 166, 0.22) 0%, rgba(245, 158, 11, 0.12) 100%);
     }
     .scale-options label {
       display: flex;
@@ -170,23 +193,24 @@
       gap: 6px;
       font-weight: 600;
       font-size: 0.9rem;
-      color: #0f172a;
+      color: var(--ey-brand-dark);
     }
     .scale-options input[type="radio"] {
-      accent-color: #111;
+      accent-color: var(--ey-brand-dark);
       width: 18px;
       height: 18px;
     }
     .conditions {
       margin-top: 16px;
       padding: 16px;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      background: #fdfdfd;
+      border: 1px solid rgba(15, 82, 87, 0.12);
+      border-radius: var(--ey-radius);
+      background: #fbfefe;
     }
     .conditions p {
       margin: 0 0 10px;
       font-weight: 600;
+      color: var(--ey-brand-dark);
     }
     .condition-option {
       display: flex;
@@ -194,6 +218,7 @@
       gap: 10px;
       margin-bottom: 8px;
       font-weight: 500;
+      color: var(--ey-text);
     }
     .condition-option input {
       width: 18px;
@@ -203,7 +228,7 @@
       margin-top: 16px;
       min-height: 20px;
       font-size: 0.95rem;
-      color: #555;
+      color: var(--ey-muted);
     }
     .hidden {
       display: none !important;
@@ -215,12 +240,12 @@
     }
     #timerHint {
       font-size: 0.9rem;
-      color: #c2410c;
+      color: var(--ey-brand-dark);
       margin-top: 4px;
     }
     .notice {
       font-size: 0.9rem;
-      color: #475569;
+      color: var(--ey-muted);
       margin-top: 8px;
     }
     textarea {
@@ -228,7 +253,7 @@
       min-height: 110px;
       resize: vertical;
       border-radius: 8px;
-      border: 1px solid #cbd5f5;
+      border: 1px solid rgba(15, 82, 87, 0.2);
       padding: 10px 12px;
       font-size: 1rem;
       font-family: inherit;
@@ -238,14 +263,14 @@
     }
   </style>
 </head>
-<body>
-  <main>
-    <header>
-      <h1>EasyType Font Reading Test</h1>
-      <p>We’re testing how readable different fonts feel. Please read each short passage, answer two quick questions, and give honest comfort ratings so we can improve EasyType for everyone. Thank you for lending a few minutes to this research.</p>
-    </header>
+<body class="ey-shell ey-test">
+  <header class="ey-hero test-hero">
+    <h1>EasyType Font Reading Test</h1>
+    <p class="ey-intro">We’re testing how readable different fonts feel. Please read each short passage, answer two quick questions, and give honest comfort ratings so we can improve EasyType for everyone. Thank you for lending a few minutes to this research.</p>
+  </header>
 
-    <section id="consentCard" class="card">
+  <main class="ey-wrap test-wrap">
+    <section id="consentCard" class="card ey-card">
       <p style="margin-top:0;">Session ID: <strong id="pidDisplay"></strong></p>
       <p style="margin-top:4px;">Detected device: <strong id="deviceTypeLabel"></strong></p>
       <p class="notice">No personal data is collected. Your nickname and answers help us compare fonts only.</p>
@@ -274,14 +299,14 @@
       <p class="status" id="introStatus"></p>
     </section>
 
-    <section id="trialCard" class="card hidden">
+    <section id="trialCard" class="card ey-card hidden">
       <div id="trialHeader">
         <strong>Passage <span id="trialCounter">1</span> of 5</strong>
         <div id="timerHint">Please spend at least 7 seconds reading before answering.</div>
       </div>
       <article id="passage" class="reading"></article>
       <div class="questions" id="questions">
-        <p style="margin-top:0;color:#475569;">Pick the factual answer that best matches the passage.</p>
+        <p style="margin-top:0;color:var(--ey-muted);">Pick the factual answer that best matches the passage.</p>
       </div>
       <div class="likert-group" id="likertGroup">
         <!-- Scales inserted with JS -->
@@ -290,7 +315,7 @@
       <p class="status" id="trialStatus"></p>
     </section>
 
-    <section id="thankYou" class="card thankyou hidden">
+    <section id="thankYou" class="card ey-card thankyou hidden">
       <p>Thank you for completing the study. As soon as I have some results, I will share them and provide the font for you to download.</p>
       <div class="comment-box">
         <label for="finalComment">Any other comments about the fonts? (optional)</label>
