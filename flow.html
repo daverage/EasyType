@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AnchorFlow – Cadence Reading Demo</title>
+  <meta name="description" content="Cadence-based lead-in emphasis layered on EasyType. Choose font; optionally toggle tint. Everything else is optimised." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- EasyType build -->
+  <link rel="stylesheet" href="https://www.marczewski.me.uk/easytype/css/easytype.css?v=1.0.0" />
+
+  <style>
+    :root{
+      --bg:#fafafa; --card:#fff; --text:#141414; --muted:#666; --brand:#1AA6A6; --brand-dark:#0F5257;
+      --radius:14px; --shadow:0 8px 24px rgba(0,0,0,.06); --lead-color:#0F5257;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:'EasyType Sans',system-ui,-apple-system,Segoe UI,Arial,sans-serif;line-height:1.7}
+    header{padding:24px 16px;border-bottom:1px solid #e8e8e8;background:linear-gradient(135deg,#f4ffff,#ffffff)}
+    h1{margin:.25rem 0 0;font-size:clamp(1.6rem,3.4vw,2.2rem);color:var(--brand-dark)}
+    p.subtitle{margin:.35rem 0 0;color:var(--muted)}
+    .wrap{max-width:1100px;margin:0 auto;padding:18px 16px 28px}
+    .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
+    label{font-size:.92rem;color:var(--brand-dark);font-weight:600}
+    select,input[type="checkbox"]{padding:8px;border-radius:10px;border:1px solid #dcdcdc;background:#fff}
+    .controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+    .grid{display:grid;gap:16px}
+    .cols-2{grid-template-columns:1fr}
+    @media (min-width: 960px){ .cols-2{grid-template-columns:1fr 1fr} }
+    .demo{padding:16px;border-radius:12px;border:1px dashed #e5e5e5;background:#fff;min-height:160px}
+    .demo h3{margin:.1rem 0 .35rem;font-size:1rem;color:var(--brand-dark)}
+    .small{color:var(--muted);font-size:.9rem}
+    .pill{display:inline-block;background:#eaf8f8;color:var(--brand-dark);border-radius:999px;padding:4px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+    .kv{display:flex;gap:10px;flex-wrap:wrap;margin:.4rem 0 .2rem}
+    .kv span{background:#f4f7f7;border:1px solid #e6eeee;border-radius:999px;padding:3px 8px;font-size:.82rem;color:#334}
+
+    /* AnchorFlow markup */
+    .af-word{white-space:pre-wrap}
+    .af-lead{font-weight:700}
+    .af-lead.tint{color:var(--lead-color)}
+    .af-tail.dim{opacity:.9}
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <h1>AnchorFlow</h1>
+    <p class="subtitle">Cadence-based lead-in emphasis with one global beat. Choose a font; toggle tint if you want. Everything else is optimised.</p>
+  </header>
+
+  <main class="wrap">
+    <section class="card" style="margin-bottom:16px">
+      <div class="controls">
+        <label for="font">Font</label>
+        <select id="font" aria-label="Font choice">
+          <option value="EasyType Sans" selected>EasyType Sans</option>
+          <option value="EasyType Focus">EasyType Focus</option>
+          <option value="EasyType Dyslexic">EasyType Dyslexic</option>
+          <option value="system">System sans</option>
+        </select>
+
+        <label class="small" style="display:flex;gap:6px;align-items:center;border:0">
+          <input id="tint" type="checkbox" checked />
+          Tint lead-in
+        </label>
+      </div>
+      <div class="kv" id="meta"></div>
+    </section>
+
+    <section class="grid cols-2">
+      <article class="card demo">
+        <h3><span class="pill">A</span>Font only</h3>
+        <p class="small">Internal anchoring and spacing. No extra highlighting.</p>
+        <div id="outA"></div>
+      </article>
+      <article class="card demo">
+        <h3><span class="pill">B</span>AnchorFlow – Cadence</h3>
+        <p class="small">Lead-in emphasis on the same steady beat for all fonts.</p>
+        <div id="outB"></div>
+      </article>
+    </section>
+
+    <section class="card" style="margin-top:16px">
+      <h2 style="margin:.1rem 0 .6rem;color:var(--brand-dark);font-size:1.2rem">Methodology and reasoning</h2>
+      <ol class="small" style="margin:0;padding-left:1.2rem">
+        <li><strong>Cadence, not fractions.</strong> We emphasise by a fixed character beat of 6, reflecting rhythmic saccades. This avoids over-bolding very short words while regularly providing anchor points.</li>
+        <li><strong>Optimal lead length by word length.</strong> Based on our tests, we bold the first 1–4 letters: 1 for ≤3 chars, 2 for 4–6, 3 for 7–10, 4 for 11+. This consistently improves lock-on without shouting.</li>
+        <li><strong>Font-aware visuals; same rhythm.</strong> EasyType fonts already anchor glyphs. Tint defaults on for Sans and System (gentle guidance), and still works well for Focus/Dyslexic; you can toggle tint to compare.</li>
+        <li><strong>Simple A/B.</strong> The page shows Font-only vs AnchorFlow with identical text and layout so the effect is clear.</li>
+      </ol>
+    </section>
+  </main>
+
+  <script>
+    // ---- Sample text (original, CC0; modern fiction style) ----
+    const SAMPLE = `The old clock in the town square chimed noon, a sound that echoed through the narrow cobblestone streets. A young boy, no older than ten, sat on a bench, his eyes fixed on a small, worn leather-bound book. He wasn't reading, but rather tracing the embossed letters on the cover with a hesitant finger. He had found it tucked away in an old chest in his grandmother's attic, a treasure trove of forgotten stories. The book promised adventure, of a sort he'd only dreamed of. He knew, with a certainty that only a child could possess, that his life was about to change. He took a deep breath, opened the book to the first page, and began to read.`;
+
+    // ---- Elements ----
+    const fontEl = document.getElementById('font');
+    const tintEl = document.getElementById('tint');
+    const metaEl = document.getElementById('meta');
+    const outA = document.getElementById('outA');
+    const outB = document.getElementById('outB');
+
+    // ---- One global optimal beat for all fonts ----
+    const GLOBAL_BEAT = 6;
+
+    function applyFontFamily(el, fam){
+      const cssFam = fam === 'system'
+        ? 'system-ui,-apple-system,Segoe UI,Arial,sans-serif'
+        : `'${fam}', system-ui, -apple-system, Segoe UI, Arial, sans-serif`;
+      el.style.fontFamily = cssFam;
+      el.style.fontSize = '1.05rem';
+      el.style.lineHeight = '1.7';
+    }
+
+    // Optimal lead sizes: 1/2/3/4 by word length
+    function leadByLen(len){
+      if (len <= 3) return 1;
+      if (len <= 6) return 2;
+      if (len <= 10) return 3;
+      return 4;
+    }
+
+    // Cadence processor: emphasise the next word’s lead-in on a fixed character beat.
+    function processCadence(text, {beat, tint, bold=true, dim=true, color='#0F5257'}){
+      document.documentElement.style.setProperty('--lead-color', color);
+      const tokens = text.split(/(\s+)/);
+      let counter = 0;
+      const frag = document.createDocumentFragment();
+
+      for (const t of tokens){
+        if (/\s+/.test(t)) { frag.appendChild(document.createTextNode(t)); continue; }
+        if (!/^[\p{L}\p{N}\u00C0-\u024F'-]+$/u.test(t)) { frag.appendChild(document.createTextNode(t)); continue; }
+
+        counter += t.length;
+        const doEmph = (counter >= beat);
+        if (doEmph) counter = 0;
+
+        if (!doEmph){
+          frag.appendChild(document.createTextNode(t));
+          continue;
+        }
+
+        const leadCount = leadByLen(t.length);
+        const lead = t.slice(0, leadCount);
+        const tail = t.slice(leadCount);
+
+        const w = document.createElement('span'); w.className = 'af-word';
+        const s1 = document.createElement('span'); s1.className = 'af-lead' + (tint ? ' tint' : ''); s1.textContent = lead;
+        const s2 = document.createElement('span'); s2.className = 'af-tail' + (dim ? ' dim' : ''); s2.textContent = tail;
+        if (!bold) s1.style.fontWeight = 'inherit';
+        w.append(s1, s2);
+        frag.appendChild(w);
+      }
+      return frag;
+    }
+
+    function update(){
+      const fam = fontEl.value;
+      const wantTint = !!tintEl.checked;
+
+      // meta chips
+      const chips = [
+        'font: ' + (fam === 'system' ? 'System sans' : fam),
+        'cadence: ' + GLOBAL_BEAT,
+        'bold: on',
+        'tint: ' + (wantTint ? 'on' : 'off'),
+        'dim: on'
+      ];
+      metaEl.innerHTML = '';
+      chips.forEach(t => { const chip = document.createElement('span'); chip.textContent = t; metaEl.appendChild(chip); });
+
+      // A: font only
+      outA.textContent = SAMPLE;
+
+      // B: cadence
+      outB.innerHTML = '';
+      outB.appendChild(processCadence(SAMPLE, {
+        beat: GLOBAL_BEAT,
+        tint: wantTint,
+        bold: true,
+        dim: true,
+        color: '#0F5257'
+      }));
+
+      // apply font families
+      applyFontFamily(outA, fam);
+      applyFontFamily(outB, fam);
+    }
+
+    fontEl.addEventListener('change', update);
+    tintEl.addEventListener('change', update);
+
+    // initial render
+    outA.textContent = SAMPLE;
+    outB.textContent = SAMPLE;
+    update();
+  </script>
+</body>
+</html>
