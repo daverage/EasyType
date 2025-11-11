@@ -1,0 +1,93 @@
+{
+category = Letter;
+color = 6;
+glyphname = "Uhungarumlaut-cy";
+kernLeft = cyr_U;
+kernRight = cyr_U;
+layers = (
+{
+layerId = "1D4F67F9-897D-45AD-B7F0-CA61A6862C03";
+shapes = (
+{
+ref = "U-cy";
+},
+{
+alignment = -1;
+pos = (160,165);
+ref = hungarumlaut;
+}
+);
+width = 621;
+},
+{
+layerId = UUID0;
+shapes = (
+{
+ref = "U-cy";
+},
+{
+pos = (168,165);
+ref = hungarumlaut;
+}
+);
+width = 645;
+},
+{
+layerId = "E17BEC9D-CAAD-449F-91D9-03766E30097E";
+shapes = (
+{
+ref = "U-cy";
+},
+{
+pos = (207,165);
+ref = hungarumlaut;
+}
+);
+width = 706;
+},
+{
+layerId = "C91144B6-58F5-45F2-9CE4-7ED6CE127FD4";
+shapes = (
+{
+ref = "U-cy";
+},
+{
+pos = (139,165);
+ref = hungarumlaut;
+}
+);
+width = 487;
+},
+{
+layerId = "A0CCC833-A561-4F2A-AF73-A35187C9FE5B";
+shapes = (
+{
+ref = "U-cy";
+},
+{
+pos = (141,165);
+ref = hungarumlaut;
+}
+);
+width = 529;
+},
+{
+layerId = "75A83886-EED5-4C31-9670-660514D8A4F6";
+shapes = (
+{
+ref = "U-cy";
+},
+{
+pos = (180,165);
+ref = hungarumlaut;
+}
+);
+width = 599;
+}
+);
+metricLeft = "U-cy";
+metricRight = "U-cy";
+script = cyrillic;
+subCategory = Uppercase;
+unicode = 1266;
+}

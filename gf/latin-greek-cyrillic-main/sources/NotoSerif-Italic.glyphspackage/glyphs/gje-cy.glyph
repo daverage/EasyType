@@ -1,0 +1,188 @@
+{
+category = Letter;
+color = 6;
+glyphname = "gje-cy";
+kernLeft = "ge-cy";
+kernRight = "ge-cy";
+layers = (
+{
+background = {
+shapes = (
+{
+alignment = -1;
+ref = "ge-cy";
+},
+{
+alignment = -1;
+pos = (153,0);
+ref = acute;
+}
+);
+};
+layerId = "A783126C-D342-49FA-8B69-0453AD03268C";
+shapes = (
+{
+alignment = -1;
+ref = "ge-cy";
+},
+{
+alignment = -1;
+pos = (421,0);
+ref = acutecomb;
+}
+);
+width = 426;
+},
+{
+background = {
+shapes = (
+{
+alignment = -1;
+ref = "ge-cy";
+},
+{
+alignment = -1;
+pos = (138,0);
+ref = acute;
+}
+);
+};
+guides = (
+{
+angle = 78;
+pos = (267,438);
+}
+);
+layerId = UUID0;
+shapes = (
+{
+alignment = -1;
+ref = "ge-cy";
+},
+{
+alignment = -1;
+pos = (487,0);
+ref = acutecomb;
+}
+);
+width = 457;
+},
+{
+background = {
+shapes = (
+{
+alignment = -1;
+ref = "ge-cy";
+},
+{
+alignment = -1;
+pos = (122,0);
+ref = acute;
+}
+);
+};
+layerId = "EFE4222C-09E4-4728-8E05-7459D7542305";
+shapes = (
+{
+alignment = -1;
+ref = "ge-cy";
+},
+{
+alignment = -1;
+pos = (617,0);
+ref = acutecomb;
+}
+);
+width = 507;
+},
+{
+background = {
+shapes = (
+{
+alignment = -1;
+ref = "ge-cy";
+},
+{
+alignment = -1;
+pos = (103,0);
+ref = acute;
+}
+);
+};
+layerId = "9563C917-11DF-412F-BB09-FC0C1CFFA48C";
+shapes = (
+{
+alignment = -1;
+ref = "ge-cy";
+},
+{
+alignment = -1;
+pos = (305,0);
+ref = acutecomb;
+}
+);
+width = 353;
+},
+{
+background = {
+shapes = (
+{
+alignment = -1;
+ref = "ge-cy";
+},
+{
+alignment = -1;
+pos = (109,0);
+ref = acute;
+}
+);
+};
+layerId = "44BFC83C-08F8-422F-A73E-536514612562";
+shapes = (
+{
+alignment = -1;
+ref = "ge-cy";
+},
+{
+alignment = -1;
+pos = (397,0);
+ref = acutecomb;
+}
+);
+width = 388;
+},
+{
+background = {
+shapes = (
+{
+alignment = -1;
+ref = "ge-cy";
+},
+{
+alignment = -1;
+pos = (97,0);
+ref = acute;
+}
+);
+};
+layerId = "081AFB27-5722-432A-9779-C9794386CEF1";
+shapes = (
+{
+alignment = -1;
+ref = "ge-cy";
+},
+{
+alignment = -1;
+pos = (507,0);
+ref = acutecomb;
+}
+);
+width = 428;
+}
+);
+metricLeft = "ge-cy";
+metricRight = "ge-cy";
+script = cyrillic;
+subCategory = Lowercase;
+unicode = 1107;
+}

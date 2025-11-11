@@ -1,0 +1,4 @@
+# This is the official list of project authors for copyright purposes.
+# See CONTRIBUTORS.txt for additional help or acknowledgements.
+
+Andrzej Marczewski <andrzej@marczewski.me.uk>

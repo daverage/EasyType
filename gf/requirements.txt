@@ -1,0 +1,2 @@
+fonttools>=4.48.0
+requests>=2.30.0
