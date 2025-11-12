@@ -1,9 +1,0 @@
-buildVariable: true
-category:
-- SERIF
-familyName: Noto Serif
-googleFonts: true
-recipeProvider: noto
-sources:
-- NotoSerif.glyphspackage
-- NotoSerif-Italic.glyphspackage

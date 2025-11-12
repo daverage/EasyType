@@ -1,4 +1,0 @@
-# This is the list of the people who have contributed to EasyType
-# beyond the official copyright authors. Add new entries as needed.
-
-# None yet – feel free to submit a pull request if you'd like to help!
