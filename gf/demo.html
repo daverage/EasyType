@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EasyType Demo</title>
+  <style>
+    :root {
+      --bg: #f9f8f5;
+      --card: #fff;
+      --border: #e3e1db;
+      --text: #212121;
+    }
+    html {
+      font-family: sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 2rem;
+    }
+    body {
+      margin: 0;
+    }
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+    h1 {
+      margin-bottom: 0.5rem;
+    }
+    h2 {
+      margin-top: 0.75rem;
+      margin-bottom: 0.25rem;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #5f5a53;
+    }
+    .sample {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin: 0.75rem 0;
+    }
+    .meta {
+      font-size: 0.85rem;
+      color: #6e685f;
+    }
+    @font-face {
+      font-family: "Easy Type Sans";
+      font-style: normal;
+      font-weight: 400;
+      src: url("../fonts/ttf/EasyTypeSans-Regular.ttf") format("truetype");
+    }
+    @font-face {
+      font-family: "Easy Type Focus";
+      font-style: normal;
+      font-weight: 400;
+      src: url("../fonts/ttf/EasyTypeFocus-Regular.ttf") format("truetype");
+    }
+    @font-face {
+      font-family: "Easy Type Dyslexic";
+      font-style: normal;
+      font-weight: 400;
+      src: url("../fonts/ttf/EasyTypeDyslexic-Regular.ttf") format("truetype");
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>EasyType Demo</h1>
+    <p>
+      Samples use the freshly built TTFs under <code>fonts/ttf</code>. The
+      deck below shows how each family handles the same text.
+    </p>
+  </header>
+
+  <div class="grid">
+    <section style="font-family: 'Easy Type Sans', system-ui, sans-serif">
+      <h2>Easy Type Sans</h2>
+      <p class="sample">
+        Calmly anchored opens, gentle spacing, and steady proportions create a
+        neutral cadence that remains comfortable over long paragraphs.
+      </p>
+      <p class="meta">Weight: 400 / Regular · line-height: 1.6</p>
+    </section>
+
+    <section style="font-family: 'Easy Type Focus', system-ui, sans-serif">
+      <h2>Easy Type Focus</h2>
+      <p class="sample">
+        Extra word-room and a wider rhythm give this variant a breathing pulse
+        that encourages laser focus without interrupting flow.
+      </p>
+      <p class="meta">Weight: 400 / Regular · line-height: 1.6</p>
+    </section>
+
+    <section style="font-family: 'Easy Type Dyslexic', system-ui, sans-serif">
+      <h2>Easy Type Dyslexic</h2>
+      <p class="sample">
+        Open counters, generous weights, and a super-readable rhythm keep
+        each glyph distinct for tired or busy eyes.
+      </p>
+      <p class="meta">Weight: 400 / Regular · line-height: 1.6</p>
+    </section>
+  </div>
+</body>
+</html>

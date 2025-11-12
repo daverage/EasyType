@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EasyType Demo</title>
+  <style>
+    /*!
+ * EasyType Fonts
+ * Â© 2025 Andrzej Marczewski â€” SIL Open Font License 1.1
+ * Based on Noto Sans. Modifications: optical anchoring + spacing for neuro-inclusive readability.
+ */
+
+@font-face {
+  font-family: 'EasyType Sans';
+  src: url('fonts/web/EasyTypeSans-Regular.woff2') format('woff2'),
+       url('fonts/ttf/EasyTypeSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'EasyType Sans';
+  src: url('fonts/web/EasyTypeSans-Italic.woff2') format('woff2'),
+       url('fonts/ttf/EasyTypeSans-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'EasyType Sans';
+  src: url('fonts/web/EasyTypeSans-Bold.woff2') format('woff2'),
+       url('fonts/ttf/EasyTypeSans-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'EasyType Sans';
+  src: url('fonts/web/EasyTypeSans-BoldItalic.woff2') format('woff2'),
+       url('fonts/ttf/EasyTypeSans-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* EasyType Focus */
+@font-face {
+  font-family: 'EasyType Focus';
+  src: url('fonts/web/EasyTypeFocus-Regular.woff2') format('woff2'),
+       url('fonts/ttf/EasyTypeFocus-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'EasyType Focus';
+  src: url('fonts/web/EasyTypeFocus-Italic.woff2') format('woff2'),
+       url('fonts/ttf/EasyTypeFocus-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'EasyType Focus';
+  src: url('fonts/web/EasyTypeFocus-Bold.woff2') format('woff2'),
+       url('fonts/ttf/EasyTypeFocus-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'EasyType Focus';
+  src: url('fonts/web/EasyTypeFocus-BoldItalic.woff2') format('woff2'),
+       url('fonts/ttf/EasyTypeFocus-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* EasyType Dyslexic */
+@font-face {
+  font-family: 'EasyType Dyslexic';
+  src: url('fonts/web/EasyTypeDyslexic-Regular.woff2') format('woff2'),
+       url('fonts/ttf/EasyTypeDyslexic-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'EasyType Dyslexic';
+  src: url('fonts/web/EasyTypeDyslexic-Italic.woff2') format('woff2'),
+       url('fonts/ttf/EasyTypeDyslexic-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'EasyType Dyslexic';
+  src: url('fonts/web/EasyTypeDyslexic-Bold.woff2') format('woff2'),
+       url('fonts/ttf/EasyTypeDyslexic-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'EasyType Dyslexic';
+  src: url('fonts/web/EasyTypeDyslexic-BoldItalic.woff2') format('woff2'),
+       url('fonts/ttf/EasyTypeDyslexic-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+ 
+    :root {
+      --bg: #f9f8f5;
+      --card: #fff;
+      --border: #e3e1db;
+      --text: #212121;
+    }
+    html {
+      font-family: sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 2rem;
+    }
+    body {
+      margin: 0;
+    }
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+    h1 {
+      margin-bottom: 0.5rem;
+    }
+    h2 {
+      margin-top: 0.75rem;
+      margin-bottom: 0.25rem;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #5f5a53;
+    }
+    .sample {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin: 0.75rem 0;
+    }
+    .scripts {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      font-size: 0.95rem;
+      color: #3a3733;
+    }
+    .scripts span {
+      font-weight: 600;
+      margin-right: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+    .alphabet {
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: none;
+      color: #5f5a53;
+      margin-top: 0.35rem;
+    }
+    .meta {
+      font-size: 0.85rem;
+      color: #6e685f;
+    }
+    @font-face {
+      font-family: "Easy Type Sans";
+      font-style: normal;
+      font-weight: 400;
+      src: url("fonts/ttf/EasyTypeSans-Regular.ttf") format("truetype");
+    }
+    @font-face {
+      font-family: "Easy Type Focus";
+      font-style: normal;
+      font-weight: 400;
+      src: url("fonts/ttf/EasyTypeFocus-Regular.ttf") format("truetype");
+    }
+    @font-face {
+      font-family: "Easy Type Dyslexic";
+      font-style: normal;
+      font-weight: 400;
+      src: url("fonts/ttf/EasyTypeDyslexic-Regular.ttf") format("truetype");
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>EasyType Demo</h1>
+    <p>
+      Samples use the freshly built TTFs under <code>fonts/ttf</code>. The
+      deck below shows how each family handles the same text.
+    </p>
+  </header>
+
+  <div class="grid">
+    <section style="font-family: 'Easy Type Sans', system-ui, sans-serif">
+      <h2>Easy Type Sans</h2>
+      <p class="sample">
+        Calmly anchored opens, gentle spacing, and steady proportions create a
+        neutral cadence that remains comfortable over long paragraphs.
+      </p>
+      <div class="scripts">
+        <p class="sample">
+          <span>Latin</span>The quick brown fox jumps over the lazy dog, 0123456789.
+        </p>
+        <p class="sample">
+          <span>Greek</span>Γρήγορος καφέ αλεπού πηδάει πάνω από τον τεμπέλη σκύλο.
+        </p>
+        <p class="sample">
+          <span>Cyrillic</span>Съешь ещё этих мягких французских булок, да выпей же чаю.
+        </p>
+        <p class="alphabet">
+          Latin: ABCDEFGHIJKLMNOPQRSTUVWXYZ · abcdefghijklmnopqrstuvwxyz
+        </p>
+        <p class="alphabet">
+          Greek: ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ · αβγδεζηθικλμνξοπρστυφχψω
+        </p>
+        <p class="alphabet">
+          Cyrillic: АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ · абвгдеёжзийклмнопрстуфхцчшщъыьэюя
+        </p>
+      </div>
+      <p class="meta">Weight: 400 / Regular · line-height: 1.6</p>
+    </section>
+
+    <section style="font-family: 'Easy Type Focus', system-ui, sans-serif">
+      <h2>Easy Type Focus</h2>
+      <p class="sample">
+        Extra word-room and a wider rhythm give this variant a breathing pulse
+        that encourages laser focus without interrupting flow.
+      </p>
+      <div class="scripts">
+        <p class="sample">
+          <span>Latin</span>Pack my box with five dozen liquor jugs and keep calm focus.
+        </p>
+        <p class="sample">
+          <span>Greek</span>Ξεφύγαμε απʼ τις προβλέψιμες λέξεις και ξεκίνησε το ταξίδι των γραμμάτων.
+        </p>
+        <p class="sample">
+          <span>Cyrillic</span>Жизнь — театр, поэтому держите палитру слов в цвете.
+        </p>
+        <p class="alphabet">
+          Latin: ABCDEFGHIJKLMNOPQRSTUVWXYZ · abcdefghijklmnopqrstuvwxyz
+        </p>
+        <p class="alphabet">
+          Greek: ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ · αβγδεζηθικλμνξοπρστυφχψω
+        </p>
+        <p class="alphabet">
+          Cyrillic: АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ · абвгдеёжзийклмнопрстуфхцчшщъыьэюя
+        </p>
+      </div>
+      <p class="meta">Weight: 400 / Regular · line-height: 1.6</p>
+    </section>
+
+    <section style="font-family: 'Easy Type Dyslexic', system-ui, sans-serif">
+      <h2>Easy Type Dyslexic</h2>
+      <p class="sample">
+        Open counters, generous weights, and a super-readable rhythm keep
+        each glyph distinct for tired or busy eyes.
+      </p>
+      <div class="scripts">
+        <p class="sample">
+          <span>Latin</span>Sphinx of black quartz, judge my vow across calm eyes.
+        </p>
+        <p class="sample">
+          <span>Greek</span>Η δύναμη των γραμμάτων στηρίζει κάθε στίχο με σταθερά βήματα.
+        </p>
+        <p class="sample">
+          <span>Cyrillic</span>Фантастические слова скользят по строке словно утренняя дымка.
+        </p>
+        <p class="alphabet">
+          Latin: ABCDEFGHIJKLMNOPQRSTUVWXYZ · abcdefghijklmnopqrstuvwxyz
+        </p>
+        <p class="alphabet">
+          Greek: ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ · αβγδεζηθικλμνξοπρστυφχψω
+        </p>
+        <p class="alphabet">
+          Cyrillic: АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ · абвгдеёжзийклмнопрстуфхцчшщъыьэюя
+        </p>
+      </div>
+      <p class="meta">Weight: 400 / Regular · line-height: 1.6</p>
+    </section>
+  </div>
+</body>
+</html>

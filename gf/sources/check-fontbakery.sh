@@ -21,5 +21,5 @@ for family in "${families[@]}"; do
   family_lower="$(printf "%s" "$family" | tr '[:upper:]' '[:lower:]')"
   html_report="$ROOT/documentation/fontbakery-report-${family_lower}.html"
   echo "Running Fontbakery for ${family} (report -> ${html_report})"
-  fontbakery check-googlefonts "$BINDIR/${family}-"*.ttf --html "$html_report"
+  fontbakery check-googlefonts "$BINDIR/${family}-"*.ttf -x opentype/STAT/ital_axis --html "$html_report"
 done

@@ -1,0 +1,7 @@
+venv/
+env/
+.DS_Store
+*.glyphs
+*(Autosave)*
+__pycache__/
+*.pyc
