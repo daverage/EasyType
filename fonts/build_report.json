@@ -1,0 +1,181 @@
+{
+  "version": "1.0.2",
+  "built_at": "2026-04-08T12:58:04.884826+00:00",
+  "git_commit": "0a25bd81",
+  "families": {
+    "EasyType Sans": {
+      "Regular": {
+        "glyph_count": 2986,
+        "os2": {
+          "xHeight": 1152,
+          "ascender": 1984,
+          "descender": -494
+        },
+        "params": {
+          "anchor_strength": 0.25,
+          "xheight_factor": 1.03,
+          "letter_spacing": 1.06,
+          "word_spacing": 1.12
+        }
+      },
+      "Italic": {
+        "glyph_count": 2950,
+        "os2": {
+          "xHeight": 1152,
+          "ascender": 1984,
+          "descender": -494
+        },
+        "params": {
+          "anchor_strength": 0.25,
+          "xheight_factor": 1.03,
+          "letter_spacing": 1.06,
+          "word_spacing": 1.12
+        }
+      },
+      "Bold": {
+        "glyph_count": 2986,
+        "os2": {
+          "xHeight": 1152,
+          "ascender": 1984,
+          "descender": -494
+        },
+        "params": {
+          "anchor_strength": 0.25,
+          "xheight_factor": 1.03,
+          "letter_spacing": 1.06,
+          "word_spacing": 1.12
+        }
+      },
+      "BoldItalic": {
+        "glyph_count": 2950,
+        "os2": {
+          "xHeight": 1152,
+          "ascender": 1984,
+          "descender": -494
+        },
+        "params": {
+          "anchor_strength": 0.25,
+          "xheight_factor": 1.03,
+          "letter_spacing": 1.06,
+          "word_spacing": 1.12
+        }
+      }
+    },
+    "EasyType Focus": {
+      "Regular": {
+        "glyph_count": 2986,
+        "os2": {
+          "xHeight": 1185,
+          "ascender": 1984,
+          "descender": -494
+        },
+        "params": {
+          "anchor_strength": 0.4,
+          "xheight_factor": 1.06,
+          "letter_spacing": 1.14,
+          "word_spacing": 1.24
+        }
+      },
+      "Italic": {
+        "glyph_count": 2950,
+        "os2": {
+          "xHeight": 1185,
+          "ascender": 1984,
+          "descender": -494
+        },
+        "params": {
+          "anchor_strength": 0.4,
+          "xheight_factor": 1.06,
+          "letter_spacing": 1.14,
+          "word_spacing": 1.24
+        }
+      },
+      "Bold": {
+        "glyph_count": 2986,
+        "os2": {
+          "xHeight": 1185,
+          "ascender": 1984,
+          "descender": -494
+        },
+        "params": {
+          "anchor_strength": 0.4,
+          "xheight_factor": 1.06,
+          "letter_spacing": 1.14,
+          "word_spacing": 1.24
+        }
+      },
+      "BoldItalic": {
+        "glyph_count": 2950,
+        "os2": {
+          "xHeight": 1185,
+          "ascender": 1984,
+          "descender": -494
+        },
+        "params": {
+          "anchor_strength": 0.4,
+          "xheight_factor": 1.06,
+          "letter_spacing": 1.14,
+          "word_spacing": 1.24
+        }
+      }
+    },
+    "EasyType Steady": {
+      "Regular": {
+        "glyph_count": 2986,
+        "os2": {
+          "xHeight": 1230,
+          "ascender": 1984,
+          "descender": -494
+        },
+        "params": {
+          "anchor_strength": 0.55,
+          "xheight_factor": 1.1,
+          "letter_spacing": 1.22,
+          "word_spacing": 1.32
+        }
+      },
+      "Italic": {
+        "glyph_count": 2950,
+        "os2": {
+          "xHeight": 1230,
+          "ascender": 1984,
+          "descender": -494
+        },
+        "params": {
+          "anchor_strength": 0.55,
+          "xheight_factor": 1.1,
+          "letter_spacing": 1.22,
+          "word_spacing": 1.32
+        }
+      },
+      "Bold": {
+        "glyph_count": 2986,
+        "os2": {
+          "xHeight": 1230,
+          "ascender": 1984,
+          "descender": -494
+        },
+        "params": {
+          "anchor_strength": 0.55,
+          "xheight_factor": 1.1,
+          "letter_spacing": 1.22,
+          "word_spacing": 1.32
+        }
+      },
+      "BoldItalic": {
+        "glyph_count": 2950,
+        "os2": {
+          "xHeight": 1230,
+          "ascender": 1984,
+          "descender": -494
+        },
+        "params": {
+          "anchor_strength": 0.55,
+          "xheight_factor": 1.1,
+          "letter_spacing": 1.22,
+          "word_spacing": 1.32
+        }
+      }
+    }
+  }
+}

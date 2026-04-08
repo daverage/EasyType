@@ -1,0 +1,1052 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>EasyType v1 vs v2 Comparison</title>
+        <script>
+            if (window.location.hostname === "marczewski.me.uk") {
+                window.location.replace(
+                    `https://www.marczewski.me.uk${window.location.pathname}${window.location.search}${window.location.hash}`,
+                );
+            }
+        </script>
+        <style>
+            :root {
+                --bg: #f6f7f9;
+                --card: #ffffff;
+                --border: #d9dde3;
+                --text: #1e2933;
+                --muted: #5b6977;
+                --accent: #0f766e;
+                --accent-soft: #dff3f1;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                background: var(--bg);
+                color: var(--text);
+                font-family:
+                    system-ui,
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    "Segoe UI",
+                    sans-serif;
+            }
+
+            main {
+                width: min(1220px, calc(100% - 32px));
+                margin: 0 auto;
+                padding: 32px 0 48px;
+            }
+
+            h1 {
+                margin: 0 0 8px;
+                font-size: clamp(1.9rem, 4vw, 2.8rem);
+            }
+
+            .intro {
+                margin: 0 0 18px;
+                color: var(--muted);
+                max-width: 72ch;
+                line-height: 1.6;
+            }
+
+            .toolbar,
+            .status,
+            .row,
+            .style-label,
+            .panel {
+                background: var(--card);
+                border: 1px solid var(--border);
+                border-radius: 14px;
+            }
+
+            .toolbar,
+            .status {
+                padding: 14px 16px;
+                margin-bottom: 16px;
+            }
+
+            .toolbar {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 14px 20px;
+                align-items: end;
+            }
+
+            .control {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                min-width: 180px;
+            }
+
+            .control label {
+                font-size: 0.9rem;
+                font-weight: 600;
+                color: var(--accent);
+            }
+
+            .control select {
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                padding: 10px 12px;
+                background: #fff;
+                font: inherit;
+            }
+
+            .status {
+                color: var(--muted);
+                line-height: 1.5;
+            }
+
+            .status strong {
+                color: var(--text);
+            }
+
+            section {
+                margin-top: 28px;
+            }
+
+            .family-title {
+                margin: 0 0 12px;
+                font-size: 1.35rem;
+                color: var(--accent);
+            }
+
+            .grid {
+                display: grid;
+                gap: 16px;
+            }
+
+            .row {
+                display: grid;
+                grid-template-columns: 110px 1fr 1fr;
+                gap: 16px;
+                align-items: stretch;
+                padding: 16px;
+            }
+
+            .style-label,
+            .panel {
+                padding: 16px;
+            }
+
+            .style-label {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 700;
+                color: var(--accent);
+                text-align: center;
+                background: var(--accent-soft);
+            }
+
+            .panel h3 {
+                margin: 0 0 10px;
+                font-size: 0.95rem;
+                color: var(--muted);
+                font-family:
+                    system-ui,
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    "Segoe UI",
+                    sans-serif;
+            }
+
+            .sample {
+                font-size: 22px;
+                line-height: 1.65;
+                margin: 0;
+            }
+
+            .sample.paragraph {
+                font-size: 20px;
+            }
+
+            .hidden {
+                display: none !important;
+            }
+
+            .hint {
+                font-size: 0.92rem;
+                color: var(--muted);
+                margin-top: 18px;
+            }
+
+            @media (max-width: 840px) {
+                .row {
+                    grid-template-columns: 1fr;
+                }
+
+                .style-label {
+                    justify-content: flex-start;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <h1>EasyType v1 vs v2</h1>
+            <p class="intro">
+                This page compares the original web fonts in
+                <code>fontsv1</code> against the current build in
+                <code>fonts</code>. It now tries several likely folder locations
+                automatically, since website deploys often move the HTML file
+                relative to the font folders.
+            </p>
+
+            <div class="toolbar">
+                <div class="control">
+                    <label for="viewMode">View mode</label>
+                    <select id="viewMode">
+                        <option value="letters" selected>
+                            Ambiguous letters
+                        </option>
+                        <option value="paragraph">Paragraph text</option>
+                    </select>
+                </div>
+                <div class="control">
+                    <label for="layoutMode">Layout</label>
+                    <select id="layoutMode">
+                        <option value="split" selected>Side by side</option>
+                        <option value="stack">Stacked</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="status" id="fontStatus">
+                <strong>Loading fonts…</strong>
+            </div>
+
+            <section>
+                <h2 class="family-title">EasyType Sans</h2>
+                <div class="grid">
+                    <div class="row">
+                        <div class="style-label">Regular</div>
+                        <div class="panel">
+                            <h3>v1</h3>
+                            <p
+                                class="sample letters"
+                                data-family="EasyType Sans"
+                                data-version="V1"
+                                data-weight="400"
+                                data-style="normal"
+                            >
+                                b d p q h n i l 1 0 O<br />The quick brown fox
+                                jumps over the lazy dog. 0 1 2 3 4 5 6 7 8 9
+                            </p>
+                            <p
+                                class="sample paragraph hidden"
+                                data-family="EasyType Sans"
+                                data-version="V1"
+                                data-weight="400"
+                                data-style="normal"
+                            >
+                                Reading should feel calm and clear. Similar
+                                letters need enough structural difference that
+                                the eye can separate them quickly without
+                                second-guessing the word.
+                            </p>
+                        </div>
+                        <div class="panel">
+                            <h3>v2</h3>
+                            <p
+                                class="sample letters"
+                                data-family="EasyType Sans"
+                                data-version="V2"
+                                data-weight="400"
+                                data-style="normal"
+                            >
+                                b d p q h n i l 1 0 O<br />The quick brown fox
+                                jumps over the lazy dog. 0 1 2 3 4 5 6 7 8 9
+                            </p>
+                            <p
+                                class="sample paragraph hidden"
+                                data-family="EasyType Sans"
+                                data-version="V2"
+                                data-weight="400"
+                                data-style="normal"
+                            >
+                                Reading should feel calm and clear. Similar
+                                letters need enough structural difference that
+                                the eye can separate them quickly without
+                                second-guessing the word.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="style-label">Italic</div>
+                        <div class="panel">
+                            <h3>v1</h3>
+                            <p
+                                class="sample letters"
+                                data-family="EasyType Sans"
+                                data-version="V1"
+                                data-weight="400"
+                                data-style="italic"
+                            >
+                                b d p q h n i l 1 0 O<br />Sphinx of black
+                                quartz, judge my vow. 0 1 2 3 4 5 6 7 8 9
+                            </p>
+                            <p
+                                class="sample paragraph hidden"
+                                data-family="EasyType Sans"
+                                data-version="V1"
+                                data-weight="400"
+                                data-style="italic"
+                            >
+                                Italic should still preserve distinction between
+                                mirrored or near-mirrored forms, even when the
+                                slant adds extra visual complexity to the word
+                                shape.
+                            </p>
+                        </div>
+                        <div class="panel">
+                            <h3>v2</h3>
+                            <p
+                                class="sample letters"
+                                data-family="EasyType Sans"
+                                data-version="V2"
+                                data-weight="400"
+                                data-style="italic"
+                            >
+                                b d p q h n i l 1 0 O<br />Sphinx of black
+                                quartz, judge my vow. 0 1 2 3 4 5 6 7 8 9
+                            </p>
+                            <p
+                                class="sample paragraph hidden"
+                                data-family="EasyType Sans"
+                                data-version="V2"
+                                data-weight="400"
+                                data-style="italic"
+                            >
+                                Italic should still preserve distinction between
+                                mirrored or near-mirrored forms, even when the
+                                slant adds extra visual complexity to the word
+                                shape.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="style-label">Bold</div>
+                        <div class="panel">
+                            <h3>v1</h3>
+                            <p
+                                class="sample letters"
+                                data-family="EasyType Sans"
+                                data-version="V1"
+                                data-weight="700"
+                                data-style="normal"
+                            >
+                                b d p q h n i l 1 0 O<br />Pack my box with five
+                                dozen liquor jugs. 0 1 2 3 4 5 6 7 8 9
+                            </p>
+                            <p
+                                class="sample paragraph hidden"
+                                data-family="EasyType Sans"
+                                data-version="V1"
+                                data-weight="700"
+                                data-style="normal"
+                            >
+                                Bold text can make counters and stems feel
+                                tighter, so differences in x-height, feet,
+                                terminals, and descender direction are
+                                especially important here.
+                            </p>
+                        </div>
+                        <div class="panel">
+                            <h3>v2</h3>
+                            <p
+                                class="sample letters"
+                                data-family="EasyType Sans"
+                                data-version="V2"
+                                data-weight="700"
+                                data-style="normal"
+                            >
+                                b d p q h n i l 1 0 O<br />Pack my box with five
+                                dozen liquor jugs. 0 1 2 3 4 5 6 7 8 9
+                            </p>
+                            <p
+                                class="sample paragraph hidden"
+                                data-family="EasyType Sans"
+                                data-version="V2"
+                                data-weight="700"
+                                data-style="normal"
+                            >
+                                Bold text can make counters and stems feel
+                                tighter, so differences in x-height, feet,
+                                terminals, and descender direction are
+                                especially important here.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="style-label">Bold Italic</div>
+                        <div class="panel">
+                            <h3>v1</h3>
+                            <p
+                                class="sample letters"
+                                data-family="EasyType Sans"
+                                data-version="V1"
+                                data-weight="700"
+                                data-style="italic"
+                            >
+                                b d p q h n i l 1 0 O<br />Waltz, bad nymph, for
+                                quick jigs vex. 0 1 2 3 4 5 6 7 8 9
+                            </p>
+                            <p
+                                class="sample paragraph hidden"
+                                data-family="EasyType Sans"
+                                data-version="V1"
+                                data-weight="700"
+                                data-style="italic"
+                            >
+                                This is usually the hardest style for letter
+                                recognition, because both slant and weight
+                                reduce the margin for subtle shape differences.
+                            </p>
+                        </div>
+                        <div class="panel">
+                            <h3>v2</h3>
+                            <p
+                                class="sample letters"
+                                data-family="EasyType Sans"
+                                data-version="V2"
+                                data-weight="700"
+                                data-style="italic"
+                            >
+                                b d p q h n i l 1 0 O<br />Waltz, bad nymph, for
+                                quick jigs vex. 0 1 2 3 4 5 6 7 8 9
+                            </p>
+                            <p
+                                class="sample paragraph hidden"
+                                data-family="EasyType Sans"
+                                data-version="V2"
+                                data-weight="700"
+                                data-style="italic"
+                            >
+                                This is usually the hardest style for letter
+                                recognition, because both slant and weight
+                                reduce the margin for subtle shape differences.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="family-title">EasyType Focus</h2>
+                <div class="grid">
+                    <div class="row">
+                        <div class="style-label">Regular</div>
+                        <div class="panel">
+                            <h3>v1</h3>
+                            <p
+                                class="sample letters"
+                                data-family="EasyType Focus"
+                                data-version="V1"
+                                data-weight="400"
+                                data-style="normal"
+                            >
+                                b d p q h n i l 1 0 O<br />The quick brown fox
+                                jumps over the lazy dog. 0 1 2 3 4 5 6 7 8 9
+                            </p>
+                            <p
+                                class="sample paragraph hidden"
+                                data-family="EasyType Focus"
+                                data-version="V1"
+                                data-weight="400"
+                                data-style="normal"
+                            >
+                                Focus uses a wider rhythm, so compare both the
+                                ambiguous forms and the overall texture of the
+                                line when you move from v1 to v2.
+                            </p>
+                        </div>
+                        <div class="panel">
+                            <h3>v2</h3>
+                            <p
+                                class="sample letters"
+                                data-family="EasyType Focus"
+                                data-version="V2"
+                                data-weight="400"
+                                data-style="normal"
+                            >
+                                b d p q h n i l 1 0 O<br />The quick brown fox
+                                jumps over the lazy dog. 0 1 2 3 4 5 6 7 8 9
+                            </p>
+                            <p
+                                class="sample paragraph hidden"
+                                data-family="EasyType Focus"
+                                data-version="V2"
+                                data-weight="400"
+                                data-style="normal"
+                            >
+                                Focus uses a wider rhythm, so compare both the
+                                ambiguous forms and the overall texture of the
+                                line when you move from v1 to v2.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="style-label">Italic</div>
+                        <div class="panel">
+                            <h3>v1</h3>
+                            <p
+                                class="sample letters"
+                                data-family="EasyType Focus"
+                                data-version="V1"
+                                data-weight="400"
+                                data-style="italic"
+                            >
+                                b d p q h n i l 1 0 O<br />Sphinx of black
+                                quartz, judge my vow. 0 1 2 3 4 5 6 7 8 9
+                            </p>
+                            <p
+                                class="sample paragraph hidden"
+                                data-family="EasyType Focus"
+                                data-version="V1"
+                                data-weight="400"
+                                data-style="italic"
+                            >
+                                Look at how the slanted forms of b, d, p, and q
+                                feel as part of a moving line rather than as
+                                isolated glyphs.
+                            </p>
+                        </div>
+                        <div class="panel">
+                            <h3>v2</h3>
+                            <p
+                                class="sample letters"
+                                data-family="EasyType Focus"
+                                data-version="V2"
+                                data-weight="400"
+                                data-style="italic"
+                            >
+                                b d p q h n i l 1 0 O<br />Sphinx of black
+                                quartz, judge my vow. 0 1 2 3 4 5 6 7 8 9
+                            </p>
+                            <p
+                                class="sample paragraph hidden"
+                                data-family="EasyType Focus"
+                                data-version="V2"
+                                data-weight="400"
+                                data-style="italic"
+                            >
+                                Look at how the slanted forms of b, d, p, and q
+                                feel as part of a moving line rather than as
+                                isolated glyphs.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="style-label">Bold</div>
+                        <div class="panel">
+                            <h3>v1</h3>
+                            <p
+                                class="sample letters"
+                                data-family="EasyType Focus"
+                                data-version="V1"
+                                data-weight="700"
+                                data-style="normal"
+                            >
+                                b d p q h n i l 1 0 O<br />Pack my box with five
+                                dozen liquor jugs. 0 1 2 3 4 5 6 7 8 9
+                            </p>
+                            <p
+                                class="sample paragraph hidden"
+                                data-family="EasyType Focus"
+                                data-version="V1"
+                                data-weight="700"
+                                data-style="normal"
+                            >
+                                The goal is not dramatic redesign, but subtle
+                                enough structural signals that repeated reading
+                                produces fewer confusions and regressions.
+                            </p>
+                        </div>
+                        <div class="panel">
+                            <h3>v2</h3>
+                            <p
+                                class="sample letters"
+                                data-family="EasyType Focus"
+                                data-version="V2"
+                                data-weight="700"
+                                data-style="normal"
+                            >
+                                b d p q h n i l 1 0 O<br />Pack my box with five
+                                dozen liquor jugs. 0 1 2 3 4 5 6 7 8 9
+                            </p>
+                            <p
+                                class="sample paragraph hidden"
+                                data-family="EasyType Focus"
+                                data-version="V2"
+                                data-weight="700"
+                                data-style="normal"
+                            >
+                                The goal is not dramatic redesign, but subtle
+                                enough structural signals that repeated reading
+                                produces fewer confusions and regressions.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="style-label">Bold Italic</div>
+                        <div class="panel">
+                            <h3>v1</h3>
+                            <p
+                                class="sample letters"
+                                data-family="EasyType Focus"
+                                data-version="V1"
+                                data-weight="700"
+                                data-style="italic"
+                            >
+                                b d p q h n i l 1 0 O<br />Waltz, bad nymph, for
+                                quick jigs vex. 0 1 2 3 4 5 6 7 8 9
+                            </p>
+                            <p
+                                class="sample paragraph hidden"
+                                data-family="EasyType Focus"
+                                data-version="V1"
+                                data-weight="700"
+                                data-style="italic"
+                            >
+                                Compare the darker word shapes and see whether
+                                v2 keeps the same spacing comfort while
+                                separating lookalike letters more clearly.
+                            </p>
+                        </div>
+                        <div class="panel">
+                            <h3>v2</h3>
+                            <p
+                                class="sample letters"
+                                data-family="EasyType Focus"
+                                data-version="V2"
+                                data-weight="700"
+                                data-style="italic"
+                            >
+                                b d p q h n i l 1 0 O<br />Waltz, bad nymph, for
+                                quick jigs vex. 0 1 2 3 4 5 6 7 8 9
+                            </p>
+                            <p
+                                class="sample paragraph hidden"
+                                data-family="EasyType Focus"
+                                data-version="V2"
+                                data-weight="700"
+                                data-style="italic"
+                            >
+                                Compare the darker word shapes and see whether
+                                v2 keeps the same spacing comfort while
+                                separating lookalike letters more clearly.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="family-title">EasyType Steady</h2>
+                <div class="grid">
+                    <div class="row">
+                        <div class="style-label">Regular</div>
+                        <div class="panel">
+                            <h3>v1</h3>
+                            <p
+                                class="sample letters"
+                                data-family="EasyType Steady"
+                                data-version="V1"
+                                data-weight="400"
+                                data-style="normal"
+                            >
+                                b d p q h n i l 1 0 O<br />The quick brown fox
+                                jumps over the lazy dog. 0 1 2 3 4 5 6 7 8 9
+                            </p>
+                            <p
+                                class="sample paragraph hidden"
+                                data-family="EasyType Steady"
+                                data-version="V1"
+                                data-weight="400"
+                                data-style="normal"
+                            >
+                                Steady is the strongest variant, so this is
+                                where x-height changes and disambiguation tweaks
+                                should be easiest to spot from one version to
+                                the next.
+                            </p>
+                        </div>
+                        <div class="panel">
+                            <h3>v2</h3>
+                            <p
+                                class="sample letters"
+                                data-family="EasyType Steady"
+                                data-version="V2"
+                                data-weight="400"
+                                data-style="normal"
+                            >
+                                b d p q h n i l 1 0 O<br />The quick brown fox
+                                jumps over the lazy dog. 0 1 2 3 4 5 6 7 8 9
+                            </p>
+                            <p
+                                class="sample paragraph hidden"
+                                data-family="EasyType Steady"
+                                data-version="V2"
+                                data-weight="400"
+                                data-style="normal"
+                            >
+                                Steady is the strongest variant, so this is
+                                where x-height changes and disambiguation tweaks
+                                should be easiest to spot from one version to
+                                the next.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="style-label">Italic</div>
+                        <div class="panel">
+                            <h3>v1</h3>
+                            <p
+                                class="sample letters"
+                                data-family="EasyType Steady"
+                                data-version="V1"
+                                data-weight="400"
+                                data-style="italic"
+                            >
+                                b d p q h n i l 1 0 O<br />Sphinx of black
+                                quartz, judge my vow. 0 1 2 3 4 5 6 7 8 9
+                            </p>
+                            <p
+                                class="sample paragraph hidden"
+                                data-family="EasyType Steady"
+                                data-version="V1"
+                                data-weight="400"
+                                data-style="italic"
+                            >
+                                In italics, check whether the raised lowercase
+                                still leaves enough separation from ascenders
+                                while improving recognition in the x-height
+                                band.
+                            </p>
+                        </div>
+                        <div class="panel">
+                            <h3>v2</h3>
+                            <p
+                                class="sample letters"
+                                data-family="EasyType Steady"
+                                data-version="V2"
+                                data-weight="400"
+                                data-style="italic"
+                            >
+                                b d p q h n i l 1 0 O<br />Sphinx of black
+                                quartz, judge my vow. 0 1 2 3 4 5 6 7 8 9
+                            </p>
+                            <p
+                                class="sample paragraph hidden"
+                                data-family="EasyType Steady"
+                                data-version="V2"
+                                data-weight="400"
+                                data-style="italic"
+                            >
+                                In italics, check whether the raised lowercase
+                                still leaves enough separation from ascenders
+                                while improving recognition in the x-height
+                                band.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="style-label">Bold</div>
+                        <div class="panel">
+                            <h3>v1</h3>
+                            <p
+                                class="sample letters"
+                                data-family="EasyType Steady"
+                                data-version="V1"
+                                data-weight="700"
+                                data-style="normal"
+                            >
+                                b d p q h n i l 1 0 O<br />Pack my box with five
+                                dozen liquor jugs. 0 1 2 3 4 5 6 7 8 9
+                            </p>
+                            <p
+                                class="sample paragraph hidden"
+                                data-family="EasyType Steady"
+                                data-version="V1"
+                                data-weight="700"
+                                data-style="normal"
+                            >
+                                This is a good row for checking whether h and n
+                                stay clearly separated while b, d, p, and q gain
+                                more directional identity.
+                            </p>
+                        </div>
+                        <div class="panel">
+                            <h3>v2</h3>
+                            <p
+                                class="sample letters"
+                                data-family="EasyType Steady"
+                                data-version="V2"
+                                data-weight="700"
+                                data-style="normal"
+                            >
+                                b d p q h n i l 1 0 O<br />Pack my box with five
+                                dozen liquor jugs. 0 1 2 3 4 5 6 7 8 9
+                            </p>
+                            <p
+                                class="sample paragraph hidden"
+                                data-family="EasyType Steady"
+                                data-version="V2"
+                                data-weight="700"
+                                data-style="normal"
+                            >
+                                This is a good row for checking whether h and n
+                                stay clearly separated while b, d, p, and q gain
+                                more directional identity.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="style-label">Bold Italic</div>
+                        <div class="panel">
+                            <h3>v1</h3>
+                            <p
+                                class="sample letters"
+                                data-family="EasyType Steady"
+                                data-version="V1"
+                                data-weight="700"
+                                data-style="italic"
+                            >
+                                b d p q h n i l 1 0 O<br />Waltz, bad nymph, for
+                                quick jigs vex.0 1 2 3 4 5 6 7 8 9
+                            </p>
+                            <p
+                                class="sample paragraph hidden"
+                                data-family="EasyType Steady"
+                                data-version="V1"
+                                data-weight="700"
+                                data-style="italic"
+                            >
+                                If the new build is working as intended, this
+                                row should make the mirrored pairs feel a little
+                                less interchangeable without looking forced.
+                            </p>
+                        </div>
+                        <div class="panel">
+                            <h3>v2</h3>
+                            <p
+                                class="sample letters"
+                                data-family="EasyType Steady"
+                                data-version="V2"
+                                data-weight="700"
+                                data-style="italic"
+                            >
+                                b d p q h n i l 1 0 O<br />Waltz, bad nymph, for
+                                quick jigs vex.0 1 2 3 4 5 6 7 8 9
+                            </p>
+                            <p
+                                class="sample paragraph hidden"
+                                data-family="EasyType Steady"
+                                data-version="V2"
+                                data-weight="700"
+                                data-style="italic"
+                            >
+                                If the new build is working as intended, this
+                                row should make the mirrored pairs feel a little
+                                less interchangeable without looking forced.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <p class="hint">
+                Tip: focus on b/d, p/q, lowercase l, the x-height area, and
+                whether h still feels taller than n in Steady.
+            </p>
+        </main>
+
+        <script>
+            const FONT_MAP = {
+                "EasyType Sans": "EasyTypeSans",
+                "EasyType Focus": "EasyTypeFocus",
+                "EasyType Steady": "EasyTypeSteady",
+            };
+
+            const STYLE_MAP = {
+                "400-normal": "Regular",
+                "400-italic": "Italic",
+                "700-normal": "Bold",
+                "700-italic": "BoldItalic",
+            };
+
+            const VERSION_DIR = {
+                V1: "fontsv1",
+                V2: "fonts",
+            };
+
+            const BASE_CANDIDATES = [
+                ".",
+                "..",
+                "../..",
+                "../../..",
+                "/easytype",
+                "/",
+            ];
+
+            const fontStatus = document.getElementById("fontStatus");
+            const viewMode = document.getElementById("viewMode");
+            const layoutMode = document.getElementById("layoutMode");
+
+            function fileName(family, weight, style) {
+                const familyToken = FONT_MAP[family];
+                const styleToken = STYLE_MAP[`${weight}-${style}`];
+                return `${familyToken}-${styleToken}.woff2`;
+            }
+
+            function buildCandidateUrls(versionKey, family, weight, style) {
+                const versionDir = VERSION_DIR[versionKey];
+                const targetFile = fileName(family, weight, style);
+                const relativePaths = BASE_CANDIDATES.map((base) => {
+                    if (base === "/") {
+                        return `/${versionDir}/web/${targetFile}`;
+                    }
+                    return `${base}/${versionDir}/web/${targetFile}`;
+                });
+                return [...new Set(relativePaths)].map(
+                    (path) => new URL(path, window.location.href).href,
+                );
+            }
+
+            async function resolveBase(versionKey, family, weight, style) {
+                const candidates = buildCandidateUrls(
+                    versionKey,
+                    family,
+                    weight,
+                    style,
+                );
+                for (const candidate of candidates) {
+                    try {
+                        const response = await fetch(candidate, {
+                            method: "HEAD",
+                            cache: "no-store",
+                        });
+                        if (response.ok) {
+                            return candidate;
+                        }
+                    } catch (error) {
+                        continue;
+                    }
+                }
+                return null;
+            }
+
+            async function loadFont(family, versionKey, weight, style) {
+                const fontFamily = `${family} ${versionKey}`;
+                const source = await resolveBase(
+                    versionKey,
+                    family,
+                    weight,
+                    style,
+                );
+                if (!source) {
+                    throw new Error(
+                        `Could not find ${fontFamily} ${weight} ${style}`,
+                    );
+                }
+                const fontFace = new FontFace(
+                    fontFamily,
+                    `url("${source}") format("woff2")`,
+                    {
+                        weight,
+                        style,
+                        display: "swap",
+                    },
+                );
+                await fontFace.load();
+                document.fonts.add(fontFace);
+                return source;
+            }
+
+            function applyViewMode() {
+                const showParagraph = viewMode.value === "paragraph";
+                document.querySelectorAll(".letters").forEach((element) => {
+                    element.classList.toggle("hidden", showParagraph);
+                });
+                document.querySelectorAll(".paragraph").forEach((element) => {
+                    element.classList.toggle("hidden", !showParagraph);
+                });
+            }
+
+            function applyLayoutMode() {
+                const stacked = layoutMode.value === "stack";
+                document.querySelectorAll(".row").forEach((row) => {
+                    row.style.gridTemplateColumns = stacked ? "1fr" : "";
+                });
+            }
+
+            function applyFontFamilies() {
+                document
+                    .querySelectorAll("[data-family]")
+                    .forEach((element) => {
+                        element.style.fontFamily = `'${element.dataset.family} ${element.dataset.version}', system-ui, sans-serif`;
+                        element.style.fontWeight = element.dataset.weight;
+                        element.style.fontStyle = element.dataset.style;
+                    });
+            }
+
+            async function init() {
+                const jobs = [];
+                const loaded = [];
+                const failed = [];
+                const combos = new Set();
+
+                document
+                    .querySelectorAll("[data-family]")
+                    .forEach((element) => {
+                        combos.add(
+                            [
+                                element.dataset.family,
+                                element.dataset.version,
+                                element.dataset.weight,
+                                element.dataset.style,
+                            ].join("|"),
+                        );
+                    });
+
+                for (const combo of combos) {
+                    const [family, versionKey, weight, style] =
+                        combo.split("|");
+                    jobs.push(
+                        loadFont(family, versionKey, weight, style)
+                            .then((source) =>
+                                loaded.push(
+                                    `${family} ${versionKey} ${weight}/${style} <- ${source}`,
+                                ),
+                            )
+                            .catch((error) => failed.push(error.message)),
+                    );
+                }
+
+                await Promise.all(jobs);
+                applyFontFamilies();
+                applyViewMode();
+                applyLayoutMode();
+
+                if (failed.length === 0) {
+                    fontStatus.innerHTML = `<strong>Fonts loaded.</strong> The page found both <code>fontsv1</code> and <code>fonts</code> automatically.`;
+                } else {
+                    fontStatus.innerHTML = `<strong>Some fonts did not load.</strong><br>${failed.join("<br>")}<br><br>Try placing this page so it sits beside the <code>fonts</code> and <code>fontsv1</code> folders, or edit <code>BASE_CANDIDATES</code> in this file for your deployment path.`;
+                }
+            }
+
+            viewMode.addEventListener("change", applyViewMode);
+            layoutMode.addEventListener("change", applyLayoutMode);
+            init();
+        </script>
+    </body>
+</html>

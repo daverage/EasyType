@@ -1,0 +1,87 @@
+[
+  {
+    "id": "missed_train",
+    "title": "The Missed Train",
+    "text": "Ravi reached the station just as the doors slid shut. He had left home early but paused to help a tourist who looked completely lost. Now the train was pulling away without him, and he knew he would be late for work. Still, as he watched it roll down the tracks, he smiled. At least someone else made it on time because he stopped.",
+    "questions": [
+      {
+        "q": "Why did Ravi miss his train?",
+        "choices": ["He stopped to help someone", "He overslept", "He took the wrong train", "He left home late"],
+        "a": 0
+      },
+      {
+        "q": "How does Ravi feel in the end?",
+        "choices": ["Calm", "Angry", "Guilty", "Worried"],
+        "a": 0
+      }
+    ]
+  },
+  {
+    "id": "coffee_break",
+    "title": "The Coffee Break",
+    "text": "Amira poured a cup of coffee and let the steam rise toward her face. She usually sticks with tea, but today her hands were still tense from a tough meeting with her manager. She needed something stronger, something that smelled like focus. The coffee scent filled the small office and slowed her breathing until she felt steady again.",
+    "questions": [
+      {
+        "q": "What drink does Amira usually have?",
+        "choices": ["Tea", "Coffee", "Juice", "Water"],
+        "a": 0
+      },
+      {
+        "q": "Why does she choose coffee today?",
+        "choices": ["She feels tense", "She feels sleepy", "She is celebrating", "She is cold"],
+        "a": 0
+      }
+    ]
+  },
+  {
+    "id": "video_call",
+    "title": "The Video Call",
+    "text": "Before the weekly video call, Ravi checked his microphone and camera twice. Last time the sound cut out halfway through his story and no one heard the best part. This time everything worked. He retold the story, his teammates finally laughed, and he relaxed into the conversation instead of watching it happen without him.",
+    "questions": [
+      {
+        "q": "What went wrong last time?",
+        "choices": ["His sound failed", "He stayed on mute", "He was late", "He lost connection"],
+        "a": 0
+      },
+      {
+        "q": "How does Ravi feel this time?",
+        "choices": ["Relieved", "Nervous", "Confused", "Bored"],
+        "a": 0
+      }
+    ]
+  },
+  {
+    "id": "rainy_walk",
+    "title": "The Rainy Walk",
+    "text": "Tom walked through a light rain toward the corner shop. He had forgotten his umbrella again, but the drizzle helped him think, so he kept walking. By the time he arrived, his hair was damp and his thoughts were clear. He grabbed a loaf of bread, nodded at the cashier, and headed home with a small smile.",
+    "questions": [
+      {
+        "q": "What did Tom forget to bring?",
+        "choices": ["His umbrella", "His wallet", "His keys", "His bag"],
+        "a": 0
+      },
+      {
+        "q": "How does Tom feel about the rain?",
+        "choices": ["He enjoys it", "He avoids it", "He fears it", "He dislikes it"],
+        "a": 0
+      }
+    ]
+  },
+  {
+    "id": "lost_password",
+    "title": "The Lost Password",
+    "text": "Sophie stared at the login screen, typing one password after another. Every time the site flashed wrong password. With a sigh she clicked “Forgot password?” for the third time that month and opened her email for the reset link. She promised herself she would finally write it down somewhere safe so she wouldn’t get stuck again.",
+    "questions": [
+      {
+        "q": "What problem is Sophie having?",
+        "choices": ["She forgot her password", "Her computer froze", "The site is offline", "She typed too slowly"],
+        "a": 0
+      },
+      {
+        "q": "What does she plan to do next time?",
+        "choices": ["Save her password", "Ask for help", "Stop using the site", "Make a new account"],
+        "a": 0
+      }
+    ]
+  }
+]
