@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>EasyType — Glyph Viewer</title>
+        <style>
+            :root {
+                --ink: #1a1916;
+                --paper: #f5f3ef;
+                --muted: #9a9690;
+                --rule: #e2dfd8;
+                --accent: #9841ff;
+                --cell: #fff;
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                background: var(--paper);
+                color: var(--ink);
+                font-family: "Georgia", serif;
+                min-height: 100vh;
+            }
+
+            header {
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                background: var(--paper);
+                border-bottom: 1px solid var(--rule);
+                padding: 1rem 2rem;
+                display: flex;
+                align-items: center;
+                gap: 2rem;
+                flex-wrap: wrap;
+            }
+
+            .wordmark {
+                font-size: 1.1rem;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: var(--accent);
+                font-family: sans-serif;
+                font-weight: 700;
+            }
+
+            .controls {
+                display: flex;
+                align-items: center;
+                gap: 1.5rem;
+                flex-wrap: wrap;
+            }
+
+            .control {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            label {
+                font-size: 0.7rem;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: var(--muted);
+                font-family: sans-serif;
+            }
+
+            select {
+                appearance: none;
+                background: var(--cell);
+                border: 1px solid var(--rule);
+                border-radius: 4px;
+                padding: 0.35rem 2rem 0.35rem 0.6rem;
+                font-size: 0.85rem;
+                font-family: sans-serif;
+                color: var(--ink);
+                cursor: pointer;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%239a9690'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 0.5rem center;
+            }
+
+            select:focus {
+                outline: none;
+                border-color: var(--accent);
+            }
+
+            input[type="range"] {
+                width: 80px;
+                accent-color: var(--accent);
+            }
+
+            #size-label {
+                font-size: 0.75rem;
+                font-family: sans-serif;
+                color: var(--muted);
+                min-width: 2rem;
+            }
+
+            .count {
+                margin-left: auto;
+                font-size: 0.75rem;
+                font-family: sans-serif;
+                color: var(--muted);
+            }
+
+            .count strong {
+                color: var(--accent);
+            }
+
+            /* Specimen strip */
+            #specimen {
+                padding: 1.5rem 2rem;
+                border-bottom: 1px solid var(--rule);
+                background: var(--cell);
+            }
+
+            #spec-label {
+                font-size: 0.65rem;
+                text-transform: uppercase;
+                letter-spacing: 0.12em;
+                color: var(--muted);
+                font-family: sans-serif;
+                margin-bottom: 0.5rem;
+            }
+
+            #spec-text {
+                font-size: 36px;
+                letter-spacing: 0.08em;
+                line-height: 1.4;
+                color: var(--ink);
+            }
+
+            /* Loading state */
+            #loading {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 6rem;
+                font-family: sans-serif;
+                font-size: 0.85rem;
+                color: var(--muted);
+                gap: 0.75rem;
+            }
+
+            .spinner {
+                width: 16px;
+                height: 16px;
+                border: 2px solid var(--rule);
+                border-top-color: var(--accent);
+                border-radius: 50%;
+                animation: spin 0.7s linear infinite;
+            }
+
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            /* Grid */
+            #grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+                gap: 1px;
+                background: var(--rule);
+                border-top: 1px solid var(--rule);
+            }
+
+            .cell {
+                background: var(--cell);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                padding: 0.75rem 0.5rem 0.6rem;
+                cursor: default;
+                transition: background 0.1s;
+                min-height: 80px;
+            }
+
+            .cell:hover {
+                background: #f0edf7;
+                cursor: copy;
+            }
+
+            .cell.wedge {
+                background: #fdf8ff;
+            }
+
+            .cell.wedge:hover {
+                background: #ede0ff;
+            }
+
+            .glyph {
+                line-height: 1;
+                user-select: none;
+            }
+
+            .cp {
+                font-size: 0.55rem;
+                font-family: "SF Mono", "Fira Code", monospace;
+                color: var(--muted);
+                letter-spacing: 0.02em;
+            }
+
+            /* Copied flash */
+            .cell.copied {
+                background: #e8f5e9 !important;
+            }
+
+            /* Tooltip */
+            #tip {
+                position: fixed;
+                pointer-events: none;
+                z-index: 200;
+                background: var(--ink);
+                color: var(--paper);
+                border-radius: 6px;
+                padding: 0.6rem 0.85rem;
+                font-family: sans-serif;
+                font-size: 0.75rem;
+                line-height: 1.6;
+                white-space: nowrap;
+                display: none;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+            }
+
+            #tip .tip-glyph {
+                font-size: 1.6rem;
+                display: block;
+                margin-bottom: 4px;
+                line-height: 1;
+            }
+
+            #tip .tip-meta {
+                color: #aaa;
+                font-size: 0.7rem;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <div class="wordmark">EasyType</div>
+
+            <div class="controls">
+                <div class="control">
+                    <label for="fam">Family</label>
+                    <select id="fam">
+                        <option>EasyType Sans</option>
+                        <option>EasyType Focus</option>
+                        <option>EasyType Steady</option>
+                    </select>
+                </div>
+
+                <div class="control">
+                    <label for="sty">Style</label>
+                    <select id="sty">
+                        <option>Regular</option>
+                        <option>Italic</option>
+                        <option>Bold</option>
+                        <option value="BoldItalic">Bold Italic</option>
+                    </select>
+                </div>
+
+                <div class="control">
+                    <label for="sz">Size</label>
+                    <input type="range" id="sz" min="16" max="80" value="32" />
+                    <span id="size-label">32px</span>
+                </div>
+            </div>
+
+            <div class="count"><strong id="cnt">—</strong> glyphs</div>
+        </header>
+
+        <div id="specimen">
+            <div id="spec-label">Disambiguation specimen</div>
+            <div id="spec-text">b d p q h n i l 1 0 O</div>
+        </div>
+
+        <div id="loading">
+            <div class="spinner"></div>
+            Loading font…
+        </div>
+        <div id="grid" style="display: none"></div>
+
+        <div id="tip"></div>
+
+        <script>
+            const FONTS = {
+                "EasyType Sans": { key: "EasyTypeSans" },
+                "EasyType Focus": { key: "EasyTypeFocus" },
+                "EasyType Steady": { key: "EasyTypeSteady" },
+            };
+
+            const STYLE_MAP = {
+                Regular: "Regular",
+                Italic: "Italic",
+                Bold: "Bold",
+                BoldItalic: "BoldItalic",
+            };
+
+            // Codepoints that received wedge disambiguation
+            const WEDGE = new Set([
+                0x0062, 0x0070, 0x00fe, 0x0431, 0x044a, 0x044c, 0x0440, 0x03c1,
+                0x03b2,
+            ]);
+
+            let glyphs = [];
+            let loadedFace = null;
+
+            const famSel = document.getElementById("fam");
+            const stySel = document.getElementById("sty");
+            const szInput = document.getElementById("sz");
+            const szLabel = document.getElementById("size-label");
+            const loading = document.getElementById("loading");
+            const grid = document.getElementById("grid");
+            const specText = document.getElementById("spec-text");
+            const tip = document.getElementById("tip");
+            const cnt = document.getElementById("cnt");
+
+            famSel.addEventListener("change", load);
+            stySel.addEventListener("change", load);
+            szInput.addEventListener("input", () => {
+                szLabel.textContent = szInput.value + "px";
+                document
+                    .querySelectorAll(".glyph")
+                    .forEach(
+                        (el) => (el.style.fontSize = szInput.value + "px"),
+                    );
+                specText.style.fontSize =
+                    Math.min(parseInt(szInput.value) * 1.1, 60) + "px";
+            });
+
+            async function load() {
+                loading.style.display = "flex";
+                grid.style.display = "none";
+
+                const famKey = FONTS[famSel.value].key;
+                const styKey =
+                    stySel.value === "Bold Italic"
+                        ? "BoldItalic"
+                        : stySel.value;
+                const path = `fonts/web/${famKey}-${styKey}.woff2`;
+                const fontName = `ET-${famKey}-${styKey}`;
+
+                // Remove previous face if any
+                if (loadedFace) {
+                    document.fonts.delete(loadedFace);
+                    loadedFace = null;
+                }
+
+                try {
+                    const face = new FontFace(fontName, `url(${path})`);
+                    await face.load();
+                    document.fonts.add(face);
+                    loadedFace = face;
+                } catch (e) {
+                    loading.innerHTML = `<span style="color:#c0392b">Failed to load ${path}</span>`;
+                    return;
+                }
+
+                // Read cmap
+                try {
+                    const resp = await fetch(path);
+                    const buf = await resp.arrayBuffer();
+                    glyphs = parseCmap(new Uint8Array(buf));
+                } catch (e) {
+                    glyphs = fallbackRange();
+                }
+
+                specText.style.fontFamily = `'${fontName}', sans-serif`;
+                renderGrid(fontName);
+            }
+
+            function renderGrid(fontName) {
+                grid.innerHTML = "";
+                const sz = parseInt(szInput.value);
+                const frag = document.createDocumentFragment();
+
+                for (const cp of glyphs) {
+                    if (cp < 0x0020) continue;
+                    const char = String.fromCodePoint(cp);
+                    const hex =
+                        "U+" + cp.toString(16).toUpperCase().padStart(4, "0");
+                    const isWedge = WEDGE.has(cp);
+
+                    const cell = document.createElement("div");
+                    cell.className = "cell" + (isWedge ? " wedge" : "");
+
+                    const g = document.createElement("div");
+                    g.className = "glyph";
+                    g.textContent = char;
+                    g.style.fontSize = sz + "px";
+                    g.style.fontFamily = `'${fontName}', sans-serif`;
+
+                    const c = document.createElement("div");
+                    c.className = "cp";
+                    c.textContent = hex;
+
+                    cell.appendChild(g);
+                    cell.appendChild(c);
+
+                    cell.addEventListener("click", () => {
+                        navigator.clipboard?.writeText(char);
+                        cell.classList.add("copied");
+                        setTimeout(() => cell.classList.remove("copied"), 600);
+                    });
+
+                    cell.addEventListener("mouseenter", (e) =>
+                        showTip(e, char, hex, cp, fontName, isWedge),
+                    );
+                    cell.addEventListener("mousemove", (e) => moveTip(e));
+                    cell.addEventListener("mouseleave", hideTip);
+
+                    frag.appendChild(cell);
+                }
+
+                grid.appendChild(frag);
+                cnt.textContent = glyphs.length;
+                loading.style.display = "none";
+                grid.style.display = "grid";
+            }
+
+            function showTip(e, char, hex, cp, fontName, isWedge) {
+                tip.innerHTML =
+                    `<span class="tip-glyph" style="font-family:'${fontName}',sans-serif">${char}</span>` +
+                    `<strong>${hex}</strong><br>` +
+                    `<span class="tip-meta">Decimal ${cp}${isWedge ? " · wedge disambiguated" : ""}</span><br>` +
+                    `<span class="tip-meta" style="color:#7a7">Click to copy</span>`;
+                tip.style.display = "block";
+                moveTip(e);
+            }
+
+            function moveTip(e) {
+                tip.style.left = e.clientX + 14 + "px";
+                tip.style.top = e.clientY + 14 + "px";
+            }
+
+            function hideTip() {
+                tip.style.display = "none";
+            }
+
+            // ── cmap parser ──────────────────────────────────────────────────────────────
+
+            function parseCmap(data) {
+                const codepoints = new Set();
+                const numTables = u16(data, 4);
+                let cmapOff = 0;
+
+                for (let i = 0; i < numTables; i++) {
+                    const off = 12 + i * 16;
+                    const tag = String.fromCharCode(
+                        data[off],
+                        data[off + 1],
+                        data[off + 2],
+                        data[off + 3],
+                    );
+                    if (tag === "cmap") {
+                        cmapOff = u32(data, off + 8);
+                        break;
+                    }
+                }
+
+                if (!cmapOff) return fallbackRange();
+
+                const subs = u16(data, cmapOff + 2);
+                for (let i = 0; i < subs; i++) {
+                    const off = cmapOff + 4 + i * 8;
+                    const subOff = cmapOff + u32(data, off + 4);
+                    const fmt = u16(data, subOff);
+                    if (fmt === 4) fmt4(data, subOff, codepoints);
+                    if (fmt === 12) fmt12(data, subOff, codepoints);
+                }
+
+                return [...codepoints].sort((a, b) => a - b);
+            }
+
+            function fmt4(data, off, set) {
+                const segCount = u16(data, off + 6) / 2;
+                const endOff = off + 14;
+                const startOff = endOff + segCount * 2 + 2;
+                const deltaOff = startOff + segCount * 2;
+                const rangeOff = deltaOff + segCount * 2;
+
+                for (let i = 0; i < segCount; i++) {
+                    const end = u16(data, endOff + i * 2);
+                    const start = u16(data, startOff + i * 2);
+                    const delta = u16(data, deltaOff + i * 2);
+                    const range = u16(data, rangeOff + i * 2);
+                    if (start === 0xffff) continue;
+                    for (let c = start; c <= end; c++) {
+                        if (range === 0) {
+                            set.add((c + delta) & 0xffff);
+                        } else {
+                            const idx =
+                                rangeOff + i * 2 + range + 2 * (c - start);
+                            const gid = u16(data, idx);
+                            if (gid !== 0) set.add((c + delta) & 0xffff);
+                        }
+                    }
+                }
+            }
+
+            function fmt12(data, off, set) {
+                const groups = u32(data, off + 12);
+                for (let i = 0; i < groups; i++) {
+                    const base = off + 16 + i * 12;
+                    const start = u32(data, base);
+                    const end = u32(data, base + 4);
+                    for (let c = start; c <= end; c++) set.add(c);
+                }
+            }
+
+            function u16(d, o) {
+                return (d[o] << 8) | d[o + 1];
+            }
+            function u32(d, o) {
+                return (
+                    ((d[o] << 24) |
+                        (d[o + 1] << 16) |
+                        (d[o + 2] << 8) |
+                        d[o + 3]) >>>
+                    0
+                );
+            }
+
+            function fallbackRange() {
+                const out = [];
+                const ranges = [
+                    [0x0020, 0x024f],
+                    [0x0370, 0x03ff],
+                    [0x0400, 0x04ff],
+                    [0x1e00, 0x1eff],
+                    [0x2010, 0x2027],
+                    [0x20ac, 0x20ac],
+                    [0x2212, 0x2212],
+                    [0xfb01, 0xfb02],
+                ];
+                for (const [lo, hi] of ranges)
+                    for (let c = lo; c <= hi; c++) out.push(c);
+                return out;
+            }
+
+            // Boot
+            load();
+        </script>
+    </body>
+</html>
