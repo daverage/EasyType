@@ -14,7 +14,7 @@ I live with both ADHD and dyslexia, and EasyType started as a personal experimen
 |------|--------------|
 | **EasyType Sans** | Neutral rhythm and mild anchoring for everyday interfaces and long-form text. |
 | **EasyType Focus** | Wider letter and word spacing to support attentional flow and reduce visual crowding. |
-| **EasyType Dyslexic** | Higher x-height, stronger entry anchors, and open counters for maximum clarity under reading pressure. |
+| **EasyType Steady** | Higher x-height, stronger entry anchors, and open counters for maximum clarity under reading pressure. |
 
 Each family includes:
 - Regular, Italic, Bold, and Bold Italic styles  

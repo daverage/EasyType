@@ -9,7 +9,7 @@ BINDIR="$ROOT/fonts/ttf"
 families=(
   EasyTypeSans
   EasyTypeFocus
-  EasyTypeDyslexic
+  EasyTypeSteady
 )
 
 if ! command -v fontbakery &> /dev/null; then

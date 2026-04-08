@@ -17,7 +17,7 @@ scripts/rebuild_and_packager.sh /path/to/google/fonts [commit]
 
 ## Behavior
 
-1. Regenerates metadata for EasyType Sans, Focus, and Dyslexic via `scripts/generate_packager_metadata.py`.
+1. Regenerates metadata for EasyType Sans, Focus, and Steady via `scripts/generate_packager_metadata.py`.
 2. For each family, removes its corresponding `ofl/<slug>` folder in the Google Fonts clone before invoking `gftools packager`, ensuring the latest assets land in a clean directory.
 3. Requires `GH_TOKEN`, because `gftools packager` downloads the upstream EasyType sources.
 

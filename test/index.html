@@ -23,8 +23,8 @@
       font-display: swap;
     }
     @font-face {
-      font-family: "EasyType Dyslexic";
-      src: url("../fonts/web/EasyTypeDyslexic-Regular.woff2") format("woff2");
+      font-family: "EasyType Steady";
+      src: url("../fonts/web/EasyTypeSteady-Regular.woff2") format("woff2");
       font-display: swap;
     }
     @font-face {
@@ -125,9 +125,9 @@
       padding: clamp(1.5rem, 5vw, 2.75rem) clamp(1.25rem, 4vw, 1.75rem) clamp(3rem, 6vw, 4rem);
     }
     .font-easytype-focus { font-family: "EasyType Focus", "EasyType", sans-serif; }
-    .font-easytype-dyslexic { font-family: "EasyType Dyslexic", "EasyType", sans-serif; }
+    .font-easytype-steady { font-family: "EasyType Steady", "EasyType", sans-serif; }
     .font-easytype { font-family: "EasyType", "Open Sans", sans-serif; }
-    .font-open-dyslexic { font-family: "Open Dyslexic", "EasyType Dyslexic", sans-serif; }
+    .font-open-dyslexic { font-family: "Open Dyslexic", "EasyType Steady", sans-serif; }
     .font-open-sans { font-family: "Open Sans", Arial, sans-serif; }
 
     .questions {
@@ -316,11 +316,12 @@
     </section>
 
     <section id="thankYou" class="card ey-card thankyou hidden">
-      <p>Thank you for completing the study. As soon as I have some results, I will share them and provide the font for you to download.</p>
+      <p id="thankYouMessage">Thank you for completing the study. Your responses are saved, and I’ll share the results plus the font download link as soon as they’re ready.</p>
+      <p class="thank-you-note">Comments are optional—skip the note if you’re all done, or leave a quick impression below and click “Submit optional comment.”</p>
       <div class="comment-box">
         <label for="finalComment">Any other comments about the fonts? (optional)</label>
         <textarea id="finalComment" placeholder="e.g., Certain letters stood out, a font felt calming on mobile, etc."></textarea>
-        <button id="submitCommentBtn" style="margin-top: 12px;">Submit comment</button>
+        <button id="submitCommentBtn" style="margin-top: 12px;">Submit optional comment</button>
         <p class="status" id="commentStatus"></p>
       </div>
     </section>
@@ -330,7 +331,7 @@
     const LIKERT_OPTIONS = [1, 2, 3, 4, 5, 6, 7];
     const FONTS = [
       { name: "EasyType Focus", className: "font-easytype-focus" },
-      { name: "EasyType Dyslexic", className: "font-easytype-dyslexic" },
+      { name: "EasyType Steady", className: "font-easytype-steady" },
       { name: "EasyType", className: "font-easytype" },
       { name: "Open Dyslexic", className: "font-open-dyslexic" },
       { name: "Open Sans", className: "font-open-sans" }
@@ -596,7 +597,7 @@
       trialCard.classList.add("hidden");
       thankYou.classList.remove("hidden");
       finalCommentInput.value = "";
-      commentStatus.textContent = "";
+      commentStatus.textContent = "You're all set! Comments are optional—share anything extra if you like.";
       submitCommentBtn.disabled = false;
       commentSubmitted = false;
     }
@@ -660,7 +661,7 @@
       if (commentSubmitted) return;
       const comment = finalCommentInput.value.trim();
       if (!comment) {
-        commentStatus.textContent = "Please add a quick note before submitting.";
+        commentStatus.textContent = "Comments are optional, so you’re already done—thanks again!";
         return;
       }
       submitCommentBtn.disabled = true;

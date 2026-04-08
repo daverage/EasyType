@@ -71,35 +71,35 @@
   font-display: swap;
 }
 
-/* EasyType Dyslexic */
+/* EasyType Steady */
 @font-face {
-  font-family: 'EasyType Dyslexic';
-  src: url('../fonts/web/EasyTypeDyslexic-Regular.woff2') format('woff2'),
-       url('../fonts/ttf/EasyTypeDyslexic-Regular.ttf') format('truetype');
+  font-family: 'EasyType Steady';
+  src: url('../fonts/web/EasyTypeSteady-Regular.woff2') format('woff2'),
+       url('../fonts/ttf/EasyTypeSteady-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'EasyType Dyslexic';
-  src: url('../fonts/web/EasyTypeDyslexic-Italic.woff2') format('woff2'),
-       url('../fonts/ttf/EasyTypeDyslexic-Italic.ttf') format('truetype');
+  font-family: 'EasyType Steady';
+  src: url('../fonts/web/EasyTypeSteady-Italic.woff2') format('woff2'),
+       url('../fonts/ttf/EasyTypeSteady-Italic.ttf') format('truetype');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
-  font-family: 'EasyType Dyslexic';
-  src: url('../fonts/web/EasyTypeDyslexic-Bold.woff2') format('woff2'),
-       url('../fonts/ttf/EasyTypeDyslexic-Bold.ttf') format('truetype');
+  font-family: 'EasyType Steady';
+  src: url('../fonts/web/EasyTypeSteady-Bold.woff2') format('woff2'),
+       url('../fonts/ttf/EasyTypeSteady-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'EasyType Dyslexic';
-  src: url('../fonts/web/EasyTypeDyslexic-BoldItalic.woff2') format('woff2'),
-       url('../fonts/ttf/EasyTypeDyslexic-BoldItalic.ttf') format('truetype');
+  font-family: 'EasyType Steady';
+  src: url('../fonts/web/EasyTypeSteady-BoldItalic.woff2') format('woff2'),
+       url('../fonts/ttf/EasyTypeSteady-BoldItalic.ttf') format('truetype');
   font-weight: 700;
   font-style: italic;
   font-display: swap;

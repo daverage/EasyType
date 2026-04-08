@@ -19,7 +19,7 @@ FAMILY_STYLES = [
 FAMILY_DATA = {
     "EasyType Sans": {"slug": "easytypesans"},
     "EasyType Focus": {"slug": "easytypefocus"},
-    "EasyType Dyslexic": {"slug": "easytypedyslexic"},
+    "EasyType Steady": {"slug": "easytypesteady"},
 }
 
 COMMON_SUBSETS = ["latin", "latin-ext", "greek", "cyrillic"]

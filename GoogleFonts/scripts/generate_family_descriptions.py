@@ -23,10 +23,10 @@ FAMILIES = {
             "lines composed even when attention drifts."
         ),
     },
-    "EasyType Dyslexic": {
-        "slug": "easytypedyslexic",
+    "EasyType Steady": {
+        "slug": "easytypesteady",
         "summary": (
-            "EasyType Dyslexic maximizes openness, with sculpted apertures, wider bowls, "
+            "EasyType Steady maximizes openness, with sculpted apertures, wider bowls, "
             "and generous weights that keep each glyph distinct even when the eyes tire."
         ),
     },

@@ -45,7 +45,7 @@ VERSION_STR = f"EasyType v{VERSION_DISPLAY}"
 FAMILY_DISPLAY = {
     "EasyType Sans": "Easy Type Sans",
     "EasyType Focus": "Easy Type Focus",
-    "EasyType Dyslexic": "Easy Type Dyslexic",
+    "EasyType Steady": "Easy Type Steady",
 }
 
 FAMILIES = {
@@ -75,7 +75,7 @@ FAMILIES = {
         1.24,
         1.0,
     ),
-    "EasyType Dyslexic": (
+    "EasyType Steady": (
         {
             "Regular": (400, "Regular"),
             "Italic": (400, "Italic"),

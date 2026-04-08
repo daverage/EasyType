@@ -1,11 +1,11 @@
 # EasyType | Google Fonts submission
 
-EasyType is a trio of neuro-inclusive sans serif families (Sans, Focus, and Dyslexic) that pair optical anchoring, raised x-height, and comfort spacing to help readers with ADHD, dyslexia, and other attention differences stay calm and focused. These styles were shaped from personal research on rhythm, crowding, and visual anchoring so the fonts feel easy to follow during long-form reading while still delivering refined, contemporary proportions.
+EasyType is a trio of neuro-inclusive sans serif families (Sans, Focus, and Steady) that pair optical anchoring, raised x-height, and comfort spacing to help readers with ADHD, dyslexia, and other attention differences stay calm and focused. These styles were shaped from personal research on rhythm, crowding, and visual anchoring so the fonts feel easy to follow during long-form reading while still delivering refined, contemporary proportions.
 
 ## Notable features
 - **Entry anchors & raised x-height:** fixed optical offsets and taller lowercase forms provide reliable fixation points and quicker recognition of each word.
 - **Comfort spacing:** letter and word spacing are tuned per glyph plus gentle micro-spacing so lines stay open without looking forced.
-- **Distinct rhythm per family:** EasyType Sans is the everyday workhorse, Focus adds wider spacing for attentional flow, and Dyslexic maximizes openness for strained reading moments.
+- **Distinct rhythm per family:** EasyType Sans is the everyday workhorse, Focus adds wider spacing for attentional flow, and Steady maximizes openness for strained reading moments.
 - **Inclusive Latin coverage:** latin + latin-extended + greek + cyrillic glyphs are rebuilt from Noto sources with the EasyType adjustments.
 
 ## Scripts
@@ -23,7 +23,7 @@ python3 font.py
 This regenerates the hinted TTFs in `fonts/ttf/` and the compressed `.woff2` files in `fonts/web/` using the same builder that produced the published releases.
 
 ## Changelog
-- **2025-03-01:** Initial release of EasyType Sans, Focus, and Dyslexic families with Regular, Italic, Bold, and Bold Italic styles tuned specifically for neuro-divergent readers.
+- **2025-03-01:** Initial release of EasyType Sans, Focus, and Steady families with Regular, Italic, Bold, and Bold Italic styles tuned specifically for neuro-divergent readers.
 
 ## Acknowledgements & credits
 Designer: Andrzej Marczewski (<https://marczewski.me.uk>), inspired by cognitive psychology research on crowding, saccades, and reading fatigue.
@@ -38,7 +38,7 @@ Before running the packager you need a clone of the [`google/fonts`](https://git
 ```bash
 gftools packager "EasyType Sans" /path/to/google/fonts
 gftools packager "EasyType Focus" /path/to/google/fonts
-gftools packager "EasyType Dyslexic" /path/to/google/fonts
+gftools packager "EasyType Steady" /path/to/google/fonts
 ```
 
 The second argument is required because the packager copies each family into the separate `ofl/<family>` directory inside the Google Fonts repo; omitting it or pointing at this builder alone will raise `CRITICAL Repository not found at …`.
@@ -53,7 +53,7 @@ python3 scripts/generate_packager_metadata.py /Users/andrzejmarczewski/Documents
 The script writes the EasyType family metadata plus `OFL.txt` and the specimen article so `gftools packager` can copy everything into `google/fonts`. Re-run the same packager commands afterwards to finish the submission.
 
 ### Family-specific descriptions
-Each family needs its own `DESCRIPTION.en_us.html`. Run `scripts/generate_family_descriptions.py` to emit a tailored description for `EasyType Sans`, `EasyType Focus`, and `EasyType Dyslexic` under `documentation/article-descriptions/<slug>/DESCRIPTION.en_us.html`. Copy the appropriate description (one per family) and `OFL.txt` into the `ofl/<family>` folder inside your `google/fonts` clone before running `gftools packager` so the submission has the right prose plus license file.
+Each family needs its own `DESCRIPTION.en_us.html`. Run `scripts/generate_family_descriptions.py` to emit a tailored description for `EasyType Sans`, `EasyType Focus`, and `EasyType Steady` under `documentation/article-descriptions/<slug>/DESCRIPTION.en_us.html`. Copy the appropriate description (one per family) and `OFL.txt` into the `ofl/<family>` folder inside your `google/fonts` clone before running `gftools packager` so the submission has the right prose plus license file.
 
 ### Automated rebuild + packager run
 When you want to regenerate everything and re-stage the families from scratch (cleaning old directories, rewriting metadata, and invoking `gftools packager` for each family), use:

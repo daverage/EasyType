@@ -1,10 +1,10 @@
-# Add EasyType Sans, EasyType Focus, EasyType Dyslexic
+# Add EasyType Sans, EasyType Focus, EasyType Steady
 
 **Font Project Git Repo URL:**  
 https://github.com/daverage/EasyType
 
 **Super short description of the Font Family:**  
-Trio of neuro-inclusive sans serif families (EasyType Sans, Focus, Dyslexic) built from Google’s Noto sources with anchoring, spacing, and rhythm adjustments to keep long-form reading calm for ADHD/dyslexic readers.
+Trio of neuro-inclusive sans serif families (EasyType Sans, Focus, Steady) built from Google’s Noto sources with anchoring, spacing, and rhythm adjustments to keep long-form reading calm for ADHD/dyslexic readers.
 
 **Requirements:**  
 By opening this issue, I confirm the project meets the following requirements:

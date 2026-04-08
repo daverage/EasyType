@@ -17,13 +17,13 @@ fi
 FAMILIES=(
   "EasyType Sans"
   "EasyType Focus"
-  "EasyType Dyslexic"
+  "EasyType Steady"
 )
 
 SLUGS=(
   easytypesans
   easytypefocus
-  easytypedyslexic
+  easytypesteady
 )
 
 # regenerate metadata for each family
