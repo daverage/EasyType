@@ -70,7 +70,7 @@ brew install woff2    # macOS only (optional for webfont compression)
 ### Build
 
 ```bash
-python3 font.py
+python3 "Generator Tools/font.py"
 ```
 
 This generates:
@@ -136,8 +136,8 @@ Need something fast for prototypes? You can point to the maintained CDN-style co
   easytype-logo.svg
   easytype-favicon.png
   easytype-social.png
-/demo.html    → Local specimen preview
-/font.py      → Font builder script
+/demo.html              → Local specimen preview
+/Generator Tools/font.py → Font builder script
 ```
 
 ---

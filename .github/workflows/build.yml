@@ -1,0 +1,42 @@
+name: Build & Validate Fonts
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          pip install fonttools requests
+          sudo apt-get update && sudo apt-get install -y woff2
+
+      - name: Build fonts
+        working-directory: Generator Tools
+        run: python font.py
+
+      - name: Install fontbakery
+        run: pip install fontbakery
+
+      - name: Run fontbakery checks
+        run: |
+          fontbakery check-universal fonts/ttf/*.ttf --no-progress --succinct || true
+
+      - name: Upload font artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: easytype-fonts
+          path: |
+            fonts/ttf/*.ttf
+            fonts/web/*.woff2

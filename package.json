@@ -14,8 +14,8 @@
   },
   "files": [
     "css/easytype.css",
-    "fonts",
-    "easytypesans.zip",
+    "fonts/ttf",
+    "fonts/web",
     "LICENSE",
     "readme.md"
   ],
