@@ -29,7 +29,9 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import datetime as dt
+import enum
 import fractions
 import json
 import logging
@@ -185,37 +187,52 @@ FONT_PARAMS: dict[str, Any] = {
 }
 
 # ─── Stem-shift disambiguation map ───────────────────────────────────────────
+
+class StemPosition(enum.Enum):
+    """Which extreme point to shift for stem disambiguation.
+
+    top_left    = leftmost  point near y_max (b-type entry)
+    top_right   = rightmost point near y_max
+    bottom_left = leftmost  point near y_min (p-type descender)
+    bottom_right= rightmost point near y_min (q-type descender)
+    """
+    top_left     = "top_left"
+    top_right    = "top_right"
+    bottom_left  = "bottom_left"
+    bottom_right = "bottom_right"
+
 # Declarative: codepoint → which extreme point to shift.
-# "top_left"    = leftmost  point near y_max (b-type entry)
-# "top_right"   = rightmost point near y_max
-# "bottom_left" = leftmost  point near y_min (p-type descender)
-# "bottom_right"= rightmost point near y_min (q-type descender)
 # Add codepoints here to extend to new scripts — no other code changes needed.
 
-STEM_SHIFT_MAP: dict[int, str] = {
-    0x0062: "top_left",      # b  Latin
-    0x0064: "top_right",  # d  Latin
-    0x0431: "top_left",      # б  Cyrillic be
-    0x0411: "top_left",      # Б  Cyrillic Be
-    0x03B2: "top_left",      # β  Greek beta
-    0x00FE: "top_left",      # þ  Latin thorn
-    0x044C: "top_left",      # ь  Cyrillic soft sign
-    0x044A: "top_left",      # ъ  Cyrillic hard sign
-    0x042A: "top_left",      # Ъ  Cyrillic Hard Sign
-    0x042C: "top_left",      # Ь  Cyrillic Soft Sign
-    0x0070: "bottom_left",   # p  Latin
-    0x0440: "bottom_left",   # р  Cyrillic er
-    0x0420: "bottom_left",   # Р  Cyrillic Er
-    0x03C1: "bottom_left",   # ρ  Greek rho
-    0x0071: "bottom_right",  # q  Latin
+_TL = StemPosition.top_left
+_TR = StemPosition.top_right
+_BL = StemPosition.bottom_left
+_BR = StemPosition.bottom_right
+
+STEM_SHIFT_MAP: dict[int, StemPosition] = {
+    0x0062: _TL,  # b  Latin
+    0x0064: _TR,  # d  Latin
+    0x0431: _TL,  # б  Cyrillic be
+    0x0411: _TL,  # Б  Cyrillic Be
+    0x03B2: _TL,  # β  Greek beta
+    0x00FE: _TL,  # þ  Latin thorn
+    0x044C: _TL,  # ь  Cyrillic soft sign
+    0x044A: _TL,  # ъ  Cyrillic hard sign
+    0x042A: _TL,  # Ъ  Cyrillic Hard Sign
+    0x042C: _TL,  # Ь  Cyrillic Soft Sign
+    0x0070: _BL,  # p  Latin
+    0x0440: _BL,  # р  Cyrillic er
+    0x0420: _BL,  # Р  Cyrillic Er
+    0x03C1: _BL,  # ρ  Greek rho
+    0x0071: _BR,  # q  Latin
     # These share identical stem geometry with their base forms
-    0x0253: "top_left",    # ɓ  Latin small b with hook (IPA/African)
-    0x0180: "top_left",    # ƀ  Latin small b with stroke
-    0x018C: "top_left",    # ƌ  Latin small d with topbar (mirror of b-form)
-    0x01A5: "bottom_left", # ƥ  Latin small p with hook
-    0x02A0: "bottom_right",# ʠ  Latin small q with hook
-    0x0036: "top_right",   # 6  top curves right, distinguishes from 9
-    0x0039: "bottom_left", # 9  bottom curves left, distinguishes from 6
+    0x0253: _TL,  # ɓ  Latin small b with hook (IPA/African)
+    0x0180: _TL,  # ƀ  Latin small b with stroke
+    0x018C: _TL,  # ƌ  Latin small d with topbar (mirror of b-form)
+    0x01A5: _BL,  # ƥ  Latin small p with hook
+    0x02A0: _BR,  # ʠ  Latin small q with hook
+    0x0036: _TR,  # 6  top curves right, distinguishes from 9
+    0x0039: _BL,  # 9  bottom curves left, distinguishes from 6
 }
 
 # ─── Greek + Cyrillic → Latin anchor analogues ────────────────────────────────
@@ -239,18 +256,49 @@ FAMILY_METRICS: dict[str, dict[str, dict[str, int]]] = {}
 
 # ─── Inter download ───────────────────────────────────────────────────────────
 
-def download_inter_zip() -> str:
-    """Download Inter v4.1 release zip to BASECACHE if not already present."""
+def _inter_zip_is_valid() -> bool:
+    """Return True only if the cached zip exists and is a valid ZIP file."""
     if not os.path.exists(INTER_ZIP_CACHE):
-        log.info("Downloading Inter v4.1…")
+        return False
+    try:
+        with zipfile.ZipFile(INTER_ZIP_CACHE) as zf:
+            bad = zf.testzip()
+            if bad:
+                log.warning("Cached Inter zip is corrupt (first bad file: %s)", bad)
+                return False
+        return True
+    except zipfile.BadZipFile:
+        log.warning("Cached Inter zip is not a valid ZIP file")
+        return False
+
+
+def download_inter_zip() -> str:
+    """Download Inter v4.1 release zip to BASECACHE if not already present and valid."""
+    if _inter_zip_is_valid():
+        log.info("✓ Found cached Inter zip")
+        return INTER_ZIP_CACHE
+
+    if os.path.exists(INTER_ZIP_CACHE):
+        log.warning("Removing corrupt/partial Inter zip cache")
+        os.remove(INTER_ZIP_CACHE)
+
+    log.info("Downloading Inter v4.1…")
+    tmp = INTER_ZIP_CACHE + ".part"
+    try:
         r = requests.get(INTER_RELEASE_URL, stream=True)
         r.raise_for_status()
-        with open(INTER_ZIP_CACHE, "wb") as fh:
+        with open(tmp, "wb") as fh:
             for chunk in r.iter_content(chunk_size=8192):
                 fh.write(chunk)
-        log.info("✓ Downloaded → %s", INTER_ZIP_CACHE)
-    else:
-        log.info("✓ Found cached Inter zip")
+        # Validate before promoting to final path
+        if not zipfile.is_zipfile(tmp):
+            raise RuntimeError("Downloaded file is not a valid ZIP")
+        os.replace(tmp, INTER_ZIP_CACHE)
+    except Exception:
+        if os.path.exists(tmp):
+            os.remove(tmp)
+        raise
+    log.info("✓ Downloaded → %s", INTER_ZIP_CACHE)
     return INTER_ZIP_CACHE
 
 
@@ -574,7 +622,7 @@ def apply_stem_shift_disambiguation(tt: TTFont) -> None:
         ys     = [y for _, y in coords]
 
         # Find the cluster of points near the extreme y
-        extreme = max(ys) if "top" in position else min(ys)
+        extreme = max(ys) if position in (StemPosition.top_left, StemPosition.top_right) else min(ys)
         cluster = [
             (i, x, y) for i, (x, y) in enumerate(coords)
             if abs(y - extreme) <= tol
@@ -585,9 +633,9 @@ def apply_stem_shift_disambiguation(tt: TTFont) -> None:
 
         # b/p (bowl-side stems) get a reduced shift to compensate for the
         # optical mass the bowl junction adds. q gets the full shift.
-        s = shift_reduced if position in ("top_left", "bottom_left") else shift_full
+        s = shift_reduced if position in (StemPosition.top_left, StemPosition.bottom_left) else shift_full
 
-        if "left" in position:
+        if position in (StemPosition.top_left, StemPosition.bottom_left):
             ti, sx, sy = min(cluster, key=lambda t: t[1])
             coords[ti] = (sx - s, sy)
         else:
@@ -599,7 +647,7 @@ def apply_stem_shift_disambiguation(tt: TTFont) -> None:
 
         log.info(
             "  ✓ StemShift [%s] U+%04X (%s) pt%d (%d,%d) → (%d,%d)  shift=%d",
-            position, codepoint, chr(codepoint),
+            position.value, codepoint, chr(codepoint),
             ti, sx, sy, coords[ti][0], coords[ti][1], s,
         )
         applied += 1
@@ -962,15 +1010,7 @@ def auto_hint(in_path: str, out_path: str, enabled: bool = True) -> bool:
 
 def compress_to_woff2(ttf_path: str) -> None:
     """Compress a TTF to WOFF2 when woff2_compress is available."""
-    woff2_bin = next(
-        (p for p in [
-            os.environ.get("WOFF2_BIN"),
-            shutil.which("woff2_compress"),
-            "/opt/homebrew/bin/woff2_compress",
-            "/usr/local/bin/woff2_compress",
-        ] if p and os.path.exists(p)),
-        None,
-    )
+    woff2_bin = os.environ.get("WOFF2_BIN") or shutil.which("woff2_compress")
     if not woff2_bin:
         log.warning("woff2_compress not found; skipping")
         return
@@ -1101,6 +1141,49 @@ def parse_args() -> argparse.Namespace:
 
 # ─── Main ─────────────────────────────────────────────────────────────────────
 
+def _build_family(
+    family: str, cfg: FamilyConfig, bases: dict[str, str],
+    hinting_enabled: bool,
+) -> tuple[str, dict[str, Any]]:
+    """Build all 4 styles for one family and return (family_name, family_report).
+
+    Regular is built first (to capture the metrics snapshot), then the
+    remaining 3 styles are built in parallel.
+    """
+    log.info("=== Building %s ===", family)
+    family_report: dict[str, Any] = {}
+
+    # Regular must come first — its metrics snapshot is applied to other styles.
+    reg_style, (reg_weight, reg_label) = "Regular", STYLE_WEIGHTS["Regular"]
+    out_ttf_reg = os.path.join(OUT_TTF, f"{family.replace(' ', '')}-{reg_style}.ttf")
+    family_report[reg_style] = build_one(
+        bases[reg_style], out_ttf_reg, family, reg_style, reg_label, reg_weight,
+        cfg, hinting_enabled=hinting_enabled,
+    )
+    FAMILY_METRICS[family] = capture_metrics_snapshot(TTFont(out_ttf_reg))
+    compress_to_woff2(out_ttf_reg)
+
+    # Remaining styles share no state — build in parallel.
+    other_styles = [(s, w, l) for s, (w, l) in STYLE_WEIGHTS.items() if s != "Regular"]
+
+    def _build_style(style: str, weight: int, style_label: str) -> tuple[str, dict[str, Any]]:
+        out_ttf = os.path.join(OUT_TTF, f"{family.replace(' ', '')}-{style}.ttf")
+        report  = build_one(
+            bases[style], out_ttf, family, style, style_label, weight,
+            cfg, hinting_enabled=hinting_enabled,
+        )
+        compress_to_woff2(out_ttf)
+        return style, report
+
+    with concurrent.futures.ThreadPoolExecutor() as pool:
+        futures = {pool.submit(_build_style, s, w, l): s for s, w, l in other_styles}
+        for fut in concurrent.futures.as_completed(futures):
+            style, style_report = fut.result()
+            family_report[style] = style_report
+
+    return family, family_report
+
+
 def main() -> int:
     args     = parse_args()
     families = resolve_family_filter(args.family)
@@ -1115,10 +1198,9 @@ def main() -> int:
         "families":   {},
     }
 
-    for family, cfg in families.items():
-        log.info("=== Building %s ===", family)
-
-        if args.dry_run:
+    if args.dry_run:
+        for family, cfg in families.items():
+            log.info("=== Dry-run %s ===", family)
             for style, (_, style_label) in STYLE_WEIGHTS.items():
                 tt = TTFont(bases[style])
                 bake_disambiguation_defaults(tt)
@@ -1127,24 +1209,19 @@ def main() -> int:
                 raise_xheight(tt, cfg.xheight_factor)
                 validate_proportions(tt, family, style_label)
                 log.info("  dry-run OK: %s %s", family, style_label)
-            continue
-
-        family_report: dict[str, Any] = {}
-        for style, (weight, style_label) in STYLE_WEIGHTS.items():
-            out_ttf      = os.path.join(OUT_TTF, f"{family.replace(' ', '')}-{style}.ttf")
-            style_report = build_one(
-                bases[style], out_ttf, family, style, style_label, weight,
-                cfg, hinting_enabled=not args.no_hint,
-            )
-            family_report[style] = style_report
-            if style_label.lower() == "regular":
-                FAMILY_METRICS[family] = capture_metrics_snapshot(TTFont(out_ttf))
-            compress_to_woff2(out_ttf)
-        report["families"][family] = family_report
-
-    if args.dry_run:
         log.info("✓ Dry run complete")
         return 0
+
+    # Build all families in parallel (each family builds Regular first, then
+    # its remaining 3 styles in parallel, so the total work is fully pipelined).
+    with concurrent.futures.ThreadPoolExecutor() as pool:
+        futures = {
+            pool.submit(_build_family, family, cfg, bases, not args.no_hint): family
+            for family, cfg in families.items()
+        }
+        for fut in concurrent.futures.as_completed(futures):
+            family, family_report = fut.result()
+            report["families"][family] = family_report
 
     os.makedirs(os.path.dirname(BUILD_REPORT_PATH), exist_ok=True)
     with open(BUILD_REPORT_PATH, "w", encoding="utf-8") as fh:

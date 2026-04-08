@@ -15,8 +15,14 @@ node_modules/
 results.jsonl
 *.zip
 
+# Inter base fonts extracted at build time (only the zip is needed)
+base_fonts/*.ttf
+
 # IDE
 *.code-workspace
+
+# Test artefacts
+.pytest_cache/
 
 # Google Fonts
 GoogleFonts/

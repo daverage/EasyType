@@ -19,11 +19,14 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install fonttools requests
-          sudo apt-get update && sudo apt-get install -y woff2
+          pip install -r requirements.txt
+          sudo apt-get update && sudo apt-get install -y woff2 ttfautohint
+
+      - name: Run unit tests
+        run: python3 -m pytest tests/ -v
 
       - name: Build fonts
-        run: python "Generator Tools/font.py"
+        run: python3 "Generator Tools/font.py"
 
       - name: Install fontbakery
         run: pip install fontbakery
