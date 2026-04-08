@@ -44,16 +44,43 @@ EasyType implements those cues directly in the letterforms:
 
 ## 🧩 Research Background
 
-EasyType draws on findings from visual cognition and reading science:
+EasyType draws on findings from visual cognition, reading science, and
+accessibility research:
 
-- Pelli, D.G. & Tillman, K.A. (2008). *The uncrowded window of object recognition.* *Nature Neuroscience, 11*(10).
-- Rayner, K. (1998). *Eye movements in reading and information processing.* *Psychological Bulletin, 124*(3).
-- Spinelli, D. et al. (2002). *Crowding effects on word recognition in dyslexia.* *Cortex, 38*(2).
-- Le Loi, J. & Whitney, C. (2016). *Optimal inter-letter spacing for reading.* *Vision Research, 121.*
-- Galliussi, J. et al. (2020). *Inter-letter spacing, inter-word spacing, and font with dyslexia-friendly features.* *Annals of Dyslexia, 70*(1).
-- Kuster, S.M. et al. (2018). *Dyslexie font does not benefit reading in children with or without dyslexia.* *Annals of Dyslexia, 68*(1).
+**Crowding and visual spacing**
+- Pelli, D.G. & Tillman, K.A. (2008). *The uncrowded window of object
+  recognition.* *Nature Neuroscience, 11*(10).
+- Spinelli, D. et al. (2002). *Crowding effects on word recognition in
+  dyslexia.* *Cortex, 38*(2).
+- Galliussi, J. et al. (2020). *Inter-letter spacing, inter-word spacing,
+  and font with dyslexia-friendly features.* *Annals of Dyslexia, 70*(1).
+- Slattery, T.J., Yates, M. & Angele, B. (2016). *Interword and interletter
+  spacing effects during reading revisited.* *Journal of Experimental
+  Psychology: Applied, 22*(4).
 
-> EasyType is not a treatment for ADHD or dyslexia - it is a research-informed design approach that reduces reading effort and improves comfort.
+**Eye movements and reading**
+- Rayner, K. (1998). *Eye movements in reading and information processing.*
+  *Psychological Bulletin, 124*(3).
+- Le Loi, J. & Whitney, C. (2016). *Optimal inter-letter spacing for
+  reading.* *Vision Research, 121.*
+
+**Legibility and letterform design**
+- Minakata, K. & Beier, S. (2022). *Stroke contrast as a key factor in
+  font legibility.* *Journal of Vision.*
+- Kuster, S.M. et al. (2018). *Dyslexie font does not benefit reading in
+  children with or without dyslexia.* *Annals of Dyslexia, 68*(1).
+
+**Reading proficiency and visual stress**
+- Shaver-Troup, B. (2000–2017). *The Shaver-Troup formulation: typographic
+  variables in reading proficiency.* Basis of the Lexend font project,
+  published in collaboration with Google Fonts.
+
+**Accessibility guidance**
+- British Dyslexia Association (2012, updated). *Dyslexia Style Guide.*
+
+> EasyType is not a treatment for ADHD or dyslexia — it is a
+> research-informed design approach that reduces reading effort and
+> improves comfort for all readers.
 
 ---
 
