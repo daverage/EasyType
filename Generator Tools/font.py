@@ -17,12 +17,16 @@ Optional:
 
 import fractions
 import os, sys, subprocess, unicodedata, requests, shutil
+from dataclasses import dataclass
 from fontTools.ttLib import TTFont
 from fontTools.ttLib.tables._g_l_y_f import GlyphCoordinates
 from fontTools.pens.ttGlyphPen import TTGlyphPen
 from fontTools.pens.transformPen import TransformPen
 
 # ----------------------- Paths -----------------------
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+REPO_ROOT  = os.path.dirname(SCRIPT_DIR)
+
 URL_BASE = "https://github.com/notofonts/noto-fonts/raw/main/hinted/ttf/NotoSans/"
 BASES = {
     "Regular":    "NotoSans-Regular.ttf",
@@ -30,9 +34,9 @@ BASES = {
     "Bold":       "NotoSans-Bold.ttf",
     "BoldItalic": "NotoSans-BoldItalic.ttf",
 }
-BASECACHE = "./base_fonts"
-OUT_TTF   = "./fonts/ttf"
-OUT_WEB   = "./fonts/web"
+BASECACHE = os.path.join(REPO_ROOT, "base_fonts")
+OUT_TTF   = os.path.join(REPO_ROOT, "fonts", "ttf")
+OUT_WEB   = os.path.join(REPO_ROOT, "fonts", "web")
 os.makedirs(BASECACHE, exist_ok=True)
 os.makedirs(OUT_TTF,   exist_ok=True)
 os.makedirs(OUT_WEB,   exist_ok=True)
@@ -48,45 +52,42 @@ FAMILY_DISPLAY = {
     "EasyType Steady": "Easy Type Steady",
 }
 
+STYLE_WEIGHTS = {
+    "Regular": (400, "Regular"),
+    "Italic": (400, "Italic"),
+    "Bold": (700, "Bold"),
+    "BoldItalic": (700, "Bold Italic"),
+}
+
+@dataclass
+class FamilyConfig:
+    anchor_strength: float
+    xheight_factor: float
+    letter_spacing: float
+    word_spacing: float
+    micro_level: float
+
 FAMILIES = {
-    "EasyType Sans": (
-        {
-            "Regular": (400, "Regular"),
-            "Italic": (400, "Italic"),
-            "Bold": (700, "Bold"),
-            "BoldItalic": (700, "Bold Italic"),
-        },
-        0.25,
-        1.03,
-        1.06,
-        1.12,
-        0.8,
+    "EasyType Sans": FamilyConfig(
+        anchor_strength=0.25,
+        xheight_factor=1.03,
+        letter_spacing=1.06,
+        word_spacing=1.12,
+        micro_level=0.8,
     ),
-    "EasyType Focus": (
-        {
-            "Regular": (400, "Regular"),
-            "Italic": (400, "Italic"),
-            "Bold": (700, "Bold"),
-            "BoldItalic": (700, "Bold Italic"),
-        },
-        0.40,
-        1.06,
-        1.14,
-        1.24,
-        1.0,
+    "EasyType Focus": FamilyConfig(
+        anchor_strength=0.40,
+        xheight_factor=1.06,
+        letter_spacing=1.14,
+        word_spacing=1.24,
+        micro_level=1.0,
     ),
-    "EasyType Steady": (
-        {
-            "Regular": (400, "Regular"),
-            "Italic": (400, "Italic"),
-            "Bold": (700, "Bold"),
-            "BoldItalic": (700, "Bold Italic"),
-        },
-        0.55,
-        1.10,
-        1.22,
-        1.32,
-        1.0,
+    "EasyType Steady": FamilyConfig(
+        anchor_strength=0.55,
+        xheight_factor=1.10,
+        letter_spacing=1.22,
+        word_spacing=1.32,
+        micro_level=1.0,
     ),
 }
 
@@ -130,7 +131,8 @@ def download_base(name):
     if not os.path.exists(dest):
         print(f"→ Downloading {name}")
         r = requests.get(url); r.raise_for_status()
-        open(dest,"wb").write(r.content)
+        with open(dest,"wb") as f:
+            f.write(r.content)
     else:
         print(f"✓ Found base {name}")
     return dest
@@ -174,7 +176,9 @@ def apply_optical_anchor(tt, entry_band, global_strength):
         base=get_base_letter(ch)
         if ch in ANCHOR_BASE_MAP:
             base=ANCHOR_BASE_MAP[ch]
-        s_key=ANCHOR_LC.get(base) or ANCHOR_UC.get(base)
+        s_key=ANCHOR_LC.get(base)
+        if s_key is None:
+            s_key=ANCHOR_UC.get(base)
         if not s_key: continue
         g=glyf[gname]
         if not hasattr(g,"getCoordinates"): continue
@@ -202,9 +206,9 @@ def raise_xheight(tt,factor):
         g=glyf[gname]
         if not hasattr(g,"getCoordinates"): continue
         coords,endPts,flags=g.getCoordinates(glyf)
-        coords=[(x,int(y*factor)) for x,y in coords]
+        coords=[(x, int(y*factor) if y > 0 else y) for x,y in coords]
         set_coords(g,coords,endPts,flags)
-    print(f"✓ x-height scaled ×{factor:.2f}")
+    print(f"✓ x-height scaled ×{factor:.2f} (above baseline only)")
 
 def apply_comfort_spacing(tt, letter_factor, word_factor):
     hmtx=tt["hmtx"].metrics
@@ -221,7 +225,9 @@ def apply_micro_spacing(tt, level):
     n=0
     for code,gname in cmap.items():
         ch=chr(code); base=get_base_letter(ch)
-        key=MICRO_SPACING_EM.get(ch) or MICRO_SPACING_EM.get(base)
+        key=MICRO_SPACING_EM.get(ch)
+        if key is None:
+            key=MICRO_SPACING_EM.get(base)
         if not key: continue
         du=int(round(key*level*upm))
         if gname in hmtx:
@@ -504,7 +510,7 @@ def set_head_flags(tt):
     tt["head"].flags |= 1 << 3
 
 
-def adjust_metrics_after_hint(font_path):
+def post_hint_fixup(font_path):
     tt = TTFont(font_path)
     ensure_win_metrics(tt)
     recompute_xavg(tt)
@@ -518,7 +524,13 @@ def auto_hint(in_path,out_path):
     if not bin_path:
         print("⚠ ttfautohint not found; skipping hinting")
         return False
-    subprocess.run([bin_path,"--windows-compatibility","--symbol","--no-info",in_path,out_path],check=False)
+    result = subprocess.run(
+        [bin_path,"--windows-compatibility","--symbol","--no-info",in_path,out_path],
+        capture_output=True, text=True
+    )
+    if result.returncode != 0:
+        print(f"⚠ ttfautohint failed: {result.stderr.strip()}")
+        return False
     print(f"✓ Hinting applied → {out_path}")
     return True
 
@@ -528,7 +540,7 @@ def build_one(
     anchor, xh, let_sp, word_sp, micro_level, reference_snapshot=None
 ):
     tt = TTFont(src_path)
-    
+
     apply_optical_anchor(tt, ENTRY_BAND, anchor)
     raise_xheight(tt, xh)
     apply_comfort_spacing(tt, let_sp, word_sp)
@@ -554,8 +566,8 @@ def build_one(
         shutil.move(tmp, out_path)
     else:
         os.remove(tmp)
-    
-    adjust_metrics_after_hint(out_path)
+
+    post_hint_fixup(out_path)
     print(f"→ Saved {out_path}")
 
 def compress_to_woff2(ttf_path):
@@ -588,14 +600,15 @@ def compress_to_woff2(ttf_path):
 # ---------------------- Main -------------------------
 def main():
     base_paths = {sty: download_base(fname) for sty, fname in BASES.items()}
-    for family, (weights, anchor, xh, let_sp, word_sp, micro_level) in FAMILIES.items():
+    for family, cfg in FAMILIES.items():
         print(f"\n=== Building {family} ===")
-        for style, (weight, style_label) in weights.items():
+        for style, (weight, style_label) in STYLE_WEIGHTS.items():
             src = base_paths[style]
             out_ttf = os.path.join(OUT_TTF, f"{family.replace(' ', '')}-{style}.ttf")
             build_one(
                 src, out_ttf, family, style, style_label, weight,
-                anchor, xh, let_sp, word_sp, micro_level,
+                cfg.anchor_strength, cfg.xheight_factor,
+                cfg.letter_spacing, cfg.word_spacing, cfg.micro_level,
                 reference_snapshot=FAMILY_METRICS.get(family),
             )
             if style_label.lower() == "regular":

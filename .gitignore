@@ -17,3 +17,6 @@ results.jsonl
 
 # IDE
 *.code-workspace
+
+# Google Fonts
+GoogleFonts/
