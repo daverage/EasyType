@@ -18,7 +18,7 @@ I live with both ADHD and dyslexia, and EasyType started as a personal experimen
 
 Each family includes:
 - Regular, Italic, Bold, and Bold Italic styles  
-- Full Latin character support (including accented and extended letters)  
+- Full Latin, Greek, and Cyrillic character support (including accented and extended letters)
 - `.ttf` and `.woff2` versions ready for desktop and web use
 
 ---
@@ -64,7 +64,7 @@ You can rebuild all styles locally using Python 3.
 
 ```bash
 pip install fonttools requests
-brew install woff2    # macOS only (optional for webfont compression)
+brew install woff2 ttfautohint    # macOS (both optional but recommended)
 ```
 
 ### Build
@@ -95,8 +95,8 @@ fonts/
 Keeping the font files on your own domain avoids third-party bottlenecks and lets you tune caching headers.
 
 1. **Grab the files**
-   - Download the latest zip: `https://www.marczewski.me.uk/easytype/easytypesans.zip`
-   - or install via npm:  
+   - Download the latest release from [GitHub Releases](https://github.com/daverage/EasyType/releases)
+   - or install via npm:
      ```bash
      npm install easytype-fonts
      ```
@@ -130,14 +130,13 @@ Need something fast for prototypes? You can point to the maintained CDN-style co
   /ttf        → Desktop font files
   /web        → WOFF2 webfonts
 /css
-  easytype.css → Web import declarations
-  styles.css   → Demo site styling
-/assets
-  easytype-logo.svg
-  easytype-favicon.png
-  easytype-social.png
-/demo.html              → Local specimen preview
-/Generator Tools/font.py → Font builder script
+  easytype.css  → Web @font-face declarations
+  styles.css    → Demo site styling
+/assets         → Favicons and web app manifest
+/Generator Tools
+  font.py       → Font builder script
+  build.sh      → Full build runner
+/demo.html      → Local specimen preview
 ```
 
 ---
