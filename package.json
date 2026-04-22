@@ -27,5 +27,8 @@
     "accessibility",
     "easytype"
   ],
-  "style": "css/easytype.css"
+  "style": "css/easytype.css",
+  "dependencies": {
+    "easytype-fonts": "^1.1.0"
+  }
 }
